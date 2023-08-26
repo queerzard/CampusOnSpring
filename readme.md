@@ -10,6 +10,6 @@ in Java using SpringMVC, JSP, Hibernate and Angular.
 \
 Made with ♥ for the [CampusFM Radio](https://campusfm.info) at the Duisburg-Essen University
 
-\
+
 
 <p align="center"><img src="https://i.imgur.com/B8mFgjx.png"></p>
