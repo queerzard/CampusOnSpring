@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.UUID;
 
 public class UtilitiesCollection {
 
@@ -25,7 +26,7 @@ public class UtilitiesCollection {
     }
 
     public static File getDefaultAvatarFile() {
-        return getFileFromResource("/assets/images/blankprofile.png");
+        return getFileFromResource("/src/main/webapp/assets/images/blankprofile.png");
     }
 
     public static File getFileFromResource(String path){
@@ -60,4 +61,8 @@ public class UtilitiesCollection {
     @SneakyThrows public static String sha384(String input){return hash("SHA-384", input);}
     @SneakyThrows public static String sha512(String input){return hash("SHA-512", input);}
 
+
+    public static String randomUUID() {
+        return UUID.randomUUID().toString().replaceAll("-", "");
+    }
 }

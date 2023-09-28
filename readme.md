@@ -7,9 +7,14 @@ were prone to bugs and limitations:
 CampusOnSpring is a content management system built entirely\
 in Java using SpringMVC, JSP, Hibernate and Angular.
 
+
+
+
+<p align="center"><img src="https://i.imgur.com/JcIeztd.png"></p>
+
+---
 \
 Made with ♥ for the [CampusFM Radio](https://campusfm.info) at the Duisburg-Essen University
-
 
 
 <p align="center"><img src="https://i.imgur.com/B8mFgjx.png"></p>

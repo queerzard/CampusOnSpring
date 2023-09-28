@@ -1,0 +1,29 @@
+package org.unidue.campusfm.queerzard.cms.services.interfaces;
+
+import org.unidue.campusfm.queerzard.cms.entities.UserEntity;
+
+import java.util.List;
+
+public interface UserService {
+
+    List<UserEntity> findAll();
+
+    UserEntity update(UserEntity userEntity);
+
+    UserEntity addUser(UserEntity user);
+
+    UserEntity addUserIfNotExists(UserEntity user);
+
+    boolean userExists(Long id);
+
+    void delete(UserEntity entity);
+
+    UserEntity getUserById(String userId);
+    UserEntity getUserByUsername(String username);
+    UserEntity getUserByEmail(String emailAddress);
+    List<UserEntity> getUsersByFirstName(String name);
+    List<UserEntity> getUsersByLastName(String name);
+
+    long count();
+
+}

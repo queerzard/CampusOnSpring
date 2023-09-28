@@ -1,4 +1,4 @@
-package org.unidue.campusfm.queerzard.cms.services.i18n;
+package org.unidue.campusfm.queerzard.cms.config.i18n;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
