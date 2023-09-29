@@ -16,6 +16,11 @@ public interface UserService {
 
     boolean userExists(Long id);
 
+    boolean userExistsByEmail(String email);
+    boolean userExistsByName(String username);
+    boolean userExistsByUserId(String userId);
+
+
     void delete(UserEntity entity);
 
     UserEntity getUserById(String userId);

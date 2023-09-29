@@ -16,20 +16,16 @@ import java.util.List;
 public class UserEntity extends AbstractEntity{
 
     @Getter
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String userId;
 
     @NotBlank(message = "The Username is a mandatory field!")
     @DisallowedCharacters(message = "The Username cannot contain special characters!")
-    @Getter @Setter
-    @Column(unique = true)
-    @Size(min = 3)
+    @Getter @Setter @Column(unique = true, nullable = false) @Size(min = 3)
     private String username;
 
     @NotBlank(message = "The Email is a mandatory field!")
-    @Getter @Setter
-    @Email
-    @Column(unique = true)
+    @Getter @Setter @Email @Column(unique = true, nullable = false)
     private String email;
 
 
@@ -45,8 +41,7 @@ public class UserEntity extends AbstractEntity{
 
 
     @NotBlank(message = "The Password is a mandatory field!")
-    @Getter
-    @Size(min = 8)
+    @Getter @Size(min = 8) @Column(nullable = false)
     private String password;
 
     @Getter @Setter
@@ -56,8 +51,7 @@ public class UserEntity extends AbstractEntity{
 
 
     @Column(columnDefinition = "LONGTEXT")
-    @JsonIgnore
-    @Getter
+    @JsonIgnore @Getter
     private String base64Avatar;
 
     @Getter @Setter private boolean enabled;
@@ -66,6 +60,7 @@ public class UserEntity extends AbstractEntity{
     private long creationTimeStamp;
     @Getter
     private long lastLoginTimestamp;
+
 
 
     @OneToMany

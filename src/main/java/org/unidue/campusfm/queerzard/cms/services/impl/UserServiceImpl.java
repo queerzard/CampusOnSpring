@@ -1,26 +1,37 @@
 package org.unidue.campusfm.queerzard.cms.services.impl;
 
+import org.checkerframework.checker.units.qual.A;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.unidue.campusfm.queerzard.cms.entities.UserEntity;
+import org.unidue.campusfm.queerzard.cms.repositories.UserRepository;
 import org.unidue.campusfm.queerzard.cms.services.interfaces.UserService;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
+
+    @Autowired
+    private EntityManager entityManager;
+
+    @Autowired
+    private UserRepository userRepository;
+
     @Override
     public List<UserEntity> findAll() {
-        return null;
+        return userRepository.findAll();
     }
 
     @Override
     public UserEntity update(UserEntity userEntity) {
-        return null;
+        return userRepository.saveAndFlush(userEntity);
     }
 
     @Override
     public UserEntity addUser(UserEntity user) {
-        return null;
+        return userRepository.save(user);
     }
 
     @Override
@@ -29,42 +40,49 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean userExists(Long id) {
-        return false;
-    }
+    public boolean userExists(Long id) {return userRepository.existsUserEntityById(id);}
+
+    @Override
+    public boolean userExistsByEmail(String email) {return userRepository.existsUserEntityByEmail(email);}
+
+    @Override
+    public boolean userExistsByName(String username) {return userRepository.existsUserEntityByUsername(username);}
+
+    @Override
+    public boolean userExistsByUserId(String userId) {return userRepository.existsUserEntityByUserId(userId);}
 
     @Override
     public void delete(UserEntity entity) {
-
+        userRepository.delete(entity);
     }
 
     @Override
     public UserEntity getUserById(String userId) {
-        return null;
+        return userRepository.findUserEntityByUserId(userId);
     }
 
     @Override
     public UserEntity getUserByUsername(String username) {
-        return null;
+        return userRepository.findUserEntityByUsername(username);
     }
 
     @Override
     public UserEntity getUserByEmail(String emailAddress) {
-        return null;
+        return userRepository.findUserEntityByEmail(emailAddress);
     }
 
     @Override
     public List<UserEntity> getUsersByFirstName(String name) {
-        return null;
+        return userRepository.findUserEntitiesByFirstName(name);
     }
 
     @Override
     public List<UserEntity> getUsersByLastName(String name) {
-        return null;
+        return userRepository.findUserEntitiesByLastName(name);
     }
 
     @Override
     public long count() {
-        return 0;
+        return userRepository.count();
     }
 }
