@@ -1,5 +1,6 @@
 package org.unidue.campusfm.queerzard.cms.services.impl;
 
+import lombok.Getter;
 import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ public class UserServiceImpl implements UserService {
     private EntityManager entityManager;
 
     @Autowired
-    private UserRepository userRepository;
+    @Getter private UserRepository userRepository;
 
     @Override
     public List<UserEntity> findAll() {
@@ -36,7 +37,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity addUserIfNotExists(UserEntity user) {
-        return null;
+        return (userRepository.existsUserEntityByUserId(user.getUserId()) ? null : addUser(user));
     }
 
     @Override
