@@ -65,4 +65,5 @@ public class UtilitiesCollection {
     public static String randomUUID() {
         return UUID.randomUUID().toString().replaceAll("-", "");
     }
+
 }
