@@ -1,4 +1,4 @@
-package org.unidue.campusfm.queerzard.cms.entities;
+package org.unidue.campusfm.queerzard.cms.database.dao;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
@@ -41,7 +41,7 @@ public class UserEntity extends AbstractEntity{
 
 
     @NotBlank(message = "The Password is a mandatory field!")
-    @Getter @Size(min = 8) @Column(nullable = false)
+    @Getter @Setter @Size(min = 8) @Column(nullable = false)
     private String password;
 
     @Getter @Setter
@@ -96,16 +96,13 @@ public class UserEntity extends AbstractEntity{
     }
 
     public UserEntity(String firstName, String lastName, String email, String password, boolean enabled) {
-        this(firstName, lastName, email, password, "Linkstgruenversuffte*r bei CampusFM",
+        this(firstName, lastName, email, password, "Linkstgrünversiffte*r bei CampusFM",
                 "Redakteur*in", enabled);
     }
 
     public UserEntity() {}
 
 
-    public void setPassword(String password, boolean hash) {
-        this.password = (hash ? UtilitiesCollection.sha256(password) : password);
-    }
 
     public void updateLastLogin() {
         this.lastLoginTimestamp = System.currentTimeMillis();

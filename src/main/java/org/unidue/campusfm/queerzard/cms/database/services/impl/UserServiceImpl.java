@@ -1,12 +1,12 @@
-package org.unidue.campusfm.queerzard.cms.services.impl;
+package org.unidue.campusfm.queerzard.cms.database.services.impl;
 
 import lombok.Getter;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.unidue.campusfm.queerzard.cms.entities.UserEntity;
-import org.unidue.campusfm.queerzard.cms.repositories.UserRepository;
-import org.unidue.campusfm.queerzard.cms.services.interfaces.UserService;
+import org.unidue.campusfm.queerzard.cms.database.dao.UserEntity;
+import org.unidue.campusfm.queerzard.cms.database.repositories.UserRepository;
+import org.unidue.campusfm.queerzard.cms.database.services.interfaces.UserService;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -20,6 +20,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     @Getter private UserRepository userRepository;
 
+    @Autowired private PasswordEncoder passwordEncoder;
+
     @Override
     public List<UserEntity> findAll() {
         return userRepository.findAll();
@@ -32,6 +34,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity addUser(UserEntity user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 

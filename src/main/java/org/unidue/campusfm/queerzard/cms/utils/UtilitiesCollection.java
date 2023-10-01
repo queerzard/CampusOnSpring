@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.UUID;
 
 public class UtilitiesCollection {
@@ -26,7 +29,7 @@ public class UtilitiesCollection {
     }
 
     public static File getDefaultAvatarFile() {
-        return getFileFromResource("/src/main/webapp/assets/images/blankprofile.png");
+        return getFileFromResource("avatardefault.png");
     }
 
     public static File getFileFromResource(String path){
@@ -64,6 +67,37 @@ public class UtilitiesCollection {
 
     public static String randomUUID() {
         return UUID.randomUUID().toString().replaceAll("-", "");
+    }
+
+
+    public static String getYear(long milliseconds){
+        return String.valueOf(Instant.ofEpochMilli(milliseconds).atZone(ZoneId.systemDefault()).getYear());
+    }
+
+    public static String getMonth(long milliseconds){
+        String m = String.valueOf(Instant.ofEpochMilli(milliseconds).atZone(ZoneId.systemDefault()).getMonth());
+        return m.substring(0, 1).toUpperCase() + m.substring(1).toLowerCase();
+    }
+
+    public static String getDay(long milliseconds){
+        return String.valueOf(Instant.ofEpochMilli(milliseconds).atZone(ZoneId.systemDefault()).getDayOfMonth());
+    }
+
+    public static String getHour(long milliseconds){
+        return String.valueOf(LocalDateTime.ofInstant(Instant.ofEpochMilli(milliseconds), ZoneId.systemDefault()).getHour());
+    }
+
+    public static String getMinute(long milliseconds){
+        return String.valueOf(LocalDateTime.ofInstant(Instant.ofEpochMilli(milliseconds), ZoneId.systemDefault()).getMinute());
+
+    }
+
+    public static String getSecond(long milliseconds){
+        return String.valueOf(LocalDateTime.ofInstant(Instant.ofEpochMilli(milliseconds), ZoneId.systemDefault()).getSecond());
+    }
+
+    public static String cutSubstring(String s, int maxChars){
+        return (s.length() > maxChars ? s.substring(0, maxChars) : s);
     }
 
 }

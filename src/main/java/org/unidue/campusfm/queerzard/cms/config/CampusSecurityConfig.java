@@ -15,7 +15,6 @@ import javax.sql.DataSource;
 @Configuration
 @EnableWebSecurity
 public class CampusSecurityConfig extends WebSecurityConfigurerAdapter {
-/*
     @Autowired
     private DataSource dataSource;
 
@@ -41,6 +40,6 @@ public class CampusSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){return new BCryptPasswordEncoder();};*/
+    public PasswordEncoder passwordEncoder(){return new BCryptPasswordEncoder();};
 
 }

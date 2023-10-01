@@ -1,9 +1,9 @@
-package org.unidue.campusfm.queerzard.cms.repositories;
+package org.unidue.campusfm.queerzard.cms.database.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.unidue.campusfm.queerzard.cms.entities.ArticleEntity;
-import org.unidue.campusfm.queerzard.cms.entities.UserEntity;
+import org.unidue.campusfm.queerzard.cms.database.dao.ArticleEntity;
+import org.unidue.campusfm.queerzard.cms.database.dao.UserEntity;
 
 import java.util.List;
 

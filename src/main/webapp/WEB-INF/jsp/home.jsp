@@ -3,9 +3,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="msg" uri="http://www.springframework.org/tags" %>
 
-
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
@@ -86,13 +85,13 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
                 <div class="card-body p-4">
                     <p class="text-primary card-text mb-0">${article.category}</p>
                     <h4 class="card-title">${article.title}</h4>
-                    <p class="card-text" th:text="${#strings.substring(article.contents, 0, 200)}"></p>
+                    <p class="card-text">${article.previewContent}</p>
                     <div class="d-flex">
                         <img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="50" height="50"
                              src="data:image/png;base64, ${article.userEntity.base64Avatar}"/>
                         <div>
                             <p class="fw-bold mb-0">${article.userEntity.firstName} ${article.userEntity.lastName}</p>
-                            <p class="text-muted mb-0" th:text="${#dates.format(#dates.createNow().withMillis(milliseconds), 'MMMM dd, yyyy', #locale)}"></p>
+                            <p class="text-muted mb-0">${article.date}</p>
                         </div>
                     </div>
                 </div>

@@ -1,13 +1,14 @@
-package org.unidue.campusfm.queerzard.cms.services.impl;
+package org.unidue.campusfm.queerzard.cms.database.services.impl;
 
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.unidue.campusfm.queerzard.cms.entities.ArticleEntity;
-import org.unidue.campusfm.queerzard.cms.entities.UserEntity;
-import org.unidue.campusfm.queerzard.cms.repositories.ArticleRepository;
-import org.unidue.campusfm.queerzard.cms.repositories.UserRepository;
-import org.unidue.campusfm.queerzard.cms.services.interfaces.ArticleService;
+import org.unidue.campusfm.queerzard.cms.database.dao.ArticleEntity;
+import org.unidue.campusfm.queerzard.cms.database.dao.UserEntity;
+import org.unidue.campusfm.queerzard.cms.database.repositories.ArticleRepository;
+import org.unidue.campusfm.queerzard.cms.database.services.interfaces.ArticleService;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -24,6 +25,11 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public List<ArticleEntity> findAll() {
         return articleRepository.findAll();
+    }
+
+    @Override
+    public List<ArticleEntity> findAll(int pageNumber, int pageSize) {
+        return articleRepository.findAll(PageRequest.of(pageNumber, pageSize)).getContent();
     }
 
     @Override

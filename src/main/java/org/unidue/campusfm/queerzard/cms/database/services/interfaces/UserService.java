@@ -1,6 +1,6 @@
-package org.unidue.campusfm.queerzard.cms.services.interfaces;
+package org.unidue.campusfm.queerzard.cms.database.services.interfaces;
 
-import org.unidue.campusfm.queerzard.cms.entities.UserEntity;
+import org.unidue.campusfm.queerzard.cms.database.dao.UserEntity;
 
 import java.util.List;
 

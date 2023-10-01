@@ -1,4 +1,4 @@
-package org.unidue.campusfm.queerzard.cms.entities;
+package org.unidue.campusfm.queerzard.cms.database.dao;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
