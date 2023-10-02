@@ -63,6 +63,11 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public List<ArticleEntity> findAllPublishedArticles(int pageNumber, int pageSize) {
+        return articleRepository.findAllByPublishedTrue(PageRequest.of(pageNumber, pageSize));
+    }
+
+    @Override
     public void delete(ArticleEntity article) {
         articleRepository.delete(article);
     }

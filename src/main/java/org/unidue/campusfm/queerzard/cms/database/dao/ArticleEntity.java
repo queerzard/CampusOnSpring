@@ -14,11 +14,6 @@ import java.util.Date;
 @Table(name = "article")
 public class ArticleEntity extends AbstractEntity{
 
-    @Id
-    @GeneratedValue
-    @Getter
-    private long id;
-
     @Column(unique = true)
     @Getter private String postId;
 
@@ -34,8 +29,11 @@ public class ArticleEntity extends AbstractEntity{
     @Getter @Setter private String title;
     @Getter private long creationMillis;
     @Getter private long publishedMillis;
-    @DateTimeFormat(pattern = "MMMM dd, yyyy")
-    @Getter private Date date;
+
+    @Getter private String publishDayOfMonth;
+    @Getter private String publishMonthName;
+    @Getter private String publishYear;
+
     @Getter @Setter private boolean editable;
     @Getter private boolean published;
     @Getter private int views;
@@ -56,7 +54,6 @@ public class ArticleEntity extends AbstractEntity{
         this.editable = true;
         this.published = false;
         this.views = 0;
-        this.date = new Date(publishedMillis);
         this.postId = UtilitiesCollection.randomUUID();
         this.previewContent = (contents.length() > 200 ? Jsoup.clean(contents, Safelist.basic()).substring(0, 200) : Jsoup.clean(contents, Safelist.basic()));
     }
@@ -66,7 +63,9 @@ public class ArticleEntity extends AbstractEntity{
         if(published){
             publishedMillis = System.currentTimeMillis();
             this.editable = false;
-            date = new Date(publishedMillis);
+            this.publishDayOfMonth = UtilitiesCollection.getDay(publishedMillis);
+            this.publishMonthName = UtilitiesCollection.getMonth(publishedMillis);
+            this.publishYear = UtilitiesCollection.getYear(publishedMillis);
         } else {
             editable = true;
         }

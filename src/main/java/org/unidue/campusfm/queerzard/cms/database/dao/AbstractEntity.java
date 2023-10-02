@@ -7,6 +7,7 @@ import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
 public abstract class AbstractEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -16,4 +17,6 @@ public abstract class AbstractEntity {
     public void setId(long id) {
         this.id = id;
     }
+
+
 }

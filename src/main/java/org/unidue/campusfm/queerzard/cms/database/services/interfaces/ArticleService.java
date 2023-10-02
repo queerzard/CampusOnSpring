@@ -19,7 +19,7 @@ public interface ArticleService {
     List<ArticleEntity> getArticlesByAuthor(UserEntity user);
     List<ArticleEntity> getArticlesWithString(String regex);
 
-
+    List<ArticleEntity> findAllPublishedArticles(int page, int pageSize);
 
 
     void delete(ArticleEntity article);
