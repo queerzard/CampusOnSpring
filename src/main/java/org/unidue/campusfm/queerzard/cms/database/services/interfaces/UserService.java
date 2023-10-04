@@ -3,6 +3,7 @@ package org.unidue.campusfm.queerzard.cms.database.services.interfaces;
 import org.unidue.campusfm.queerzard.cms.database.dao.UserEntity;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface UserService {
 
@@ -14,7 +15,7 @@ public interface UserService {
 
     UserEntity addUserIfNotExists(UserEntity user);
 
-    boolean userExists(Long id);
+    boolean userExists(String id);
 
     boolean userExistsByEmail(String email);
     boolean userExistsByName(String username);

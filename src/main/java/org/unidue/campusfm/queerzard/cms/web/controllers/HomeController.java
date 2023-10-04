@@ -13,6 +13,8 @@ public class HomeController {
     @Autowired
     private ArticleService articleService;
 
+    //TODO: HANDLE VALIDATION
+
     @RequestMapping("/")
     public String onAccess(Model model, @RequestParam(defaultValue = "0") int page){
 

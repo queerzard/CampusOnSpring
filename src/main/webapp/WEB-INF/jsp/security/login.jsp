@@ -3,13 +3,12 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="msg" uri="http://www.springframework.org/tags" %>
 
-
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Startseite - CampusFM</title>
+    <title><msg:message code="page.login.title"/></title>
     <meta name="twitter:title" content="CampusFM - Klingt... anders!">
     <meta property="og:image" content="assets/img/cropped-Logo-Tab-180x180.png">
     <meta name="description" content="Klingt... anders!
@@ -28,6 +27,8 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abhaya+Libre&amp;display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="assets/css/styles.min.css">
+
+
 </head>
 <body>
 <nav class="navbar navbar-light navbar-expand-lg fixed-top" id="mainNav">
@@ -42,16 +43,16 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="/"><msg:message code="navigator.label.home"/></a>
+                    <a class="nav-link" href="/"><msg:message code="navigator.label.home" /></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/about"><msg:message code="navigator.label.about"/></a>
+                    <a class="nav-link" href="/about"><msg:message code="navigator.label.about" /></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/events"><msg:message code="navigator.label.events"/></a>
+                    <a class="nav-link" href="/events"><msg:message code="navigator.label.events" /></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/login"><msg:message code="navigator.label.login"/></a>
+                    <a class="nav-link" href="/login"><msg:message code="navigator.label.login" /></a>
                 </li>
             </ul>
         </div>
@@ -66,8 +67,8 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
         <div class="row">
             <div class="col-md-10 col-lg-8 mx-auto position-relative">
                 <div class="site-heading">
-                    <h1>${mainpage.title}</h1>
-                    <span class="subheading">${mainpage.subtitle}</span>
+                    <h1><msg:message code="page.login.biglabel"/></h1>
+                    <span class="subheading"><msg:message code="page.login.sublabel"/></span>
                 </div>
             </div>
         </div>
@@ -89,7 +90,7 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
                 </p>
 
 
-                <form class="form-signin"><span class="reauth-email" style="margin: 11px;">
+                <form method="post" action="/login" class="form-signin"><span class="reauth-email" style="margin: 11px;">
                 </span>
                     <input id="inputEmail" class="form-control" type="email" required placeholder="username" autofocus
                            name="username"/>
@@ -111,7 +112,11 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
         <!-- END PAGE MAIN CONTENT -->
 
     </div>
+
 </div>
+
+
+
 
 
 <footer>
@@ -148,19 +153,19 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
             <div class="col-md-4 col-xl-11 col-xxl-12">
                 <ul class="list-inline" style="font-size: 17px;font-family: Abel, sans-serif;">
                     <li class="list-inline-item me-4">
-                        <a class="link-secondary" href="/imprint"><msg:message code="footer.label.imprint"/></a>
+                        <a class="link-secondary" href="/imprint"><msg:message code="footer.label.imprint" /></a>
                     </li>
                     <li class="list-inline-item me-4">
-                        <a class="link-secondary" href="/contact"><msg:message code="footer.label.contact"/></a>
+                        <a class="link-secondary" href="/contact"><msg:message code="footer.label.contact" /></a>
                     </li>
                     <li class="list-inline-item">
-                        <a class="link-secondary" href="/listen"><msg:message code="footer.label.listen"/></a>
+                        <a class="link-secondary" href="/listen"><msg:message code="footer.label.listen" /></a>
                     </li>
                     <li class="list-inline-item" style="padding-left: 12px;padding-right: 12px;">
-                        <a class="link-secondary" href="/contribute"><msg:message code="footer.label.contribute"/></a>
+                        <a class="link-secondary" href="/contribute"><msg:message code="footer.label.contribute" /></a>
                     </li>
                     <li class="list-inline-item" style="padding-right: 12px;padding-left: 12px;">
-                        <a class="link-secondary" href="/program"><msg:message code="footer.label.program"/></a>
+                        <a class="link-secondary" href="/program"><msg:message code="footer.label.program" /></a>
                     </li>
                 </ul>
             </div>

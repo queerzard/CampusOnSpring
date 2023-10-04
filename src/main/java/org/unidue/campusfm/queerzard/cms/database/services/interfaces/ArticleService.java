@@ -5,6 +5,7 @@ import org.unidue.campusfm.queerzard.cms.database.dao.ArticleEntity;
 import org.unidue.campusfm.queerzard.cms.database.dao.UserEntity;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface ArticleService {
 

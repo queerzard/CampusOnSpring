@@ -14,9 +14,6 @@ import java.util.Date;
 @Table(name = "article")
 public class ArticleEntity extends AbstractEntity{
 
-    @Column(unique = true)
-    @Getter private String postId;
-
     @ManyToOne
     @Getter private UserEntity userEntity;
 
@@ -25,7 +22,7 @@ public class ArticleEntity extends AbstractEntity{
     @Getter @Setter @Column(columnDefinition = "LONGTEXT") private String base64preview;
     @Getter @Setter @Column(columnDefinition = "LONGTEXT") private String contents;
     @Getter @Setter private String tags;
-    @Getter @Setter private String category;
+    @Getter private String category;
     @Getter @Setter private String title;
     @Getter private long creationMillis;
     @Getter private long publishedMillis;
@@ -43,7 +40,7 @@ public class ArticleEntity extends AbstractEntity{
                          String tags, String base64preview){
         this.userEntity = authorEntity;
         this.title = title;
-        this.contents = contents;
+        setContent(contents);
         this.category = category;
         this.tags = tags;
         this.base64preview = (base64preview != null ? base64preview : UtilitiesCollection
@@ -54,8 +51,12 @@ public class ArticleEntity extends AbstractEntity{
         this.editable = true;
         this.published = false;
         this.views = 0;
-        this.postId = UtilitiesCollection.randomUUID();
+    }
+
+    public void setContent(String contents){
+        this.contents = contents;
         this.previewContent = (contents.length() > 200 ? Jsoup.clean(contents, Safelist.basic()).substring(0, 200) : Jsoup.clean(contents, Safelist.basic()));
+
     }
 
     public void setPublished(boolean published) {

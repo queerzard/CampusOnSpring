@@ -13,6 +13,8 @@ import javax.annotation.PostConstruct;
 @Service
 public class ExampleData {
 
+    // STOPSHIP: 04.10.2023  
+    
     @Autowired
     private ArticleService articleService;
 
@@ -24,7 +26,8 @@ public class ExampleData {
     public void init(){
         if(userService.count() == 0){
             UserEntity user = userService.addUserIfNotExists(new UserEntity(
-                    "Ozan", "Aslan", "ozan0.aslan5@gmail.com", "default", true));
+                    "Ozan", "Aslan", "ozan0.aslan5@gmail.com",
+                    "default", "ROLE_ADMIN", "*", true));
 
             for(int i = 0; i < 12; i++){
                 ArticleEntity article = articleService.addArticle(new ArticleEntity(

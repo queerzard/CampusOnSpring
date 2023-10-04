@@ -7,11 +7,12 @@ import org.unidue.campusfm.queerzard.cms.database.dao.ArticleEntity;
 import org.unidue.campusfm.queerzard.cms.database.dao.UserEntity;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface ArticleRepository extends JpaRepository<ArticleEntity, Long> {
 
     List<ArticleEntity> findArticleEntitiesByUserEntity(UserEntity user);
-    ArticleEntity findArticleEntityByPostId(String postId);
+    ArticleEntity findArticleEntityById(String postId);
 
     @Query("SELECT a FROM ArticleEntity a WHERE a.published = true AND a.views >= :minViews")
     List<ArticleEntity> findPopularArticlesWithMinViews(int minViews);
@@ -30,7 +31,8 @@ public interface ArticleRepository extends JpaRepository<ArticleEntity, Long> {
 
     List<ArticleEntity> findAllByPublishedTrue(Pageable pageable);
 
+    List<ArticleEntity> findAllByUserEntityAndPublishedIsTrue(UserEntity user);
 
-    boolean existsArticleEntityByPostId(String postId);
+    boolean existsArticleEntityById(String postId);
 
 }

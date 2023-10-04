@@ -10,6 +10,7 @@ import org.unidue.campusfm.queerzard.cms.database.services.interfaces.UserServic
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -40,11 +41,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity addUserIfNotExists(UserEntity user) {
-        return (userRepository.existsUserEntityByUserId(user.getUserId()) ? null : addUser(user));
+        return (userRepository.existsUserEntityById(user.getId()) ? null : addUser(user));
     }
 
     @Override
-    public boolean userExists(Long id) {return userRepository.existsUserEntityById(id);}
+    public boolean userExists(String id) {return userRepository.existsUserEntityById(id);}
 
     @Override
     public boolean userExistsByEmail(String email) {return userRepository.existsUserEntityByEmail(email);}
@@ -53,7 +54,7 @@ public class UserServiceImpl implements UserService {
     public boolean userExistsByName(String username) {return userRepository.existsUserEntityByUsername(username);}
 
     @Override
-    public boolean userExistsByUserId(String userId) {return userRepository.existsUserEntityByUserId(userId);}
+    public boolean userExistsByUserId(String userId) {return userRepository.existsUserEntityById(userId);}
 
     @Override
     public void delete(UserEntity entity) {
@@ -62,7 +63,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity getUserById(String userId) {
-        return userRepository.findUserEntityByUserId(userId);
+        return userRepository.findUserEntityById(userId);
     }
 
     @Override

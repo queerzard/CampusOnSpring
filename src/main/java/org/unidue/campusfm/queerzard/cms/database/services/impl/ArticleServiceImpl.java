@@ -12,6 +12,7 @@ import org.unidue.campusfm.queerzard.cms.database.services.interfaces.ArticleSer
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ArticleServiceImpl implements ArticleService {
@@ -44,12 +45,12 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public boolean articleExists(ArticleEntity article) {
-        return articleRepository.existsArticleEntityByPostId(article.getPostId());
+        return articleRepository.existsArticleEntityById(article.getId());
     }
 
     @Override
     public ArticleEntity getArticleByPostId(String postId) {
-        return articleRepository.findArticleEntityByPostId(postId);
+        return articleRepository.findArticleEntityById(postId);
     }
 
     @Override

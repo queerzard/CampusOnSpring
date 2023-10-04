@@ -67,8 +67,8 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
         <div class="row">
             <div class="col-md-10 col-lg-8 mx-auto position-relative">
                 <div class="site-heading">
-                    <h1><msg:message code="page.search.biglabel"/></h1>
-                    <span class="subheading"><msg:message code="page.search.sublabel"/></span>
+                    <h1>"${searchQuery}"</h1>
+                    <span class="subheading">${searchResultCount} <msg:message code="page.search.results"/></span>
                 </div>
             </div>
         </div>

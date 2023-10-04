@@ -3,21 +3,19 @@ package org.unidue.campusfm.queerzard.cms.database.dao;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.unidue.campusfm.queerzard.cms.utils.UtilitiesCollection;
 import org.unidue.campusfm.queerzard.cms.utils.validators.DisallowedCharacters;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Entity
 @Table(name = "user")
 public class UserEntity extends AbstractEntity{
-
-    @Getter
-    @Column(unique = true, nullable = false)
-    private String userId;
 
     @NotBlank(message = "The Username is a mandatory field!")
     @DisallowedCharacters(message = "The Username cannot contain special characters!")
@@ -66,38 +64,37 @@ public class UserEntity extends AbstractEntity{
     @OneToMany
     @JsonIgnore @Getter @Setter private List<ArticleEntity> articleEntities = new ArrayList<>();
 
-    @NotNull
-    @NotEmpty
-    @ManyToMany
-    @Getter @Setter private List<RoleEntity> roles = new ArrayList<>();
+    @Setter private String roles;
+    @Setter private String permissions;
 
 
     public UserEntity(String firstName, String lastName, String email, String password, String description,
-                      String note, String avatar, boolean enabled) {
+                      String note, String avatar, String roles, String permissions, boolean enabled) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.username = email.split("@")[0];
-        this.password = password;
+        setPassword(password);
         this.description = description;
         this.note = note;
         this.base64Avatar = avatar;
         this.enabled = enabled;
         this.creationTimeStamp = System.currentTimeMillis();
         this.lastLoginTimestamp = 0L;
-        this.userId = UtilitiesCollection.randomUUID();
+        this.roles = roles;
+        this.permissions = permissions;
     }
 
     public UserEntity(String firstName, String lastName, String email, String password, String description,
-                      String note, boolean enabled) {
+                      String note, String roles, String permissions, boolean enabled) {
         this(firstName, lastName, email, password, description, note, UtilitiesCollection
-                .toBase64(UtilitiesCollection.getFileBytes(UtilitiesCollection.getDefaultAvatarFile())), enabled);
+                .toBase64(UtilitiesCollection.getFileBytes(UtilitiesCollection.getDefaultAvatarFile())), roles, permissions, enabled);
 
     }
 
-    public UserEntity(String firstName, String lastName, String email, String password, boolean enabled) {
+    public UserEntity(String firstName, String lastName, String email, String password, String roles, String permissions, boolean enabled) {
         this(firstName, lastName, email, password, "Linkstgrünversiffte*r bei CampusFM",
-                "Redakteur*in", enabled);
+                "Redakteur*in", roles, password, enabled);
     }
 
     public UserEntity() {}
@@ -106,6 +103,22 @@ public class UserEntity extends AbstractEntity{
 
     public void updateLastLogin() {
         this.lastLoginTimestamp = System.currentTimeMillis();
+    }
+
+    public void setPassword(String password){
+        this.password = new BCryptPasswordEncoder().encode(password);
+    }
+
+    public List<String> getPermissions(){
+        if(this.permissions.length() > 0)
+            return Arrays.asList(this.permissions.split(";"));
+        return new ArrayList<>();
+    }
+
+    public List<String> getRoles(){
+        if(this.roles.length() > 0)
+            return Arrays.asList(this.roles.split(";"));
+        return new ArrayList<>();
     }
 
 }
