@@ -20,6 +20,7 @@ public class ArticleEntity extends AbstractEntity{
     @Getter @Setter private String previewContent;
 
     @Getter @Setter @Column(columnDefinition = "LONGTEXT") private String base64preview;
+    @Getter @Column(columnDefinition = "LONGTEXT") private String base64banner;
     @Getter @Setter @Column(columnDefinition = "LONGTEXT") private String contents;
     @Getter @Setter private String tags;
     @Getter private String category;
@@ -37,7 +38,7 @@ public class ArticleEntity extends AbstractEntity{
 
     public ArticleEntity(){}
     public ArticleEntity(UserEntity authorEntity, String title, String contents, String category,
-                         String tags, String base64preview){
+                         String tags, String base64preview, String base64banner){
         this.userEntity = authorEntity;
         this.title = title;
         setContent(contents);
@@ -51,12 +52,19 @@ public class ArticleEntity extends AbstractEntity{
         this.editable = true;
         this.published = false;
         this.views = 0;
+        this.setBase64Banner(base64banner == null ? null : base64banner);
     }
 
     public void setContent(String contents){
         this.contents = contents;
         this.previewContent = (contents.length() > 200 ? Jsoup.clean(contents, Safelist.basic()).substring(0, 200) : Jsoup.clean(contents, Safelist.basic()));
 
+    }
+
+    public void setBase64Banner(String banner){
+        this.base64banner = (banner != null ? banner : UtilitiesCollection
+                .toBase64(UtilitiesCollection.getFileBytes(UtilitiesCollection
+                        .getFileFromResource("assets/img/banner.png"))));
     }
 
     public void setPublished(boolean published) {

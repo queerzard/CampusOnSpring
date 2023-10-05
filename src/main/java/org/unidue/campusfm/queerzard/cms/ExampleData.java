@@ -32,7 +32,7 @@ public class ExampleData {
             for(int i = 0; i < 12; i++){
                 ArticleEntity article = articleService.addArticle(new ArticleEntity(
                         user, "This Is A Test Article", "This is lorem ipsum test content for a test article",
-                        "allgemein", "news, trump", null));
+                        "allgemein", "news, trump", null, null));
                 article.setPublished(true);
                 articleService.update(article);
             }

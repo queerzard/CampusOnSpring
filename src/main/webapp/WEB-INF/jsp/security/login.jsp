@@ -59,7 +59,7 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
     </div>
 </nav>
 <header class="masthead"
-        style="background: url(&quot;assets/img/cropped-dggnhfg-5.jpg&quot;) center / cover no-repeat;">
+        style="background: url(&quot;assets/img/banner.png&quot;) center / cover no-repeat;">
     <div class="overlay">
 
     </div>

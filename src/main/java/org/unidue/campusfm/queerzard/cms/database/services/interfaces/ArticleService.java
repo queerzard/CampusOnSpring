@@ -16,6 +16,7 @@ public interface ArticleService {
     ArticleEntity addArticle(ArticleEntity article);
     boolean articleExists(ArticleEntity article);
 
+    boolean articleExistsById(String id);
     ArticleEntity getArticleByPostId(String postId);
     List<ArticleEntity> getArticlesByAuthor(UserEntity user);
     List<ArticleEntity> getArticlesWithString(String regex);

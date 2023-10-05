@@ -13,14 +13,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.unidue.campusfm.queerzard.cms.database.services.user.UserDetails;
 import org.unidue.campusfm.queerzard.cms.database.services.user.UserDetailsService;
 
+import javax.annotation.Resource;
 import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
 public class CampusSecurityConfig extends WebSecurityConfigurerAdapter {
+
     @Autowired
     private DataSource dataSource;
 
+    @Resource
     private UserDetailsService userDetailsService;
 
     public CampusSecurityConfig(UserDetailsService userDetailsService){
@@ -36,7 +39,8 @@ public class CampusSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/**").permitAll()
-                .antMatchers("/myprofile").authenticated()
+                .antMatchers("/myprofile*").hasRole("USER")
+                .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login").permitAll()

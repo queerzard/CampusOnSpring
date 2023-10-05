@@ -45,7 +45,12 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public boolean articleExists(ArticleEntity article) {
-        return articleRepository.existsArticleEntityById(article.getId());
+        return articleExistsById(article.getId());
+    }
+
+    @Override
+    public boolean articleExistsById(String id) {
+        return articleRepository.existsArticleEntityById(id);
     }
 
     @Override

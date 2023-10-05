@@ -8,7 +8,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title><msg:message code="page.home.title"/></title>
+    <title>${article.title}</title>
     <meta name="twitter:title" content="CampusFM - Klingt... anders!">
     <meta property="og:image" content="assets/img/cropped-Logo-Tab-180x180.png">
     <meta name="description" content="Klingt... anders!
@@ -27,10 +27,9 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abhaya+Libre&amp;display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="assets/css/styles.min.css">
-
-
 </head>
 <body>
+
 <nav class="navbar navbar-light navbar-expand-lg fixed-top" id="mainNav">
     <div class="container">
         <button data-bs-toggle="collapse" data-bs-target="#navbarResponsive" class="navbar-toggler"
@@ -58,99 +57,35 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
         </div>
     </div>
 </nav>
-<header class="masthead"
-        style="background: url(&quot;assets/img/banner.png&quot;) center / cover no-repeat;">
-    <div class="overlay">
 
-    </div>
+<!-- START RELEVANT PAGE CONTENT -->
+
+<header class="masthead" style="background: url(&quot;data:image/png;base64, ${article.base64banner}&quot;) center / cover no-repeat;">
+    <div class="overlay"></div>
     <div class="container">
         <div class="row">
             <div class="col-md-10 col-lg-8 mx-auto position-relative">
-                <div class="site-heading">
-                    <h1><msg:message code="page.home.biglabel"/></h1>
-                    <span class="subheading"><msg:message code="page.home.sublabel"/></span>
+                <div class="post-heading">
+                    <h1>${article.title}</h1>
+                    <h2 class="subheading">${article.category}</h2><span class="meta"><msg:message code="page.article.publishedBy" />
+                    <a href="/author/${article.userEntity.username}">${article.userEntity.firstName} ${article.userEntity.lastName}</a> <msg:message code="page.article.publishedOn" />
+                    ${article.publishMonthName}
+                    ${article.publishDayOfMonth},
+                    ${article.publishYear}</span>
                 </div>
             </div>
         </div>
     </div>
 </header>
-<div class="container py-4 py-xl-5">
-    <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
-
-        <!-- PAGE MAIN CONTENT -->
-
-        <c:forEach items="${articleEntitiesList}" var="article">
-        <div class="col">
-            <a href="/article?a=${article.id}">
-                <div class="card">
-                    <img class="card-img-top w-100 d-block fit-cover" style="height: 200px;"
-                         src="data:image/png;base64, ${article.base64preview}"/>
-                    <div class="card-body p-4">
-                        <p class="text-primary card-text mb-0">${article.category}</p>
-                        <h4 class="card-title">${article.title}</h4>
-                        <p class="card-text">${article.previewContent}</p>
-                        <div class="d-flex">
-                            <img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="50" height="50"
-                                 src="data:image/png;base64, ${article.userEntity.base64Avatar}"/>
-                            <div>
-                                <p class="fw-bold mb-0">${article.userEntity.firstName} ${article.userEntity.lastName}</p>
-                                <p class="text-muted mb-0">${article.publishMonthName} ${article.publishDayOfMonth}, ${article.publishYear}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
-        </c:forEach>
-
-</div>
-
-
-    <div style="padding-top: 10px;" class="container"><button class="btn btn-primary float-end" id="next-page-button" type="button"
-                                   style="background: rgb(0,161,74);"><msg:message code="page.home.label.nextpage"/></button>
-        <div class="clearfix"></div>
-    </div>
-
-
-    <script>const nextPageButton = document.getElementById("next-page-button");
-
-    // Add an event listener to the button
-    nextPageButton.addEventListener("click", function() {
-        // Get the URLSearchParams object
-        const urlSearchParams = new URLSearchParams(window.location.search);
-
-        // Get the value of a parameter named "page"
-        const page = urlSearchParams.get("page") || 1;
-
-        // Increment the page number and create a new URL with the updated parameter
-        const nextPageUrl = window.location.origin + window.location.pathname + "?page=" + (parseInt(page) + 1);
-
-        // Redirect to the next page
-        window.location.href = nextPageUrl;
-    });</script>
-
-</div>
-
-
-<div class="event__search__floater">
-    <div class="search__anchor">
-        <form autocomplete="off" id="event-search-form" action="search" method="get">
-            <input type="text" name="query" id="querriee" class="search__bar" placeholder="Suche">
-            <input class="search__submit" onclick="encodeFormData()" type="submit">
-            <div class="search__toggler"></div>
-        </form>
-
+<div class="container">
+    <div class="col-md-10 col-lg-8 mx-auto">
+        ${article.contents}
     </div>
 </div>
+</br>
 
-<script>
-    function encodeFormData() {
-        const query = document.getElementById("querriee");
 
-        query.value = encodeURIComponent(query.value);
-    }
-</script>
-
+<!-- END RELEVANT PAGE CONTENT -->
 
 
 
@@ -214,8 +149,8 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
         </div>
     </div>
 </footer>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js"></script>
 <script src="assets/js/script.min.js"></script>
 </body>
 </html>
