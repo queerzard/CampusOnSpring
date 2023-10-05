@@ -3,6 +3,7 @@ package org.unidue.campusfm.queerzard.cms.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -21,13 +22,16 @@ import javax.sql.DataSource;
 public class CampusSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private DataSource dataSource;
-
-    @Resource
     private UserDetailsService userDetailsService;
 
     public CampusSecurityConfig(UserDetailsService userDetailsService){
         this.userDetailsService = userDetailsService;
+    }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 
     @Override
@@ -35,30 +39,47 @@ public class CampusSecurityConfig extends WebSecurityConfigurerAdapter {
 
         //TODO: MAKE. AUTHENTICATION. WORK?!
 
-
         http
                 .authorizeRequests()
-                .antMatchers("/**").permitAll()
-                .antMatchers("/myprofile*").hasRole("USER")
+                .antMatchers("/").permitAll()
+                .antMatchers("/home").permitAll()
+                .antMatchers("/search").permitAll()
+                .antMatchers("/article").permitAll()
+                .antMatchers("/about").permitAll()
+                .antMatchers("/contact").permitAll()
+                .antMatchers("/listen").permitAll()
+                .antMatchers("/imprint").permitAll()
+                .antMatchers("/program").permitAll()
+                .antMatchers("/contribute").permitAll()
+                .antMatchers("/failLol").permitAll()
+                .antMatchers("/assets/**").permitAll()
+
+                .antMatchers("/login").permitAll()
+
+                .antMatchers("/myprofile").authenticated()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login").permitAll()
+                .loginPage("/login")
+                .loginProcessingUrl("/perform_login")
+                .failureUrl("/failLol").permitAll()
                 .defaultSuccessUrl("/myprofile", true);
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(authenticationProvider());
+        auth
+                .userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder());
     }
 
-    @Bean
+/*    @Bean
     public DaoAuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
         daoAuthenticationProvider.setUserDetailsService(this.userDetailsService);
         return daoAuthenticationProvider;
-    }
+    }*/
 
     @Bean
     public PasswordEncoder passwordEncoder(){return new BCryptPasswordEncoder();};

@@ -40,6 +40,7 @@ public class UserEntity extends AbstractEntity{
 
     @NotBlank(message = "The Password is a mandatory field!")
     @Getter @Setter @Size(min = 8) @Column(nullable = false)
+    @JsonIgnore
     private String password;
 
     @Getter @Setter

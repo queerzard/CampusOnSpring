@@ -5,6 +5,9 @@
 
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
+
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
@@ -76,31 +79,42 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
         </div>
     </div>
 </header>
-<div class="container py-4 py-xl-5">
-    <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 col-lg-8">
 
         <!-- PAGE MAIN CONTENT -->
 
         <c:forEach items="${articleEntitiesList}" var="article">
-            <div class="col">
-                <div class="card">
-                    <img class="card-img-top w-100 d-block fit-cover" style="height: 200px;"
-                         src="data:image/png;base64, ${article.base64preview}"/>
-                    <div class="card-body p-4">
-                        <p class="text-primary card-text mb-0">${article.category}</p>
-                        <h4 class="card-title">${article.title}</h4>
-                        <p class="card-text">${article.previewContent}</p>
-                        <div class="d-flex">
-                            <img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="50" height="50"
-                                 src="data:image/png;base64, ${article.userEntity.base64Avatar}"/>
-                            <div>
-                                <p class="fw-bold mb-0">${article.userEntity.firstName} ${article.userEntity.lastName}</p>
-                                <p class="text-muted mb-0">${article.publishMonthName} ${article.publishDayOfMonth}, ${article.publishYear}</p>
+
+            <div class="post-preview"><a href="/article?a=${article.id}"><h2 class="post-title" style="font-size: 32px;">${article.title}</h2>
+                <h3 class="post-subtitle" style="font-size: 20px;">${article.previewContent}</h3></a>
+                <p class="post-meta"><msg:message code="page.article.publishedBy" />&nbsp;<a href="/article?a=${article.id}">
+                        ${article.userEntity.firstName} ${article.userEntity.lastName} <msg:message code="page.article.publishedOn" />
+                        ${article.publishMonthName} ${article.publishDayOfMonth}, ${article.publishYear}</a></p></div>
+            <hr>
+
+            <%--<div class="col">
+                <a href="/article?a=${article.id}">
+                    <div class="card">
+                        <img class="card-img-top w-100 d-block fit-cover" style="height: 200px;"
+                             src="data:image/png;base64, ${article.base64preview}"/>
+                        <div class="card-body p-4">
+                            <p class="text-primary card-text mb-0">${article.category}</p>
+                            <h4 class="card-title">${article.title}</h4>
+                            <p class="card-text">${article.previewContent}</p>
+                            <div class="d-flex">
+                                <img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="50" height="50"
+                                     src="data:image/png;base64, ${article.userEntity.base64Avatar}"/>
+                                <div>
+                                    <p class="fw-bold mb-0">${article.userEntity.firstName} ${article.userEntity.lastName}</p>
+                                    <p class="text-muted mb-0">${article.publishMonthName} ${article.publishDayOfMonth}, ${article.publishYear}</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                </a>
+            </div>--%>
         </c:forEach>
 
     </div>
@@ -117,6 +131,8 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
         </form>
 
     </div>
+</div>
+
 </div>
 
 <script>

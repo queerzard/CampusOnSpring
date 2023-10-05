@@ -5,6 +5,7 @@
 
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
@@ -90,11 +91,12 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
                 </p>
 
 
-                <form method="post" action="/login" class="form-signin"><span class="reauth-email" style="margin: 11px;">
+                <form method="post" role="form"
+                      th:action="@{/perform_login}" class="form-signin"><span class="reauth-email" style="margin: 11px;">
                 </span>
-                    <input id="inputEmail" class="form-control" type="email" required placeholder="username" autofocus
+                    <input id="email" class="form-control" type="email" required placeholder="username" autofocus
                            name="username"/>
-                    <input id="inputPassword" class="form-control" type="password" required placeholder="password"
+                    <input id="password" class="form-control" type="password" required placeholder="password"
                            name="password"/>
                     <button class="btn btn-primary btn-lg d-block btn-signin w-100"
                             style="font-family: Roboto, sans-serif;font-size: 16px;font-weight: normal;font-style: normal;background: rgb(0,161,74);"

@@ -74,6 +74,16 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public List<ArticleEntity> findArticlesByQuery(String query, int pageNumber, int pageSize) {
+        return articleRepository.findArticlesByQuery(query, PageRequest.of(pageNumber, pageSize));
+    }
+
+    @Override
+    public List<ArticleEntity> findAllArticlesByQuery(String query) {
+        return articleRepository.findAllArticlesByQuery(query);
+    }
+
+    @Override
     public void delete(ArticleEntity article) {
         articleRepository.delete(article);
     }

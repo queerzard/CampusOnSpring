@@ -21,7 +21,7 @@ public class HomeController {
 
     //TODO: HANDLE VALIDATION
 
-    @RequestMapping("/")
+    @RequestMapping(value = {"/", "/home"})
     public String onAccess(Model model, @RequestParam(defaultValue = "1") @Min(1) @Positive int page){
         List<ArticleEntity> entities = articleService
                 .findAllPublishedArticles((page > 0 ? (page -1) : (page < 0 ? 0 : page)), 9);

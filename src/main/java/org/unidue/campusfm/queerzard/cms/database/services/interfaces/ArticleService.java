@@ -23,6 +23,8 @@ public interface ArticleService {
 
     List<ArticleEntity> findAllPublishedArticles(int page, int pageSize);
 
+    List<ArticleEntity> findArticlesByQuery(String query, int pageNumber, int pageSize);
+    List<ArticleEntity> findAllArticlesByQuery(String query);
 
     void delete(ArticleEntity article);
 

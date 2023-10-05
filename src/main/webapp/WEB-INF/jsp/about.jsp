@@ -6,12 +6,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>${article.title}</title>
+    <title><msg:message code="page.about.title"/></title>
     <meta name="twitter:title" content="CampusFM - Klingt... anders!">
     <meta property="og:image" content="assets/img/cropped-Logo-Tab-180x180.png">
     <meta name="description" content="Klingt... anders!
@@ -30,9 +28,10 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abhaya+Libre&amp;display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="assets/css/styles.min.css">
+
+
 </head>
 <body>
-
 <nav class="navbar navbar-light navbar-expand-lg fixed-top" id="mainNav">
     <div class="container">
         <button data-bs-toggle="collapse" data-bs-target="#navbarResponsive" class="navbar-toggler"
@@ -61,34 +60,68 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
     </div>
 </nav>
 
-<!-- START RELEVANT PAGE CONTENT -->
 
-<header class="masthead" style="background: url(&quot;data:image/png;base64, ${article.base64banner}&quot;) center / cover no-repeat;">
-    <div class="overlay"></div>
+<header class="masthead"
+        style="background: url(&quot;assets/img/teamimage.png&quot;) center / cover no-repeat;">
+    <div class="overlay">
+
+    </div>
     <div class="container">
         <div class="row">
             <div class="col-md-10 col-lg-8 mx-auto position-relative">
-                <div class="post-heading">
-                    <h1>${article.title}</h1>
-                    <h2 class="subheading">${article.category}</h2><span class="meta"><msg:message code="page.article.publishedBy" />
-                    <a href="/author/${article.userEntity.username}">${article.userEntity.firstName} ${article.userEntity.lastName}</a> <msg:message code="page.article.publishedOn" />
-                    ${article.publishMonthName}
-                    ${article.publishDayOfMonth},
-                    ${article.publishYear}</span>
+                <div class="site-heading">
+                    <h1><msg:message code="page.about.biglabel"/></h1>
+                    <span class="subheading"><msg:message code="page.about.sublabel"/></span>
                 </div>
             </div>
         </div>
     </div>
 </header>
-<div class="container">
-    <div class="col-md-10 col-lg-8 mx-auto">
-        ${article.contents}
+<div class="container py-4 py-xl-5">
+    <div class="row text-center">
+
+        <c:forEach items="${userEntityList}" var="userEntity">
+
+                <!-- Team item -->
+                <div class="col-xl-3 col-sm-6 mb-5">
+                    <div class="bg-white rounded shadow-sm py-5 px-4"><img src="data:image/png;base64, ${userEntity.base64Avatar}" alt="" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+                        <h5 class="mb-0">${userEntity.firstName} ${userEntity.lastName}</h5><span class="small text-uppercase text-muted">${userEntity.note}</span></br>
+                        <ul class="social mb-0 list-inline mt-3">
+                            <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-envelope"></i></a></li>
+
+                        </ul>
+                    </div>
+                </div><!-- End -->
+
+
+
+            </div>
+        </c:forEach>
+
+    </div>
+
+</div>
+
+
+<div class="event__search__floater">
+    <div class="search__anchor">
+        <form autocomplete="off" id="event-search-form" action="search" method="get">
+            <input type="text" name="query" id="querriee" class="search__bar" placeholder="Suche">
+            <input class="search__submit" onclick="encodeFormData()" type="submit">
+            <div class="search__toggler"></div>
+        </form>
+
     </div>
 </div>
-</br>
 
+<script>
+    function encodeFormData() {
+        const query = document.getElementById("querriee");
 
-<!-- END RELEVANT PAGE CONTENT -->
+        query.value = encodeURIComponent(query.value);
+    }
+</script>
+
 
 
 
@@ -152,8 +185,8 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
         </div>
     </div>
 </footer>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js"></script>
 <script src="assets/js/script.min.js"></script>
 </body>
 </html>
