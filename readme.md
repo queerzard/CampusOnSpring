@@ -6,7 +6,7 @@ of spring or other third-party applications, but rather built solely on self-wri
 were prone to bugs and limitations:
 
 CampusOnSpring is a content management system built entirely\
-in Java using SpringMVC, JSP, Hibernate and Angular.
+in Java using SpringMVC, JSP and Hibernate.
 
 ### TODO
 
