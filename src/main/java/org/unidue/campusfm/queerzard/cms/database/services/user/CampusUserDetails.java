@@ -7,14 +7,13 @@ import org.unidue.campusfm.queerzard.cms.database.dao.UserEntity;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
-public class UserDetails implements org.springframework.security.core.userdetails.UserDetails {
+public class CampusUserDetails implements org.springframework.security.core.userdetails.UserDetails {
 
     @Getter private UserEntity userEntity;
 
-    public UserDetails(UserEntity userEntity){
+    public CampusUserDetails(UserEntity userEntity){
         this.userEntity = userEntity;
     }
 

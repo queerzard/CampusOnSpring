@@ -91,10 +91,10 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
                 </p>
 
 
-                <form method="post" role="form"
-                      th:action="@{/perform_login}" class="form-signin"><span class="reauth-email" style="margin: 11px;">
+                <form name="f" method="post" role="form"
+                      th:action="@{/login}" class="form-signin"><span class="reauth-email" style="margin: 11px;">
                 </span>
-                    <input id="email" class="form-control" type="email" required placeholder="username" autofocus
+                    <input id="username" class="form-control" type="username" required placeholder="username" autofocus
                            name="username"/>
                     <input id="password" class="form-control" type="password" required placeholder="password"
                            name="password"/>

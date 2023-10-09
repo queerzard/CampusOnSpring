@@ -17,36 +17,24 @@ import java.util.List;
 @Table(name = "user")
 public class UserEntity extends AbstractEntity{
 
-    @NotBlank(message = "The Username is a mandatory field!")
-    @DisallowedCharacters(message = "The Username cannot contain special characters!")
-    @Getter @Setter @Column(unique = true, nullable = false) @Size(min = 3)
+    @Getter @Setter @Column(unique = true, nullable = false)
     private String username;
 
-    @NotBlank(message = "The Email is a mandatory field!")
-    @Getter @Setter @Email @Column(unique = true, nullable = false)
+    @Getter @Setter @Column(unique = true, nullable = false)
     private String email;
 
-
-    @NotBlank(message = "The Firstname is a mandatory field!")
-    @DisallowedCharacters(message = "The Firstname cannot contain special characters!")
     @Getter @Setter
     private String firstName;
 
-    @NotBlank(message = "The Lastname is a mandatory field!")
-    @DisallowedCharacters(message = "The Lastname cannot contain special characters!")
     @Getter @Setter
     private String lastName;
 
-
-    @NotBlank(message = "The Password is a mandatory field!")
-    @Getter @Setter @Size(min = 8) @Column(nullable = false)
     @JsonIgnore
-    private String password;
+    @Getter private String password;
 
     @Getter @Setter
-    private String description;
-    @Getter @Setter
-    private String note;
+    private String social;
+    @Getter @Setter private String position;
 
 
     @Column(columnDefinition = "LONGTEXT")
@@ -65,19 +53,29 @@ public class UserEntity extends AbstractEntity{
     @OneToMany
     @JsonIgnore @Getter @Setter private List<ArticleEntity> articleEntities = new ArrayList<>();
 
-    @Setter private String roles;
+   /* @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(
+                    name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "role_id", referencedColumnName = "id"))
+
+    @Getter private List<Role> roles;*/
+    @Getter private String roles;
+
     @Setter private String permissions;
 
 
-    public UserEntity(String firstName, String lastName, String email, String password, String description,
-                      String note, String avatar, String roles, String permissions, boolean enabled) {
+    public UserEntity(String firstName, String lastName, String email, String password, String social,
+                      String position, String avatar, String roles, String permissions, boolean enabled) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.username = email.split("@")[0];
         setPassword(password);
-        this.description = description;
-        this.note = note;
+        this.social = social;
+        this.position = position;
         this.base64Avatar = avatar;
         this.enabled = enabled;
         this.creationTimeStamp = System.currentTimeMillis();

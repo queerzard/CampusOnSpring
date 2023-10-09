@@ -2,6 +2,7 @@ package org.unidue.campusfm.queerzard.cms.database.services.impl;
 
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.unidue.campusfm.queerzard.cms.database.dao.UserEntity;
@@ -15,13 +16,15 @@ import java.util.UUID;
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private EntityManager entityManager;
-
-    @Autowired
     @Getter private UserRepository userRepository;
 
-    @Autowired private PasswordEncoder passwordEncoder;
+    @Getter private PasswordEncoder passwordEncoder;
+
+
+    public UserServiceImpl(UserRepository userRepository){
+        this.userRepository = userRepository;
+        this.passwordEncoder = new BCryptPasswordEncoder();
+    }
 
     @Override
     public List<UserEntity> findAll() {
@@ -32,6 +35,8 @@ public class UserServiceImpl implements UserService {
     public UserEntity update(UserEntity userEntity) {
         return userRepository.saveAndFlush(userEntity);
     }
+
+
 
     @Override
     public UserEntity addUser(UserEntity user) {
