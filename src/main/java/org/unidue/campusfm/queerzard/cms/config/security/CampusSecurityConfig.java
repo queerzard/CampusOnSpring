@@ -1,4 +1,4 @@
-package org.unidue.campusfm.queerzard.cms.config;
+package org.unidue.campusfm.queerzard.cms.config.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -20,16 +20,13 @@ import org.unidue.campusfm.queerzard.cms.database.services.user.CampusUserDetail
 @EnableWebSecurity
 public class CampusSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
     private CampusUserDetailsService userDetailsService;
 
-    public CampusSecurityConfig(CampusUserDetailsService userDetailsService){
-        this.userDetailsService = userDetailsService;
-    }
-
-    @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
+    private final CampusAuthenticationProvider authenticationProvider;
+    @Autowired
+    public CampusSecurityConfig(CampusAuthenticationProvider authenticationProvider) {
+        this.authenticationProvider = authenticationProvider;
     }
 
     @Override
@@ -38,6 +35,7 @@ public class CampusSecurityConfig extends WebSecurityConfigurerAdapter {
         //TODO: MAKE. AUTHENTICATION. WORK?!
 
         http
+                /*.csrf().disable()*/
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/home").permitAll()
@@ -64,19 +62,19 @@ public class CampusSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
+/*        auth
                 .userDetailsService(this.userDetailsService)
-                .passwordEncoder(passwordEncoder());
-        auth.authenticationProvider(authenticationProvider());
+                .passwordEncoder(passwordEncoder());*/
+        auth.authenticationProvider(authenticationProvider/*()*/);
     }
 
-    @Bean
+/*    @Bean
     public DaoAuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
         daoAuthenticationProvider.setUserDetailsService(this.userDetailsService);
         return daoAuthenticationProvider;
-    }
+    }*/
 
     @Bean
     public PasswordEncoder passwordEncoder(){return new BCryptPasswordEncoder();};

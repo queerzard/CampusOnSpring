@@ -98,6 +98,7 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
                            name="username"/>
                     <input id="password" class="form-control" type="password" required placeholder="password"
                            name="password"/>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <button class="btn btn-primary btn-lg d-block btn-signin w-100"
                             style="font-family: Roboto, sans-serif;font-size: 16px;font-weight: normal;font-style: normal;background: rgb(0,161,74);"
                             type="submit">

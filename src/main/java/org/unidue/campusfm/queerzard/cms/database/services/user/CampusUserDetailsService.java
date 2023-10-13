@@ -16,14 +16,11 @@ import org.unidue.campusfm.queerzard.cms.database.repositories.UserRepository;
 @Service
 public class CampusUserDetailsService implements UserDetailsService {
 
+    @Autowired
     private UserRepository userRepository;
 
-    public CampusUserDetailsService(UserRepository userRepository){
-        this.userRepository = userRepository;
-    }
-
     @Bean
-    public PasswordEncoder getpasswordEncoder(){
+    public PasswordEncoder getPasswordEncoder(){
         return new BCryptPasswordEncoder();
     }
 
@@ -34,8 +31,10 @@ public class CampusUserDetailsService implements UserDetailsService {
         System.out.println("Attempting login for username: " + s);
 
         UserEntity userEntity;
-        if((userEntity = userRepository.findUserEntityByUsername(s)) == null || (userEntity = userRepository.findUserEntityByEmail(s)) == null)
+        if((userEntity = userRepository.findUserEntityByUsername(s)) == null && (userEntity = userRepository.findUserEntityByEmail(s)) == null)
             throw new UsernameNotFoundException("User not found with username/email: " +  s);
+
+        System.out.println("DetSev" +  s);
 
         return new CampusUserDetails(userEntity);
     }

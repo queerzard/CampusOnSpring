@@ -3,6 +3,7 @@ package org.unidue.campusfm.queerzard.cms.database.dao;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Fetch;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.unidue.campusfm.queerzard.cms.utils.UtilitiesCollection;
 import org.unidue.campusfm.queerzard.cms.utils.validators.DisallowedCharacters;
@@ -105,7 +106,7 @@ public class UserEntity extends AbstractEntity{
     }
 
     public void setPassword(String password){
-        this.password = new BCryptPasswordEncoder().encode(password);
+        this.password = password;
     }
 
     public List<String> getPermissions(){

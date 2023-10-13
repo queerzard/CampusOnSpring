@@ -3,13 +3,14 @@ package org.unidue.campusfm.queerzard.cms.database.services.user;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.unidue.campusfm.queerzard.cms.database.dao.UserEntity;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class CampusUserDetails implements org.springframework.security.core.userdetails.UserDetails {
+public class CampusUserDetails implements UserDetails {
 
     @Getter private UserEntity userEntity;
 
@@ -36,6 +37,7 @@ public class CampusUserDetails implements org.springframework.security.core.user
 
     @Override
     public String getPassword() {
+        System.out.println(userEntity.getPassword());
         return userEntity.getPassword();
     }
 
