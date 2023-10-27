@@ -11,10 +11,10 @@ import java.util.concurrent.TimeUnit;
 @Configuration
 public class CampusConfig implements WebMvcConfigurer {
 
-    @Override
+/*    @Override
     public void addViewControllers(final ViewControllerRegistry registry) {
         registry.addViewController("/login").setViewName("security/login");
-    }
+    }*/
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {

@@ -44,16 +44,16 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="/"><msg:message code="navigator.label.home" /></a>
+                    <a class="nav-link" href="/"><msg:message code="navigator.label.home"/></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/about"><msg:message code="navigator.label.about" /></a>
+                    <a class="nav-link" href="/about"><msg:message code="navigator.label.about"/></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/events"><msg:message code="navigator.label.events" /></a>
+                    <a class="nav-link" href="/events"><msg:message code="navigator.label.events"/></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/login"><msg:message code="navigator.label.login" /></a>
+                    <a class="nav-link" href="/login"><msg:message code="navigator.label.login"/></a>
                 </li>
             </ul>
         </div>
@@ -62,7 +62,7 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
 
 
 <header class="masthead"
-        style="background: url(&quot;assets/img/teamimage.png&quot;) center / cover no-repeat; ">
+        style="background: url(&quot;assets/img/banner.png&quot;) center / cover no-repeat; ">
     <div class="overlay">
 
     </div>
@@ -77,27 +77,54 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
         </div>
     </div>
 </header>
-<div class="container py-4 py-xl-5">
-    <div class="row text-center">
-
-        <c:forEach items="${userEntityList}" var="userEntity">
-
-                <!-- Team item -->
-                <div class="col-xl-3 col-sm-6 mb-5">
-                    <div class="bg-white rounded shadow-sm py-5 px-4"><img src="data:image/png;base64, ${userEntity.base64Avatar}" alt="" width="128" class="img-fluid rounded-circle mb-3 shadow-sm">
-                        <h5 class="mb-0">${userEntity.firstName} ${userEntity.lastName}</h5><span class="small text-uppercase text-muted">${userEntity.position}</span></br>
-                        <ul class="social mb-0 list-inline mt-3">
-                            <li class="list-inline-item"><a href="${userEntity.social}" class="social-link"><i class="fa fa-envelope"></i></a></li>
-
-                        </ul>
-                    </div>
-                </div><!-- End -->
 
 
+<div class="container">
+    <div class="row mb-5">
+        <div class="col-md-8 col-xl-6 text-center mx-auto" style="width: 90%;font-family: Abel, sans-serif;"><img
+                src="/assets/img/teamimage.png" style="width: 100%;"/>
+            <hr>
+            <h2 class="divider-style"><span><msg:message code="page.about.biglabel"/></span></h2>
+            <p class="text-start w-lg-50" style="font-family: 'Open Sans', sans-serif;"><br/><span
+                    style="color: rgb(0, 0, 0); background-color: transparent;">
+                Das sind wir!</span><br/>
+                <span style="color: rgb(0, 0, 0); background-color: transparent;">Ein bunter Haufen engagierter Studis, die Radio machen lieben!</span><br/><br/><span
+                        style="color: rgb(0, 0, 0); background-color: transparent;">Wir kommen aus den verschiedensten Fachschaften, wachsen als Team aber ständig weiter zusammen!</span><br/><br/><span
+                        style="color: rgb(0, 0, 0); background-color: transparent;">CampusFM ist komplett selbst organisiert, was uns neben kreativer Freiheit auch die Möglichkeit bietet, in vielen verschiedenen Bereichen zu arbeiten. </span><br/><br/><span
+                        style="color: rgb(0, 0, 0); background-color: transparent;">So kann jede*r die eigenen Stärken ausspielen und Neues lernen! </span><br/><span
+                        style="color: rgb(0, 0, 0); background-color: transparent;">Wenn du Lust hast, mal bei uns reinzuschnuppern, dann melde dich doch gerne mit einer einfachen Mail bei unserem Personalchef. </span><br/><br/><br/>
+            </p>
+            <div style="text-align: center;">
+                <hr>
+                <h2 class="divider-style"><span><msg:message code="page.about.team"/></span></h2>
+            </div>
+            <div class="container py-4 py-xl-5">
+                <div class="row text-center">
+
+                    <c:forEach items="${userEntityList}" var="userEntity">
+
+                    <!-- Team item -->
+                    <div class="col-xl-3 col-sm-6 mb-5">
+                        <div class="bg-white rounded shadow-sm py-5 px-4"><img
+                                src="data:image/png;base64, ${userEntity.base64Avatar}" alt="" width="128"
+                                class="img-fluid rounded-circle mb-3 shadow-sm">
+                            <h5 class="mb-0">${userEntity.firstName} ${userEntity.lastName}</h5><span
+                                    class="small text-uppercase text-muted">${userEntity.position}</span></br>
+                            <ul class="social mb-0 list-inline mt-3">
+                                <li class="list-inline-item"><a href="${userEntity.social}" class="social-link"><i
+                                        class="fa fa-envelope"></i></a></li>
+
+                            </ul>
+                        </div>
+                    </div><!-- End -->
+
+
+                </div>
+                </c:forEach>
 
             </div>
-        </c:forEach>
 
+        </div>
     </div>
 
 </div>
@@ -121,8 +148,6 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
         query.value = encodeURIComponent(query.value);
     }
 </script>
-
-
 
 
 <footer>
@@ -159,19 +184,19 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
             <div class="col-md-4 col-xl-11 col-xxl-12">
                 <ul class="list-inline" style="font-size: 17px;font-family: Abel, sans-serif;">
                     <li class="list-inline-item me-4">
-                        <a class="link-secondary" href="/imprint"><msg:message code="footer.label.imprint" /></a>
+                        <a class="link-secondary" href="/imprint"><msg:message code="footer.label.imprint"/></a>
                     </li>
                     <li class="list-inline-item me-4">
-                        <a class="link-secondary" href="/contact"><msg:message code="footer.label.contact" /></a>
+                        <a class="link-secondary" href="/contact"><msg:message code="footer.label.contact"/></a>
                     </li>
                     <li class="list-inline-item">
-                        <a class="link-secondary" href="/listen"><msg:message code="footer.label.listen" /></a>
+                        <a class="link-secondary" href="/listen"><msg:message code="footer.label.listen"/></a>
                     </li>
                     <li class="list-inline-item" style="padding-left: 12px;padding-right: 12px;">
-                        <a class="link-secondary" href="/contribute"><msg:message code="footer.label.contribute" /></a>
+                        <a class="link-secondary" href="/contribute"><msg:message code="footer.label.contribute"/></a>
                     </li>
                     <li class="list-inline-item" style="padding-right: 12px;padding-left: 12px;">
-                        <a class="link-secondary" href="/program"><msg:message code="footer.label.program" /></a>
+                        <a class="link-secondary" href="/program"><msg:message code="footer.label.program"/></a>
                     </li>
                 </ul>
             </div>

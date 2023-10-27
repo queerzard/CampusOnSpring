@@ -10,10 +10,13 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.unidue.campusfm.queerzard.cms.database.services.user.CampusUserDetailsService;
+import org.unidue.campusfm.queerzard.cms.utils.UtilitiesCollection;
 
 @Order(value = -1)
 @Configuration
@@ -37,46 +40,64 @@ public class CampusSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 /*.csrf().disable()*/
                 .authorizeRequests()
-                .antMatchers("/").permitAll()
-                .antMatchers("/home").permitAll()
-                .antMatchers("/search").permitAll()
-                .antMatchers("/article").permitAll()
-                .antMatchers("/about").permitAll()
-                .antMatchers("/contact").permitAll()
-                .antMatchers("/listen").permitAll()
-                .antMatchers("/imprint").permitAll()
-                .antMatchers("/program").permitAll()
-                .antMatchers("/contribute").permitAll()
-                .antMatchers("/failLol").permitAll()
-                .antMatchers("/assets/**").permitAll()
+                    .antMatchers("/").permitAll()
+                    .antMatchers("/home").permitAll()
+                    .antMatchers("/search").permitAll()
+                    .antMatchers("/article").permitAll()
+                    .antMatchers("/about").permitAll()
+                    .antMatchers("/contact").permitAll()
+                    .antMatchers("/listen").permitAll()
+                    .antMatchers("/imprint").permitAll()
+                    .antMatchers("/program").permitAll()
+                    .antMatchers("/contribute").permitAll()
+                    .antMatchers("/assets/**").permitAll()
 
-                .antMatchers("/login").permitAll()
-                .antMatchers("/myprofile").authenticated()
+                    .antMatchers("/login").permitAll()
+
+                    .antMatchers("/myprofile").authenticated()
+                    .antMatchers("/compose").authenticated()
+                    .antMatchers("/drafts").authenticated()
+
                 .anyRequest().authenticated()
+
                 .and()
-                .formLogin()
-                .loginPage("/login")
-                .failureUrl("/failLol").permitAll()
-                .defaultSuccessUrl("/", true);
+                    .formLogin()
+                        .loginPage("/login")
+                        .failureUrl("/login?error").permitAll()
+                        .defaultSuccessUrl("/myprofile", true)
+
+                .and()
+                    .logout().logoutUrl("/logout")
+                        .invalidateHttpSession(true) // Invalidate the user's session
+                        .clearAuthentication(true)    // Clear authentication information
+                        .logoutSuccessUrl("/login?logout")
+                        .permitAll()
+
+/*                .and()
+                    .rememberMe()
+                        .key("v3ry23cr3tk3y")
+                        .rememberMeParameter("remember")
+                        .tokenValiditySeconds(86400)
+
+                .and()
+                    .sessionManagement()
+                        .maximumSessions(1)
+                        .expiredUrl("/login?expired")
+                        .sessionRegistry(sessionRegistry())*/;
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-/*        auth
-                .userDetailsService(this.userDetailsService)
-                .passwordEncoder(passwordEncoder());*/
         auth.authenticationProvider(authenticationProvider/*()*/);
     }
 
-/*    @Bean
-    public DaoAuthenticationProvider authenticationProvider(){
-        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
-        daoAuthenticationProvider.setUserDetailsService(this.userDetailsService);
-        return daoAuthenticationProvider;
-    }*/
-
     @Bean
     public PasswordEncoder passwordEncoder(){return new BCryptPasswordEncoder();};
+
+    @Bean
+    public SessionRegistry sessionRegistry() {
+        return new SessionRegistryImpl();
+    }
+
 
 }

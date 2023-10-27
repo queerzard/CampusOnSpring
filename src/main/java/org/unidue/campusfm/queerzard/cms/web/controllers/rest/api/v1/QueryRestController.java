@@ -6,4 +6,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/")
 public class QueryRestController {
+
+    // GET /api/v1/query?published={bool}
+    //                  &editable={bool}
+    //                  &author={str}
+    //                  &keywords={str}
+    //                  &page={int min 0}
+    //                  &items={int min 5}
+
+    // GET api/v1/{author}/query?
+
 }

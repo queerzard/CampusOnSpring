@@ -32,6 +32,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<UserEntity> findAllEnabled() {
+        return userRepository.findAllByEnabledIsTrue();
+    }
+
+    @Override
     public UserEntity update(UserEntity userEntity) {
         return userRepository.saveAndFlush(userEntity);
     }

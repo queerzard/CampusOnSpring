@@ -18,7 +18,7 @@ public class AboutController {
 
     @RequestMapping("/about")
     public String getAbout(Model model){
-        List<UserEntity> team = userService.findAll();
+        List<UserEntity> team = userService.findAllEnabled();
         model.addAttribute("userEntityList", team);
         return "about";
     }

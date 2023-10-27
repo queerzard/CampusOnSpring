@@ -9,6 +9,8 @@ public interface UserService {
 
     List<UserEntity> findAll();
 
+    List<UserEntity> findAllEnabled();
+
     UserEntity update(UserEntity userEntity);
 
     UserEntity addUser(UserEntity user);

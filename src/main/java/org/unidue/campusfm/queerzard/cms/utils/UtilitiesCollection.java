@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -99,5 +100,19 @@ public class UtilitiesCollection {
     public static String cutSubstring(String s, int maxChars){
         return (s.length() > maxChars ? s.substring(0, maxChars) : s);
     }
+
+    public static String generateSecretKey(){
+        SecureRandom secureRandom = new SecureRandom();
+        byte[] keyBytes = new byte[64]; // You can adjust the key size as needed
+
+        secureRandom.nextBytes(keyBytes);
+
+        StringBuilder keyBuilder = new StringBuilder();
+        for (byte b : keyBytes)
+            keyBuilder.append(String.format("%02x", b));
+
+        return keyBuilder.toString();
+    }
+
 
 }

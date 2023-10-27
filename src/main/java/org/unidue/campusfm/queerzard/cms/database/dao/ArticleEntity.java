@@ -57,7 +57,7 @@ public class ArticleEntity extends AbstractEntity{
 
     public void setContent(String contents){
         this.contents = contents;
-        this.previewContent = (contents.length() > 200 ? Jsoup.clean(contents, Safelist.basic()).substring(0, 200) : Jsoup.clean(contents, Safelist.basic()));
+        this.previewContent = (contents.length() > 200 ? Jsoup.clean(contents, Safelist.basic()).substring(0, 200) : Jsoup.clean(contents, Safelist.basic())) + "...";
 
     }
 

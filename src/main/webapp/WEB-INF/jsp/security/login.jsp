@@ -44,16 +44,17 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="/"><msg:message code="navigator.label.home" /></a>
+                    <a class="nav-link" href="/"><msg:message code="navigator.label.home"/></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/about"><msg:message code="navigator.label.about" /></a>
+                    <a class="nav-link" href="/about"><msg:message code="navigator.label.about"/></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/events"><msg:message code="navigator.label.events" /></a>
+                    <a class="nav-link" href="/events"><msg:message code="navigator.label.events"/></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/login"><msg:message code="navigator.label.login" /></a>
+
+                    <a class="nav-link" href="/login"><msg:message code="navigator.label.login"/></a>
                 </li>
             </ul>
         </div>
@@ -83,33 +84,44 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
 
         <div class="container">
 
+
             <div class="login-card" style="font-family: Roboto, sans-serif;">
+
                 <p class="profile-name-card">
                     <i class="fa fa-unlock-alt d-inline"
                        style="width: 0;height: 0;font-size: 56px;color: rgb(0,161,74);border-color: rgb(55,197,146);">
                     </i>
                 </p>
 
-
                 <form name="f" method="post" role="form"
-                      th:action="@{/login}" class="form-signin"><span class="reauth-email" style="margin: 11px;">
-                </span>
-                    <input id="username" class="form-control" type="username" required placeholder="username" autofocus
-                           name="username"/>
-                    <input id="password" class="form-control" type="password" required placeholder="password"
+                      th:action="@{/login}" class="form-signin">
+
+        <span class="reauth-email" style="margin: 11px;">
+
+        </span><input id="inputEmail" class="form-control" type="username" required placeholder="username" autofocus
+                      name="username"/>
+
+                    <input id="inputPassword" class="form-control" type="password" required placeholder="password"
                            name="password"/>
+
+                    <div class="custom-control custom-checkbox">
+                        <input class="custom-control-input" type="checkbox" name="remember" id="remember" th:checked="${param.remember}" />
+                        <label class="form-label custom-control-label" for="remember" style="font-size: 16px;">Remember Me</label>
+                    </div>
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
                     <button class="btn btn-primary btn-lg d-block btn-signin w-100"
                             style="font-family: Roboto, sans-serif;font-size: 16px;font-weight: normal;font-style: normal;background: rgb(0,161,74);"
-                            type="submit">
-                        Sign in
+                            type="submit">Sign in
                     </button>
+
                 </form>
                 <p class="text-center" style="color: rgb(73,80,87);font-size: 11px;">Restricted Area</p>
-
             </div>
-        </div>
 
+
+
+        </div>
 
 
         <!-- END PAGE MAIN CONTENT -->
@@ -117,9 +129,6 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
     </div>
 
 </div>
-
-
-
 
 
 <footer>
@@ -156,19 +165,19 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
             <div class="col-md-4 col-xl-11 col-xxl-12">
                 <ul class="list-inline" style="font-size: 17px;font-family: Abel, sans-serif;">
                     <li class="list-inline-item me-4">
-                        <a class="link-secondary" href="/imprint"><msg:message code="footer.label.imprint" /></a>
+                        <a class="link-secondary" href="/imprint"><msg:message code="footer.label.imprint"/></a>
                     </li>
                     <li class="list-inline-item me-4">
-                        <a class="link-secondary" href="/contact"><msg:message code="footer.label.contact" /></a>
+                        <a class="link-secondary" href="/contact"><msg:message code="footer.label.contact"/></a>
                     </li>
                     <li class="list-inline-item">
-                        <a class="link-secondary" href="/listen"><msg:message code="footer.label.listen" /></a>
+                        <a class="link-secondary" href="/listen"><msg:message code="footer.label.listen"/></a>
                     </li>
                     <li class="list-inline-item" style="padding-left: 12px;padding-right: 12px;">
-                        <a class="link-secondary" href="/contribute"><msg:message code="footer.label.contribute" /></a>
+                        <a class="link-secondary" href="/contribute"><msg:message code="footer.label.contribute"/></a>
                     </li>
                     <li class="list-inline-item" style="padding-right: 12px;padding-left: 12px;">
-                        <a class="link-secondary" href="/program"><msg:message code="footer.label.program" /></a>
+                        <a class="link-secondary" href="/program"><msg:message code="footer.label.program"/></a>
                     </li>
                 </ul>
             </div>

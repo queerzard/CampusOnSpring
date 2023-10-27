@@ -35,6 +35,7 @@ public class CampusAuthenticationProvider implements AuthenticationProvider {
         if (!passwordEncoder.matches(password, userDetails.getPassword()))
             throw new AuthenticationException("Invalid credentials") {};
 
+        userDetails.getUserEntity().updateLastLogin();
         // Create a fully authenticated Authentication object
         Authentication authenticated = new UsernamePasswordAuthenticationToken(
                 userDetails, null, userDetails.getAuthorities());

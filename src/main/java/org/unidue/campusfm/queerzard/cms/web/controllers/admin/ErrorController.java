@@ -5,8 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
-/*
-@Controller*/
+@Controller
 public class ErrorController implements org.springframework.boot.web.servlet.error.ErrorController {
 
     @Override
@@ -15,7 +14,6 @@ public class ErrorController implements org.springframework.boot.web.servlet.err
     }
 
     //TODO: ERROR HANDLING
-/*
     @RequestMapping("/error")
     public String handleError(HttpServletRequest request){
 
@@ -29,7 +27,7 @@ public class ErrorController implements org.springframework.boot.web.servlet.err
                 return request.getAttribute(RequestDispatcher.ERROR_MESSAGE).toString();
         }
 
-    }*/
+    }
 
 
 }

@@ -33,9 +33,9 @@ public class UserEntity extends AbstractEntity{
     @JsonIgnore
     @Getter private String password;
 
-    @Getter @Setter
-    private String social;
+    @Getter @Setter private String social;
     @Getter @Setter private String position;
+    @Getter @Setter private String description;
 
 
     @Column(columnDefinition = "LONGTEXT")
@@ -69,7 +69,7 @@ public class UserEntity extends AbstractEntity{
 
 
     public UserEntity(String firstName, String lastName, String email, String password, String social,
-                      String position, String avatar, String roles, String permissions, boolean enabled) {
+                      String position, String description, String avatar, String roles, String permissions, boolean enabled) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -83,18 +83,23 @@ public class UserEntity extends AbstractEntity{
         this.lastLoginTimestamp = 0L;
         this.roles = roles;
         this.permissions = permissions;
+        this.description = description;
     }
 
-    public UserEntity(String firstName, String lastName, String email, String password, String description,
-                      String note, String roles, String permissions, boolean enabled) {
-        this(firstName, lastName, email, password, description, note, UtilitiesCollection
+    public UserEntity(String firstName, String lastName, String email, String password, String social,
+                      String position, String description, String roles, String permissions, boolean enabled) {
+        this(firstName, lastName, email, password, social, position, description, UtilitiesCollection
                 .toBase64(UtilitiesCollection.getFileBytes(UtilitiesCollection.getDefaultAvatarFile())), roles, permissions, enabled);
 
     }
 
     public UserEntity(String firstName, String lastName, String email, String password, String roles, String permissions, boolean enabled) {
-        this(firstName, lastName, email, password, "Linkstgrünversiffte*r bei CampusFM",
-                "Redakteur*in", roles, password, enabled);
+        this(firstName, lastName, email, password, "",
+                "Redakteur*in", "", roles, permissions, enabled);
+    }
+
+    public UserEntity(String email, String password){
+        this("", "", email, password, "USER", "*", true);
     }
 
     public UserEntity() {}

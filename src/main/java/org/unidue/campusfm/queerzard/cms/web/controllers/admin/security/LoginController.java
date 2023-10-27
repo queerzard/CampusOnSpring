@@ -14,15 +14,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.unidue.campusfm.queerzard.cms.database.services.interfaces.UserService;
 
 import javax.naming.AuthenticationException;
+import java.security.Principal;
 
-/*@Controller*/
+@Controller
 public class LoginController {
 
-/*    //TODO: AUTHENTICATION STILL NOT WORKING. RETURNS 403 & HANDLE VALIDATION
-
     @GetMapping("/login")
-    public String getLogin(){
+    public String getLogin(Principal principal){
+        if(principal != null)
+            return "redirect:myprofile";
         return "security/login";
-    }*/
+    }
 
 }
