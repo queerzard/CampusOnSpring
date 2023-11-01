@@ -2,9 +2,13 @@ package org.unidue.campusfm.queerzard.cms.web.controllers.rest.api.v1.article;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.unidue.campusfm.queerzard.cms.database.dao.ArticleEntity;
 import org.unidue.campusfm.queerzard.cms.database.services.interfaces.ArticleService;
 import org.unidue.campusfm.queerzard.cms.database.services.interfaces.UserService;
+import org.unidue.campusfm.queerzard.cms.database.services.user.CampusUserDetails;
 import org.unidue.campusfm.queerzard.cms.web.dto.ArticleModel;
+
+import java.security.Principal;
 
 /*
 
@@ -39,28 +43,49 @@ public class ArticlesController {
     @Autowired
     private ArticleService articleService;
 
+    //obtain an article by its ID (if article.published = false & user isnt author nor admin -> refuse |
+    // elif author or admin -> grant | or if article.published = true -> grant)
     @GetMapping
-    public ArticleModel handleGetMapping(@RequestParam("article") String articleId){
+    public ArticleModel handleGetMapping(Principal principal, @RequestParam("article") String articleId){
+
+        ArticleEntity articleEntity;
+        CampusUserDetails userDetails = (principal != null ? (CampusUserDetails) principal : null);
+
+        //check if article by that ID exists
+        if(!articleService.articleExistsById(articleId))
+            return null;
+        //obtain article from DB
+        articleEntity = articleService.getArticleByPostId(articleId);
+
+        //check the articles availability and the authentication / return error if
+        if(!articleEntity.isPublished() && (userDetails == null || !articleEntity.getUserEntity().getId().equals(userDetails.getUserEntity().getId())))
+            return null;
         return null;
     }
 
+    //Generate a database entry for a new article (if authenticated -> create | else -> refuse)
     @PostMapping
-    public ArticleModel handlePostMapping(){
+    public ArticleModel handlePostMapping(Principal principal){
+        if(principal != null)
+            return null;
         return null;
     }
 
+    //replace article content (if user = author || user = admin then -> delete | else -> refuse)
     @PutMapping
-    public ArticleModel handlePutMapping(){
+    public ArticleModel handlePutMapping(Principal principal, @RequestParam("article") String articleId){
         return null;
     }
 
+    //patch article content (if user = author || user = admin then -> delete | else -> refuse)
     @PatchMapping
-    public ArticleModel handlePatchMapping(){
+    public ArticleModel handlePatchMapping(Principal principal, @RequestParam("article") String articleId){
         return null;
     }
 
+    //delete an article entry from DB (if user = author || user = admin then -> delete | else -> refuse)
     @DeleteMapping
-    public ArticleModel handleDeleteMapping(){
+    public ArticleModel handleDeleteMapping(Principal principal, @RequestParam("article") String articleId){
         return null;
     }
 

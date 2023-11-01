@@ -21,7 +21,7 @@ public class UserEntity extends AbstractEntity{
     @Getter @Setter @Column(unique = true, nullable = false)
     private String username;
 
-    @Getter @Setter @Column(unique = true, nullable = false)
+    @Getter @Setter @Column(unique = true, nullable = false) @JsonIgnore
     private String email;
 
     @Getter @Setter
@@ -63,8 +63,10 @@ public class UserEntity extends AbstractEntity{
                     name = "role_id", referencedColumnName = "id"))
 
     @Getter private List<Role> roles;*/
+    @JsonIgnore
     @Getter private String roles;
 
+    @JsonIgnore
     @Setter private String permissions;
 
 
