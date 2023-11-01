@@ -1,5 +1,6 @@
 package org.unidue.campusfm.queerzard.cms.web.controllers.rest.api.v1.article;
 
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.unidue.campusfm.queerzard.cms.database.dao.ArticleEntity;
@@ -60,7 +61,19 @@ public class ArticlesController {
         //check the articles availability and the authentication / return error if
         if(!articleEntity.isPublished() && (userDetails == null || !articleEntity.getUserEntity().getId().equals(userDetails.getUserEntity().getId())))
             return null;
-        return null;
+
+        ArticleModel articleModel = new ArticleModel();
+        articleModel.setBase64preview(articleEntity.getBase64preview());
+        articleModel.setPreviewContent(articleEntity.getPreviewContent());
+        articleModel.setContents(articleEntity.getContents());
+        articleModel.setTags(articleEntity.getTags());
+        articleModel.setTitle(articleEntity.getTitle());
+        articleModel.setEditable(articleEntity.isEditable());
+        articleModel.setCategory(articleEntity.getCategory());
+        articleModel.setViews(articleEntity.getViews());
+        articleModel.setBase64banner(articleEntity.getBase64banner());
+
+        return articleModel;
     }
 
     //Generate a database entry for a new article (if authenticated -> create | else -> refuse)
