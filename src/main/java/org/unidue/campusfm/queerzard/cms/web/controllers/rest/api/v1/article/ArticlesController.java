@@ -59,7 +59,9 @@ public class ArticlesController {
         articleEntity = articleService.getArticleByPostId(articleId);
 
         //check the articles availability and the authentication / return error if
-        if(!articleEntity.isPublished() && (userDetails == null || !articleEntity.getUserEntity().getId().equals(userDetails.getUserEntity().getId())))
+        if(!articleEntity.isPublished() && (userDetails == null || !articleEntity.getUserEntity().getId()
+                .equals(userDetails.getUserEntity().getId()) || !userDetails.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ADMIN"))))
             return null;
 
         ArticleModel articleModel = new ArticleModel();
@@ -72,6 +74,11 @@ public class ArticlesController {
         articleModel.setCategory(articleEntity.getCategory());
         articleModel.setViews(articleEntity.getViews());
         articleModel.setBase64banner(articleEntity.getBase64banner());
+        articleModel.setCreationMillis(articleEntity.getCreationMillis());
+        articleModel.setPublishYear(articleEntity.getPublishYear());
+        articleModel.setPublishDayOfMonth(articleEntity.getPublishDayOfMonth());
+        articleModel.setPublishMonthName(articleEntity.getPublishMonthName());
+        articleModel.setUserEntity(articleEntity.getUserEntity());
 
         return articleModel;
     }
@@ -99,6 +106,23 @@ public class ArticlesController {
     //delete an article entry from DB (if user = author || user = admin then -> delete | else -> refuse)
     @DeleteMapping
     public ArticleModel handleDeleteMapping(Principal principal, @RequestParam("article") String articleId){
+
+        ArticleEntity articleEntity;
+        CampusUserDetails userDetails = (principal != null ? (CampusUserDetails) principal : null);
+
+        //check if article by that ID exists
+        if(!articleService.articleExistsById(articleId))
+            return null;
+        //obtain article from DB
+        articleEntity = articleService.getArticleByPostId(articleId);
+
+        if(userDetails == null || !articleEntity.getUserEntity().getId()
+                .equals(userDetails.getUserEntity().getId()) || userDetails.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ADMIN")))
+            return null;
+
+        articleService.delete(articleEntity);
+
         return null;
     }
 

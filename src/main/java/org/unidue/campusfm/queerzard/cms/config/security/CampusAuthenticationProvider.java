@@ -15,6 +15,7 @@ import org.unidue.campusfm.queerzard.cms.database.services.user.CampusUserDetail
 public class CampusAuthenticationProvider implements AuthenticationProvider {
 
 
+
     private final UserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
 

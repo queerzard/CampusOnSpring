@@ -18,7 +18,7 @@ import java.util.List;
 @Table(name = "user")
 public class UserEntity extends AbstractEntity{
 
-    @Getter @Setter @Column(unique = true, nullable = false)
+    @Getter @Setter @JsonIgnore @Column(unique = true, nullable = false)
     private String username;
 
     @Getter @Setter @Column(unique = true, nullable = false) @JsonIgnore
