@@ -13,8 +13,8 @@ in Java using SpringMVC, JSP and Hibernate.
 ---
 
 
-- [ ] Implement custom authentication and authorization
-- [ ] Create the according controllers for login/registration
+- [x] Implement custom authentication and authorization
+- [x] Create the according controllers for login/registration
 - [ ] Create a profile details editor with avatar upload option
 - [ ] Create the campus compose interface to compose blog entries
 

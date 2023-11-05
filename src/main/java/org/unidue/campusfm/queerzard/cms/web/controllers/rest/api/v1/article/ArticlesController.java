@@ -108,7 +108,7 @@ public class ArticlesController {
 
     //replace article content (if user = author || user = admin then -> delete | else -> refuse)
     @PutMapping
-    public ResponseEntity<Object> handlePutMapping(Principal principal, @RequestParam("article") String articleId){
+    public ResponseEntity<Object> handlePutMapping(Principal principal, @RequestParam("article") String articleId, ArticleModel articleModel){
         ArticleEntity articleEntity;
         CampusUserDetails userDetails = (principal != null ? (CampusUserDetails) principal : null);
 
@@ -127,6 +127,8 @@ public class ArticlesController {
             return new ResponseEntity<>(new RestError(HttpStatus.UNAUTHORIZED,
                     "[handlePutMapping] access to an unpublished resource is restricted. not an administrator nor the author;",
                     new Exception()), HttpStatus.UNAUTHORIZED);
+
+        //put code...
 
 
         return new ResponseEntity<>(HttpStatus.OK);
