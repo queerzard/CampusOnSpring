@@ -39,6 +39,7 @@ public class CampusSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 /*.csrf().disable()*/
+                .csrf().ignoringAntMatchers("/api/v1/**").and()
                 .authorizeRequests()
                     .antMatchers("/").permitAll()
                     .antMatchers("/home").permitAll()
@@ -52,9 +53,7 @@ public class CampusSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/contribute").permitAll()
                     .antMatchers("/assets/**").permitAll()
 
-                    .antMatchers("/api/v1/article").permitAll()
-                    .antMatchers("/api/v1/profile").permitAll()
-                    .antMatchers("/api/v1/query").permitAll()
+                    .antMatchers("/api/v1/**").permitAll()
 
                     .antMatchers("/login").permitAll()
 

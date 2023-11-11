@@ -1,6 +1,5 @@
 package org.unidue.campusfm.queerzard.cms.web.controllers.rest.api.v1.article;
 
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +8,7 @@ import org.unidue.campusfm.queerzard.cms.database.dao.ArticleEntity;
 import org.unidue.campusfm.queerzard.cms.database.services.interfaces.ArticleService;
 import org.unidue.campusfm.queerzard.cms.database.services.interfaces.UserService;
 import org.unidue.campusfm.queerzard.cms.database.services.user.CampusUserDetails;
-import org.unidue.campusfm.queerzard.cms.utils.RestError;
+import org.unidue.campusfm.queerzard.cms.utils.RestResponse;
 import org.unidue.campusfm.queerzard.cms.web.dto.ArticleModel;
 
 import java.security.Principal;
@@ -57,9 +56,8 @@ public class ArticlesController {
 
         //check if article by that ID exists
         if(!articleService.articleExistsById(articleId))
-            return new ResponseEntity<>(new RestError(HttpStatus.NOT_FOUND,
-                    "[handleGetMapping] this resource couldn't be found. unavailable resource;",
-                    new Exception()), HttpStatus.NOT_FOUND);;
+            return new ResponseEntity<>(new RestResponse(HttpStatus.NOT_FOUND,
+                    "[handleGetMapping] this resource couldn't be found. unavailable resource;"), HttpStatus.NOT_FOUND);;
         //obtain article from DB
         articleEntity = articleService.getArticleByPostId(articleId);
 
@@ -67,9 +65,8 @@ public class ArticlesController {
         if(!articleEntity.isPublished() && (userDetails == null || !articleEntity.getUserEntity().getId()
                 .equals(userDetails.getUserEntity().getId()) || !userDetails.getAuthorities().stream()
                 .anyMatch(a -> a.getAuthority().contains("ADMIN"))))
-            return new ResponseEntity<>(new RestError(HttpStatus.UNAUTHORIZED,
-                    "[handleGetMapping] access to an unpublished resource is restricted. not an administrator nor the author;",
-                    new Exception()), HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(new RestResponse(HttpStatus.UNAUTHORIZED,
+                    "[handleGetMapping] access to an unpublished resource is restricted. not an administrator nor the author;"), HttpStatus.UNAUTHORIZED);
 
         ArticleModel articleModel = new ArticleModel();
         articleModel.setBase64preview(articleEntity.getBase64preview());
@@ -91,12 +88,11 @@ public class ArticlesController {
     }
 
     //Generate a database entry for a new article (if authenticated -> create | else -> refuse)
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<Object> handlePostMapping(Principal principal){
-        if(principal != null)
-            return new ResponseEntity<>(new RestError(HttpStatus.UNAUTHORIZED,
-                    "[handlePostMapping] an error occurred checking authorization. principal is null;",
-                    new NullPointerException()), HttpStatus.UNAUTHORIZED);
+        if(principal == null)
+            return new ResponseEntity<>(new RestResponse(HttpStatus.UNAUTHORIZED,
+                    "[handlePostMapping] principal is null; creating articles is reserved to authenticated users!"), HttpStatus.UNAUTHORIZED);
 
         ArticleEntity article = new ArticleEntity(((CampusUserDetails) principal).getUserEntity(),
                 "Unnamed", "",
@@ -107,16 +103,15 @@ public class ArticlesController {
     }
 
     //replace article content (if user = author || user = admin then -> delete | else -> refuse)
-    @PutMapping
+    @PutMapping()
     public ResponseEntity<Object> handlePutMapping(Principal principal, @RequestParam("article") String articleId, ArticleModel articleModel){
         ArticleEntity articleEntity;
         CampusUserDetails userDetails = (principal != null ? (CampusUserDetails) principal : null);
 
         //check if article by that ID exists
         if(!articleService.articleExistsById(articleId))
-            return new ResponseEntity<>(new RestError(HttpStatus.NOT_FOUND,
-                    "[handlePutMapping] this resource couldn't be found. unavailable resource;",
-                    new Exception()), HttpStatus.NOT_FOUND);;
+            return new ResponseEntity<>(new RestResponse(HttpStatus.NOT_FOUND,
+                    "[handlePutMapping] this resource couldn't be found. unavailable resource;"), HttpStatus.NOT_FOUND);;
         //obtain article from DB
         articleEntity = articleService.getArticleByPostId(articleId);
 
@@ -124,9 +119,8 @@ public class ArticlesController {
         if((userDetails == null || !articleEntity.getUserEntity().getId()
                 .equals(userDetails.getUserEntity().getId()) || !userDetails.getAuthorities().stream()
                 .anyMatch(a -> a.getAuthority().contains("ADMIN"))))
-            return new ResponseEntity<>(new RestError(HttpStatus.UNAUTHORIZED,
-                    "[handlePutMapping] access to an unpublished resource is restricted. not an administrator nor the author;",
-                    new Exception()), HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(new RestResponse(HttpStatus.UNAUTHORIZED,
+                    "[handlePutMapping] access to an unpublished resource is restricted. not an administrator nor the author;"), HttpStatus.UNAUTHORIZED);
 
         //put code...
 
@@ -135,7 +129,7 @@ public class ArticlesController {
     }
 
     //patch article content (if user = author || user = admin then -> delete | else -> refuse)
-    @PatchMapping
+    @PatchMapping()
     public ResponseEntity<Object> handlePatchMapping(Principal principal, @RequestParam("article") String articleId){
 
         ArticleEntity articleEntity;
@@ -143,9 +137,8 @@ public class ArticlesController {
 
         //check if article by that ID exists
         if(!articleService.articleExistsById(articleId))
-            return new ResponseEntity<>(new RestError(HttpStatus.NOT_FOUND,
-                    "[handlePatchMapping] this resource couldn't be found. unavailable resource;",
-                    new Exception()), HttpStatus.NOT_FOUND);;
+            return new ResponseEntity<>(new RestResponse(HttpStatus.NOT_FOUND,
+                    "[handlePatchMapping] this resource couldn't be found. unavailable resource;"), HttpStatus.NOT_FOUND);;
         //obtain article from DB
         articleEntity = articleService.getArticleByPostId(articleId);
 
@@ -153,9 +146,8 @@ public class ArticlesController {
         if((userDetails == null || !articleEntity.getUserEntity().getId()
                 .equals(userDetails.getUserEntity().getId()) || !userDetails.getAuthorities().stream()
                 .anyMatch(a -> a.getAuthority().contains("ADMIN"))))
-            return new ResponseEntity<>(new RestError(HttpStatus.UNAUTHORIZED,
-                    "[handlePatchMapping] access to thus resource is restricted. you're not an administrator nor the author;",
-                    new Exception()), HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(new RestResponse(HttpStatus.UNAUTHORIZED,
+                    "[handlePatchMapping] access to this resource is restricted. not an administrator nor the author;"), HttpStatus.UNAUTHORIZED);
 
         //handlerCode...
 
@@ -163,7 +155,7 @@ public class ArticlesController {
     }
 
     //delete an article entry from DB (if user = author || user = admin then -> delete | else -> refuse)
-    @DeleteMapping
+    @DeleteMapping()
     public ResponseEntity<Object> handleDeleteMapping(Principal principal, @RequestParam("article") String articleId){
 
         ArticleEntity articleEntity;
@@ -171,21 +163,19 @@ public class ArticlesController {
 
         //check if article by that ID exists
         if(!articleService.articleExistsById(articleId))
-            return new ResponseEntity<>(new RestError(HttpStatus.NOT_FOUND,
-                    "[handleDeleteMapping] this resource couldn't be found. unavailable resource;",
-                    new Exception()), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new RestResponse(HttpStatus.NOT_FOUND,
+                    "[handleDeleteMapping] this resource couldn't be found. unavailable resource;"), HttpStatus.NOT_FOUND);
         //obtain article from DB
         articleEntity = articleService.getArticleByPostId(articleId);
 
         if(userDetails == null || (!articleEntity.getUserEntity().getId()
                 .equals(userDetails.getUserEntity().getId()) || userDetails.getAuthorities().stream()
                 .anyMatch(a -> a.getAuthority().contains("ADMIN"))))
-            return new ResponseEntity<>(new RestError(HttpStatus.UNAUTHORIZED,
-                    "[handleDeleteMapping] resources can only be deleted by their author or an administrator!",
-                    new Exception()), HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(new RestResponse(HttpStatus.UNAUTHORIZED,
+                    "[handleDeleteMapping] resources can only be deleted by their author or an administrator!"), HttpStatus.UNAUTHORIZED);
 
         articleService.delete(articleEntity);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(new RestResponse(HttpStatus.OK, "article deleted successfully"), HttpStatus.OK);
     }
 
 
