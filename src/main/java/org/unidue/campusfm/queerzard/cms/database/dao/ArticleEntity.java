@@ -21,9 +21,9 @@ public class ArticleEntity extends AbstractEntity{
 
     @Getter @Setter @Column(columnDefinition = "LONGTEXT") private String base64preview;
     @Getter @Column(columnDefinition = "LONGTEXT") private String base64banner;
-    @Getter @Setter @Column(columnDefinition = "LONGTEXT") private String contents;
+    @Getter @Column(columnDefinition = "LONGTEXT") private String contents;
     @Getter @Setter private String tags;
-    @Getter private String category;
+    @Getter @Setter private String category;
     @Getter @Setter private String title;
     @Getter private long creationMillis;
     @Getter private long publishedMillis;

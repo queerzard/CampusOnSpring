@@ -26,6 +26,16 @@ public class RestResponse {
         this.httpStatus = httpStatus;
     }
 
+    public RestResponse addData(String key, Object value){
+        this.data.put(key, value);
+        return this;
+    }
+
+    public RestResponse removeData(String key){
+        this.data.remove(key);
+        return this;
+    }
+
     public RestResponse(HttpStatus httpStatus, String message) {
         this();
         this.httpStatus = httpStatus;

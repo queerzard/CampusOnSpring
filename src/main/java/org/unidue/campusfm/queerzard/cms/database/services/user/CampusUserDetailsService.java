@@ -27,15 +27,9 @@ public class CampusUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-
-        System.out.println("Attempting login for username: " + s);
-
         UserEntity userEntity;
         if((userEntity = userRepository.findUserEntityByUsername(s)) == null && (userEntity = userRepository.findUserEntityByEmail(s)) == null)
             throw new UsernameNotFoundException("User not found with username/email: " +  s);
-
-        System.out.println("DetSev" +  s);
-
         return new CampusUserDetails(userEntity);
     }
 
