@@ -14,6 +14,14 @@ HttpMethod | route | short explanation | logic
  GET api/v1/profile/{id/username} Obtain a profile
         response ->
 
+ DELETE api/v1/profile/{id/username} Delete a profile
+        response ->
+
+ PATCH api/v1/profile/{id/username} modify a profile
+        response ->
+
+ POST api/v1/profile/{id/username} create a profile or change enabled status
+        response ->
 
 */
 

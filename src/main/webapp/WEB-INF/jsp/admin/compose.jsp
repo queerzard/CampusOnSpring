@@ -11,15 +11,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title><msg:message code="page.compose.title"/></title>
     <meta name="twitter:title" content="CampusFM - Klingt... anders!">
-    <meta property="og:image" content="assets/img/cropped-Logo-Tab-180x180.png">
+    <meta property="og:image" content="/assets/img/cropped-Logo-Tab-180x180.png">
     <meta name="description" content="Klingt... anders!
 Das Uni-Radio der Uni-Duisburg-Essen.">
-    <meta name="twitter:image" content="assets/img/cropped-Logo-Tab-180x180.png">
+    <meta name="twitter:image" content="/assets/img/cropped-Logo-Tab-180x180.png">
     <meta name="twitter:description" content="Das Uni-Radio der Uni-Duisburg-Essen">
-    <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="assets/img/cropped-Logo-Tab-180x180.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/cropped-Logo-Tab-32x32.png">
-    <link rel="icon" type="image/png" sizes="180x180" href="assets/img/cropped-Logo-Tab-180x180.png">
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="/assets/img/cropped-Logo-Tab-180x180.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/cropped-Logo-Tab-32x32.png">
+    <link rel="icon" type="image/png" sizes="180x180" href="/assets/img/cropped-Logo-Tab-180x180.png">
+    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
     <link rel="stylesheet"
@@ -27,7 +27,7 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abel&amp;display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abhaya+Libre&amp;display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="assets/css/styles.min.css">
+    <link rel="stylesheet" href="/assets/css/styles.min.css">
 
     <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js"></script>
     <script src="  https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js"  async></script>
@@ -41,7 +41,7 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
 
             </i>
         </button>
-        <img src="assets/img/Logo_CampusFM.png" style="width: 192px;filter: contrast(110%);" width="192" height="69">
+        <img src="/assets/img/Logo_CampusFM.png" style="width: 192px;filter: contrast(110%);" width="192" height="69">
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
@@ -61,7 +61,7 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
     </div>
 </nav>
 <header class="masthead"
-        style="background: url(&quot;assets/img/banner.png&quot;) center / cover no-repeat;">
+        style="background: url(&quot;/assets/img/banner.png&quot;) center / cover no-repeat;">
     <div class="overlay">
 
     </div>
@@ -86,8 +86,8 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
             <div style="box-sizing: border-box;
     padding: 0;" method="post" id="postForm" enctype="application/x-www-form-urlencoded">
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label"></div>
-                <div class="form-group mb-3"><label class="form-label">Title</label><input id="titleInput" class="form-control form-control" type="text" placeholder="{title.placeholder}" name="title" autocomplete="off" required minlength="6" style="width: 620px;" /></div>
-                <div><textarea type="text" name="content" id="tiny"></textarea></div>
+                <div class="form-group mb-3"><label class="form-label">Title</label><input id="titleInput" class="form-control form-control" type="text" placeholder="title here..." value="${articleEntity.title}" name="title" autocomplete="off" required minlength="6" style="width: 620px;" /></div>
+                <div><textarea type="text" name="content" id="tiny"> ${articleEntity.contents}</textarea></div>
                 <div class="row" style="margin-top: 18px;margin-bottom: 18px;">
                     <div class="col-xxl-10" style="margin-bottom: 0px;width: 359.672px;">
                         <button class="btn btn-primary btn-sm" id="discardBtn" style="position: relative;background: rgb(31,31,31);">Discard</button>
@@ -95,7 +95,8 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
                         <button class="btn btn-primary btn-sm" id="submitBtn" style="position: relative;background: rgb(31,31,31);">Submit</button>
                     </div>
                     <div class="col">
-                        <div class="form-group mb-3" style="padding-left: 40px;"><label class="form-label">Category</label><input class="form-control form-control" type="text" id="categoryInput" placeholder="category (e.g. allgemein, angeschaut...)" name="category" autocomplete="off" required minlength="6" style="width: 429px;" />
+                        <div class="form-group mb-3" style="padding-left: 40px;"><label class="form-label">Category</label>
+                            <input class="form-control form-control" type="text" id="categoryInput" placeholder="category (e.g. allgemein, angeschaut...)" value="${articleEntity.category}" name="category" autocomplete="off" required minlength="6" style="width: 429px;" />
                         </div>
                     </div>
                 </div>
@@ -177,7 +178,6 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
 
 
 <script >
-    /*const urlSearchParams = new URLSearchParams(window.location.search);*/
     window.addEventListener('load', function() {
         tinymce.init({
             selector: 'textarea#tiny',
@@ -188,7 +188,17 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
             toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent',
             menubar: 'favs edit view insert format tools table help',
         });
-/*        postId = urlSearchParams.get("id")*/
+
+        const path = window.location.pathname;
+
+// Split the path by '/' and find the index of 'compose'
+        const pathArray = path.split('/');
+        const indexOfCompose = pathArray.indexOf('compose');
+
+// Obtain the id from the path
+        const id = indexOfCompose !== -1 ? pathArray[indexOfCompose + 1] : null;
+
+        console.log(id); // Output: The value of {id} in the URL or null if not found
     });
 
 </script>

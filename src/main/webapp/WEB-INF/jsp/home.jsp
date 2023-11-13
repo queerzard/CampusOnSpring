@@ -14,12 +14,12 @@
     <meta property="og:image" content="assets/img/cropped-Logo-Tab-180x180.png">
     <meta name="description" content="Klingt... anders!
 Das Uni-Radio der Uni-Duisburg-Essen.">
-    <meta name="twitter:image" content="assets/img/cropped-Logo-Tab-180x180.png">
+    <meta name="twitter:image" content="/assets/img/cropped-Logo-Tab-180x180.png">
     <meta name="twitter:description" content="Das Uni-Radio der Uni-Duisburg-Essen">
-    <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="assets/img/cropped-Logo-Tab-180x180.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/cropped-Logo-Tab-32x32.png">
-    <link rel="icon" type="image/png" sizes="180x180" href="assets/img/cropped-Logo-Tab-180x180.png">
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="/assets/img/cropped-Logo-Tab-180x180.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/cropped-Logo-Tab-32x32.png">
+    <link rel="icon" type="image/png" sizes="180x180" href="/assets/img/cropped-Logo-Tab-180x180.png">
+    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
     <link rel="stylesheet"
