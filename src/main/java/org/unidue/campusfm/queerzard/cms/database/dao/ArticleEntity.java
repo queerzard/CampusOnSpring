@@ -34,7 +34,7 @@ public class ArticleEntity extends AbstractEntity{
 
     @Getter @Setter private boolean editable;
     @Getter private boolean published;
-    @Getter private int views;
+    @Getter @Setter private int views;
 
     public ArticleEntity(){}
     public ArticleEntity(UserEntity authorEntity, String title, String contents, String category,

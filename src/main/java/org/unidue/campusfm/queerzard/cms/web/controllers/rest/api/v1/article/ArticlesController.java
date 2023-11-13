@@ -54,7 +54,7 @@ public class ArticlesController {
     public ResponseEntity<Object> handleGetMapping(Authentication authentication, @RequestParam("article") String articleId){
 
         ArticleEntity articleEntity;
-        CampusUserDetails userDetails = (authentication.getPrincipal() != null ? (CampusUserDetails) authentication.getPrincipal() : null);
+        CampusUserDetails userDetails = (authentication != null ? (CampusUserDetails) authentication.getPrincipal() : null);
 
         //check if article by that ID exists
         if(!articleService.articleExistsById(articleId))
@@ -96,7 +96,7 @@ public class ArticlesController {
 
         if((articleId != null && !articleId.isBlank())){
             ArticleEntity articleEntity;
-            CampusUserDetails userDetails = (authentication.getPrincipal() != null ? (CampusUserDetails) authentication.getPrincipal() : null);
+            CampusUserDetails userDetails = (authentication != null ? (CampusUserDetails) authentication.getPrincipal() : null);
             //check if article by that ID exists
             if(!articleService.articleExistsById(articleId))
                 return new ResponseEntity<>(new RestResponse(HttpStatus.NOT_FOUND,
@@ -105,7 +105,7 @@ public class ArticlesController {
             articleEntity = articleService.getArticleByPostId(articleId);
 
             //check the articles availability and the authentication / return error if
-            if(!articleEntity.isPublished() && (userDetails == null || !articleEntity.getUserEntity().getId()
+            if(/*!articleEntity.isPublished() && */(userDetails == null || !articleEntity.getUserEntity().getId()
                     .equals(userDetails.getUserEntity().getId()) || !userDetails.getAuthorities().stream()
                     .anyMatch(a -> a.getAuthority().contains("ADMIN"))))
                 return new ResponseEntity<>(new RestResponse(HttpStatus.UNAUTHORIZED,
@@ -117,7 +117,7 @@ public class ArticlesController {
             return new ResponseEntity<>(new RestResponse(HttpStatus.OK, "publication status modified!"), HttpStatus.OK);
         }
 
-        if(authentication.getPrincipal() == null)
+        if(authentication == null)
             return new ResponseEntity<>(new RestResponse(HttpStatus.UNAUTHORIZED,
                     "[handlePostMapping] principal is null; creating and changing the publication state of " +
                             "articles is reserved to authenticated users!"), HttpStatus.UNAUTHORIZED);
@@ -134,7 +134,7 @@ public class ArticlesController {
     @PutMapping()
     public ResponseEntity<Object> handlePutMapping(Authentication authentication, @RequestParam("article") String articleId, ArticleModel articleModel){
         ArticleEntity articleEntity;
-        CampusUserDetails userDetails = (authentication.getPrincipal() != null ? (CampusUserDetails) authentication.getPrincipal() : null);
+        CampusUserDetails userDetails = (authentication != null ? (CampusUserDetails) authentication.getPrincipal() : null);
 
         //check if article by that ID exists
         if(!articleService.articleExistsById(articleId))
@@ -144,11 +144,11 @@ public class ArticlesController {
         articleEntity = articleService.getArticleByPostId(articleId);
 
         //check the articles availability and the authentication / return error if
-        if((userDetails == null || !articleEntity.getUserEntity().getId()
+        if((userDetails == null || articleEntity.isPublished() || !articleEntity.getUserEntity().getId()
                 .equals(userDetails.getUserEntity().getId()) || !userDetails.getAuthorities().stream()
                 .anyMatch(a -> a.getAuthority().contains("ADMIN"))))
             return new ResponseEntity<>(new RestResponse(HttpStatus.UNAUTHORIZED,
-                    "[handlePutMapping] access to an unpublished resource is restricted. not an administrator nor the author;"), HttpStatus.UNAUTHORIZED);
+                    "[handlePutMapping] a published resource cannot be replaced and needs to be taken down first. not an administrator nor the author;"), HttpStatus.UNAUTHORIZED);
 
         //put code...
         articleEntity.setTitle(articleModel.getTitle());
@@ -158,6 +158,7 @@ public class ArticlesController {
 
         articleEntity.setBase64Banner(articleModel.getBase64banner());
         articleEntity.setBase64preview(articleModel.getBase64preview());
+        articleEntity.setViews(articleModel.getViews());
 
         articleService.update(articleEntity);
 
@@ -170,7 +171,7 @@ public class ArticlesController {
     public ResponseEntity<Object> handlePatchMapping(Authentication authentication, @RequestParam("article") String articleId, ArticleModel articleModel){
 
         ArticleEntity articleEntity;
-        CampusUserDetails userDetails = (authentication.getPrincipal() != null ? (CampusUserDetails) authentication.getPrincipal() : null);
+        CampusUserDetails userDetails = (authentication != null ? (CampusUserDetails) authentication.getPrincipal() : null);
 
 
         //check if article by that ID exists
@@ -207,7 +208,7 @@ public class ArticlesController {
     public ResponseEntity<Object> handleDeleteMapping(Authentication authentication, @RequestParam("article") String articleId){
 
         ArticleEntity articleEntity;
-        CampusUserDetails userDetails = (authentication.getPrincipal() != null ? (CampusUserDetails) authentication.getPrincipal() : null);
+        CampusUserDetails userDetails = (authentication != null ? (CampusUserDetails) authentication.getPrincipal() : null);
 
         //check if article by that ID exists
         if(!articleService.articleExistsById(articleId))
