@@ -84,10 +84,13 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
         <div class="container">
 
             <div style="box-sizing: border-box;
-    padding: 0;" method="post" id="postForm" enctype="application/x-www-form-urlencoded">
+    padding: 0;" method="post" id="postForm" enctype="multipart/form-data">
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label"></div>
-                <div class="form-group mb-3"><label class="form-label">Title</label><input id="titleInput" class="form-control form-control" type="text" placeholder="title here..." value="${articleEntity.title}" name="title" autocomplete="off" required minlength="6" style="width: 620px;" /></div>
-                <div><textarea type="text" name="content" id="tiny"> ${articleEntity.contents}</textarea></div>
+                <div class="form-group mb-3"><label class="form-label">Title</label>
+                    <input id="titleInput" class="form-control form-control" type="text" placeholder="title here..." value="${articleEntity.title}" name="title" autocomplete="off" required minlength="6" style="width: 620px;" /></div>
+                <div>
+                    <input type="file" id="avatarInput" accept="image/png" style="display: none" onchange="previewAvatar(this)">
+                    <textarea type="text" name="content" id="tiny"> ${articleEntity.contents}</textarea></div>
                 <div class="row" style="margin-top: 18px;margin-bottom: 18px;">
                     <div class="col-xxl-10" style="margin-bottom: 0px;width: 359.672px;">
                         <button class="btn btn-primary btn-sm" id="discardBtn" style="position: relative;background: rgb(31,31,31);">Discard</button>
@@ -102,6 +105,9 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
                 </div>
             </div>
 
+            <div id="avatarPreview" style="width: 100px; height: 100px; border: 1px solid #ddd;"></div>
+            <img id="existingAvatar" src="data:image/png;base64, ${articleEntity.base64preview}" alt="Existing Avatar" style="max-width: 100px; max-height: 100px; border: 1px solid #ddd; display: block;">
+            <button type="button" onclick="openFileInput()">Select Thumbnail</button>
 
         </div>
 
@@ -174,7 +180,7 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<script src="assets/js/script.min.js"></script>
+<script src="/assets/js/script.min.js"></script>
 
 
 <script >
@@ -196,10 +202,293 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
         const indexOfCompose = pathArray.indexOf('compose');
 
 // Obtain the id from the path
-        const id = indexOfCompose !== -1 ? pathArray[indexOfCompose + 1] : null;
+        postId = indexOfCompose !== -1 ? pathArray[indexOfCompose + 1] : null;
 
-        console.log(id); // Output: The value of {id} in the URL or null if not found
+        console.log(postId); // Output: The value of {id} in the URL or null if not found
     });
+
+    $(document).on('click', '#submitBtn', function() {
+        save();
+        setTimeout(() => {
+            setPublished(true);
+
+        }, 900);
+        displayAlert('1cc88a', 'Success!', "Article Submitted!");
+
+        setTimeout(() => {
+            window.location.href = "/article?a=" + postId;
+        }, 1200);
+    });
+
+
+
+    $(document).on('click', '#draftBtn', function() {
+        save();
+    });
+
+
+
+    $(document).on('click', '#discardBtn', function() {
+        console.log("Discarded");
+        // get the form data
+        var formData = {
+            id: postId
+        };
+
+        // send the form data to the server
+        $.ajax({
+            type: 'DELETE',
+            url: '/api/v1/article?article=' + postId,
+            dataType: 'json',
+            encode: true
+        })
+            .done(function(response) {
+                // handle the server response
+                if (response.success) {
+                    console.log(response.message);
+                    displayAlert('1cc88a', 'Success!', response.message);
+                    // redirect to the URL received from the server
+                    setTimeout(() => {
+                        window.location.href = "/home";
+                    }, 1200);
+                } else {
+                    console.log(response.message);
+                    displayAlert('e74a3b', 'Error!', response.message);
+                    // display an error message to the user
+                }
+            });
+    });
+
+    function openFileInput() {
+        document.getElementById('avatarInput').click();
+    }
+
+    // Function to preview the selected avatar image
+    function previewAvatar(input) {
+        var preview = document.getElementById('avatarPreview');
+        var existingAvatar = document.getElementById('existingAvatar');
+        // Hide existing avatar if it's visible
+        existingAvatar.style.display = 'none';
+        preview.innerHTML = ''; // Clear previous content
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var img = document.createElement("img");
+                img.src = e.target.result;
+                img.style.width = '100%';
+                img.style.height = '100%';
+                preview.appendChild(img);
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function save(){
+        console.log("Drafted");
+        // get the form data
+        var formData = new FormData();
+        formData.append('title', $('input[name=title]').val());
+        formData.append('content', btoa(tinymce.activeEditor.getContent()));
+        formData.append('category', $('input[name=category]').val());
+        formData.append('article', postId);
+
+        var avatarInput = document.getElementById('avatarInput');
+        if (avatarInput.files && avatarInput.files[0]) {
+            formData.append('previewImage', avatarInput.files[0]);
+        }
+
+
+        // send the form data to the server
+        $.ajax({
+            type: 'PATCH',
+            url: '/api/v1/article',
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+        })
+            .done(function(response) {
+                // handle the server response
+                if (response.success) {
+                    console.log(response.message);
+                    displayAlert('1cc88a', 'Success!', response.message);
+                    // redirect to the URL received from the server
+                } else {
+                    console.log(response.message);
+                    displayAlert('e74a3b', 'Error!', response.message);
+                    // display an error message to the user
+                }
+            });
+    }
+
+    function setPublished(boolean) {
+        var formData = {
+            title: $('input[name=title]').val(),
+            content: tinymce.activeEditor.getContent(),
+            category: $('input[name=category]').val()
+        };
+
+        // send the form data to the server
+        $.ajax({
+            type: 'POST',
+            url: '/api/v1/article?article=' + postId + '&pub=' + boolean,
+            dataType: 'json',
+            encode: true
+        })
+            .done(function(response) {
+                // handle the server response
+                if (response.success) {
+                    console.log(response.message);
+                    console.log(response.data.url);
+                    displayAlert('1cc88a', 'Success!', response.message);
+                    // redirect to the URL received from the server
+                    setTimeout(() => {
+                        window.location.href = '/article?a=' + postId;
+                    }, 4000);
+                } else {
+                    console.log(response.message);
+                    displayAlert('e74a3b', 'Error!', response.message);
+                    // display an error message to the user
+                }
+            });
+    }
+
+    function displayAlert(colorHex, heading, message) {
+        // Create the alert container element
+        const alertContainer = document.createElement('div');
+        alertContainer.className = 'alert-container';
+
+        // Create the alert element with the provided color, heading, and message
+        const alert = document.createElement('div');
+        alert.className = 'alert';
+        alert.style.backgroundColor = `#` + colorHex;
+        alert.innerHTML = `
+<div class="alert-header">
+      <div class="white-line"></div>
+    </div>
+    <h2>[(${heading})]</h2>
+    <p>[(${message})]</p>
+    <span class="close-btn">&times;</span>
+  `;
+
+        // Add a click event listener to the close button
+        const closeBtn = alert.querySelector('.close-btn');
+        closeBtn.addEventListener('click', () => {
+            alertContainer.remove();
+        });
+
+        // Append the alert to the container, and the container to the body
+        alertContainer.appendChild(alert);
+        document.body.appendChild(alertContainer);
+
+
+        // Remove the alert after 4 seconds
+        setTimeout(() => {
+            alertContainer.remove();
+        }, 5000);
+
+        // Apply the CSS styles to the alert element
+        const styles = `
+    .alert-container {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    z-index: 3234;
+
+    }
+
+    .alert {
+      position: absolute;
+      width: 400px;
+      padding: 0px;
+      text-align: center;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      transform: translate(-50%, -50%);
+  word-wrap: break-word;
+  max-width: 90%;
+ animation: slide-in 0.3s ease-in-out forwards, slide-out 0.3s ease-in-out forwards 4.7s; /* added slide-in and slide-out animations */
+    }
+
+
+@keyframes slide-in {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-out {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+    .alert h2 {
+padding-top: 5px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+.alert-header {
+  position: relative;
+}
+
+.alert-header::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background-color: white;
+  animation: alert-header-animation 5s linear;
+}
+
+@keyframes alert-header-animation {
+  0% { width: 0; }
+  100% { width: 100%; }
+}
+
+    .alert p {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      padding: 5px;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #ccc;
+      cursor: pointer;
+      z-index: 3235;
+    }
+
+    .close-btn:hover {
+      color: #999;
+    }
+  `;
+        const styleEl = document.createElement('style');
+        styleEl.textContent = styles;
+        alert.appendChild(styleEl);
+    }
+
 
 </script>
 

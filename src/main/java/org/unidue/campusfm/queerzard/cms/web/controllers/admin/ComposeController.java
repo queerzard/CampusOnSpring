@@ -54,4 +54,9 @@ public class ComposeController {
         return "admin/compose";
     }
 
+    @GetMapping("/compose")
+    public String getComposer(){
+        return "redirect:/compose/1";
+    }
+
 }
