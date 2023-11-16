@@ -19,8 +19,11 @@ public class ReaderController {
     @RequestMapping("/article")
     public String onRead(Model model, @RequestParam("a") @NotBlank String articleId){
         if(!articleService.articleExistsById(articleId))
-            return "redirect: /";
+            return "redirect:/";
         ArticleEntity article = articleService.getArticleByPostId(articleId);
+        if(!article.isPublished())
+            return "redirect:/";
+
         article.setViews(article.getViews() + 1);
         this.articleService.update(article);
         model.addAttribute("article", article);

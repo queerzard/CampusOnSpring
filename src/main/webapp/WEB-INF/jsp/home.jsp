@@ -89,7 +89,7 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
                     <div class="card-body p-4">
                         <p class="text-primary card-text mb-0">${article.category}</p>
                         <h4 class="card-title">${article.title}</h4>
-                        <p class="card-text" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100px;">${article.previewContent}</p>
+                        <p class="card-text" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 400px;">${article.previewContent}</p>
                         <div class="d-flex">
                             <img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="50" height="50"
                                  src="data:image/png;base64, ${article.userEntity.base64Avatar}"/>
