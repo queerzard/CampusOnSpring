@@ -7,9 +7,10 @@ import org.unidue.campusfm.queerzard.cms.utils.validators.DisallowedCharacters;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 @Data
-public class RegistrationModel {
+public class RegistrationModel implements Serializable {
 
     @NotBlank(message = "Username is a mandatory field!")
     @DisallowedCharacters(message = "This field cannot contain special characters!")

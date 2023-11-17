@@ -59,9 +59,13 @@
                     <a class="nav-link" href="/myprofile">Profile</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/register">Register New Profile</a>
+                    <a class="nav-link" href="/compose/1">Compose</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/register">Register</a>
                 </li>
             </ul>
+
         </div>
     </nav>
     <div class="row">

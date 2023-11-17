@@ -1,5 +1,6 @@
 package org.unidue.campusfm.queerzard.cms.config.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -9,6 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.unidue.campusfm.queerzard.cms.database.services.interfaces.UserService;
 import org.unidue.campusfm.queerzard.cms.database.services.user.CampusUserDetails;
 
 @Component
@@ -16,6 +18,8 @@ public class CampusAuthenticationProvider implements AuthenticationProvider {
 
 
 
+    @Autowired
+    private UserService userService;
     private final UserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
 
@@ -36,7 +40,11 @@ public class CampusAuthenticationProvider implements AuthenticationProvider {
         if (!passwordEncoder.matches(password, userDetails.getPassword()))
             throw new AuthenticationException("Invalid credentials") {};
 
+        if(!userDetails.isEnabled())
+            throw new AuthenticationException("Account Disabled!") {};
+
         userDetails.getUserEntity().updateLastLogin();
+        userService.update(userDetails.getUserEntity());
         // Create a fully authenticated Authentication object
         Authentication authenticated = new UsernamePasswordAuthenticationToken(
                 userDetails, null, userDetails.getAuthorities());
