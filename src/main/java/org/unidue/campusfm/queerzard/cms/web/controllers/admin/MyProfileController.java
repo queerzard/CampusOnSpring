@@ -48,16 +48,17 @@ public class MyProfileController {
         UserEntity userEntity = userService.getUserByUsername(username);
 
 
-        List<ArticleEntity> draftEntitiesList = articleService.findAll();
-        model.addAttribute("draftEntitiesList", draftEntitiesList);
+        List<ArticleEntity> draftEntitiesList;
+
         model.addAttribute("userEntity", userEntity);
 
         if(!notSelf && !notAdmin){
-            // show all drafts and own profile
+            draftEntitiesList = articleService.findAllUnpublishedArticles();
         } else {
-            //show other users profile
+            draftEntitiesList = articleService.findAllUnpublishedByAuthor(userEntity);
         }
 
+        model.addAttribute("draftEntitiesList", draftEntitiesList);
         return "admin/myprofile";
     }
 

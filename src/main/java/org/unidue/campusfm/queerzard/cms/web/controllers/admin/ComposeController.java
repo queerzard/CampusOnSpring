@@ -44,9 +44,10 @@ public class ComposeController {
 
         ArticleEntity articleEntity = articleService.getArticleByPostId(articleId);
 
+        boolean notAdmin = !userDetails.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().contains("ADMIN"));
         if(!articleEntity.getUserEntity().getId()
-                .equals(userDetails.getUserEntity().getId()) || !userDetails.getAuthorities().stream()
-                .anyMatch(a -> a.getAuthority().contains("ADMIN")))
+                .equals(userDetails.getUserEntity().getId()) && notAdmin || notAdmin && !articleEntity.isEditable())
             return "redirect:/";
 
         model.addAttribute("articleEntity", articleEntity);

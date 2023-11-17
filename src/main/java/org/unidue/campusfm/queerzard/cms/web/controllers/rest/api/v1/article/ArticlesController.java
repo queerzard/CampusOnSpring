@@ -110,13 +110,19 @@ public class ArticlesController {
             articleEntity = articleService.getArticleByPostId(articleId);
 
             //check the articles availability and the authentication / return error if
-            if(/*!articleEntity.isPublished() && */(userDetails == null || !articleEntity.getUserEntity().getId()
-                    .equals(userDetails.getUserEntity().getId()) || !userDetails.getAuthorities().stream()
-                    .anyMatch(a -> a.getAuthority().contains("ADMIN"))))
+            if (userDetails == null || // Not authenticated
+                    (articleEntity.isPublished() && // Article is published
+                            (!articleEntity.getUserEntity().getId().equals(userDetails.getUserEntity().getId()) || // User is not the owner
+                                    !userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().contains("ADMIN")))))
                 return new ResponseEntity<>(new RestResponse(HttpStatus.UNAUTHORIZED,
                         "[handlePostMapping] access to an unpublished resource is restricted. not an administrator nor the author;"), HttpStatus.UNAUTHORIZED);
 
-            articleEntity.setPublished(publishBool);
+            if(!userDetails.getAuthorities().stream()
+                    .anyMatch(a -> a.getAuthority().contains("ADMIN")) && articleEntity.isEditable())
+                articleEntity.setEditable(!publishBool);
+            else if(publishBool)
+                articleEntity.setPublished(true);
+
             articleService.update(articleEntity);
 
             return new ResponseEntity<>(new RestResponse(HttpStatus.OK, "publication status modified!"), HttpStatus.OK);
@@ -149,9 +155,10 @@ public class ArticlesController {
         articleEntity = articleService.getArticleByPostId(articleId);
 
         //check the articles availability and the authentication / return error if
-        if((userDetails == null || articleEntity.isPublished() || !articleEntity.getUserEntity().getId()
-                .equals(userDetails.getUserEntity().getId()) || !userDetails.getAuthorities().stream()
-                .anyMatch(a -> a.getAuthority().contains("ADMIN"))))
+        if (userDetails == null || // Not authenticated
+                (articleEntity.isPublished() && // Article is published
+                        (!articleEntity.getUserEntity().getId().equals(userDetails.getUserEntity().getId()) || // User is not the owner
+                                !userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().contains("ADMIN")))))
             return new ResponseEntity<>(new RestResponse(HttpStatus.UNAUTHORIZED,
                     "[handlePutMapping] a published resource cannot be replaced and needs to be taken down first. not an administrator nor the author;"), HttpStatus.UNAUTHORIZED);
 
@@ -192,9 +199,10 @@ public class ArticlesController {
         articleEntity = articleService.getArticleByPostId(articleId);
 
         //check the articles availability and the authentication / return error if
-        if((userDetails == null || !articleEntity.getUserEntity().getId()
-                .equals(userDetails.getUserEntity().getId()) || !userDetails.getAuthorities().stream()
-                .anyMatch(a -> a.getAuthority().contains("ADMIN"))))
+        if (userDetails == null || // Not authenticated
+                (articleEntity.isPublished() && // Article is published
+                        (!articleEntity.getUserEntity().getId().equals(userDetails.getUserEntity().getId()) || // User is not the owner
+                                !userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().contains("ADMIN")))))
             return new ResponseEntity<>(new RestResponse(HttpStatus.UNAUTHORIZED,
                     "[handlePatchMapping] access to this resource is restricted. not an administrator nor the author;"), HttpStatus.UNAUTHORIZED);
 
@@ -231,42 +239,15 @@ public class ArticlesController {
         //obtain article from DB
         articleEntity = articleService.getArticleByPostId(articleId);
 
-        if(articleEntity.isPublished() && (userDetails == null || (!articleEntity.getUserEntity().getId()
-                .equals(userDetails.getUserEntity().getId()) || !userDetails.getAuthorities().stream()
-                .anyMatch(a -> a.getAuthority().contains("ADMIN")))))
+        if (userDetails == null || // Not authenticated
+                (articleEntity.isPublished() && // Article is published
+                        (!articleEntity.getUserEntity().getId().equals(userDetails.getUserEntity().getId()) || // User is not the owner
+                                !userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().contains("ADMIN")))))
             return new ResponseEntity<>(new RestResponse(HttpStatus.UNAUTHORIZED,
                     "[handleDeleteMapping] resources can only be deleted by their author or an administrator!"), HttpStatus.UNAUTHORIZED);
 
         articleService.delete(articleEntity);
         return new ResponseEntity<>(new RestResponse(HttpStatus.OK, "article deleted successfully"), HttpStatus.OK);
-    }
-
-    @SneakyThrows
-    @PostMapping("/uploadThumbnail")
-    public ResponseEntity<Object> handleThumbnailUpload(Authentication authentication,
-                                                      @RequestParam("article") String articleId,
-                                                      @RequestParam("banner") MultipartFile multipartFile){
-        ArticleEntity articleEntity;
-        CampusUserDetails userDetails = (authentication != null ? (CampusUserDetails) authentication.getPrincipal() : null);
-
-        //check if article by that ID exists
-        if(!articleService.articleExistsById(articleId))
-            return new ResponseEntity<>(new RestResponse(HttpStatus.NOT_FOUND,
-                    "[handleThumbnail] this resource couldn't be found. unavailable resource;"), HttpStatus.NOT_FOUND);;
-        //obtain article from DB
-        articleEntity = articleService.getArticleByPostId(articleId);
-
-        //check the articles availability and the authentication / return error if
-        if((userDetails == null || articleEntity.isPublished() || !articleEntity.getUserEntity().getId()
-                .equals(userDetails.getUserEntity().getId()) || !userDetails.getAuthorities().stream()
-                .anyMatch(a -> a.getAuthority().contains("ADMIN"))))
-            return new ResponseEntity<>(new RestResponse(HttpStatus.UNAUTHORIZED,
-                    "[handleThumbnail] a published resource cannot be modified and needs to be taken down first. not an administrator nor the author;"), HttpStatus.UNAUTHORIZED);
-
-        // code...
-        articleEntity.setBase64preview(Base64.encodeBase64String(multipartFile.getBytes()));
-
-        return new ResponseEntity<>(new RestResponse(HttpStatus.OK, "avatar updated successfully!"), HttpStatus.OK);
     }
 
 }

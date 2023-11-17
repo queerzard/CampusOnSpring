@@ -49,6 +49,16 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public List<ArticleEntity> findAllUnpublishedArticles() {
+        return articleRepository.findAllUnpublishedArticles();
+    }
+
+    @Override
+    public List<ArticleEntity> findAllUnpublishedByAuthor(UserEntity user) {
+        return articleRepository.findAllUnpublishedByAuthor(user);
+    }
+
+    @Override
     public boolean articleExistsById(String id) {
         return articleRepository.existsArticleEntityById(id);
     }
@@ -70,7 +80,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public List<ArticleEntity> findAllPublishedArticles(int pageNumber, int pageSize) {
-        return articleRepository.findAllByPublishedTrue(PageRequest.of(pageNumber, pageSize));
+        return articleRepository.findAllPublishedArticles(PageRequest.of(pageNumber, pageSize));
     }
 
     @Override

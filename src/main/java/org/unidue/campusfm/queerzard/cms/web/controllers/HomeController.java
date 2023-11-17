@@ -19,13 +19,10 @@ public class HomeController {
     @Autowired
     private ArticleService articleService;
 
-    //TODO: HANDLE VALIDATION
-
     @RequestMapping(value = {"/", "/home"})
     public String onAccess(Model model, @RequestParam(defaultValue = "1") @Min(1) @Positive int page){
         List<ArticleEntity> entities = articleService
                 .findAllPublishedArticles((page > 0 ? (page -1) : (page < 0 ? 0 : page)), 9);
-        Collections.reverse(entities);
         model.addAttribute("articleEntitiesList", entities);
         return "home";
     }

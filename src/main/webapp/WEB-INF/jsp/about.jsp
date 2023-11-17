@@ -112,7 +112,7 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
                                     class="small text-uppercase text-muted">${userEntity.position}</span></br>
                             <ul class="social mb-0 list-inline mt-3">
                                 <li class="list-inline-item"><a href="${userEntity.social}" class="social-link"><i
-                                        class="fa fa-envelope"></i></a></li>
+                                        class="fa fa-solid fa-at"></i></a></li>
 
                             </ul>
                         </div>

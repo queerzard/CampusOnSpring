@@ -42,8 +42,9 @@
         <div class="row profile-row">
             <div class="col-md-4 relative">
                 <div class="avatar">
-                    <div class="avatar-bg center"></div>
-                </div><input class="form-control form-control" type="file" name="avatar-file">
+                    <div class="avatar-bg center" id="background-ava" style="background-image: url('data:image/png;base64, ${userEntity.base64Avatar}')"></div></div>
+                    <input id="avatar-file" class="form-control form-control" type="file" name="avatar-file" onchange="previewImage()">
+                    <input id="base64-image" type="hidden" style="display: none" name="base64-image">
             </div>
             <div class="col-md-8">
                 <h2>${userEntity.username}'s Profile </h2>
@@ -59,10 +60,10 @@
                 <div class="form-group mb-3"><label class="form-label">Email </label><input class="form-control" type="email" autocomplete="off" name="email" value="${userEntity.email}"></div>
                 <div class="row">
                     <div class="col-sm-12 col-md-6">
-                        <div class="form-group mb-3"><label class="form-label">Social Link</label><input class="form-control" type="password" name="password" autocomplete="off" ></div>
+                        <div class="form-group mb-3"><label class="form-label">Social Link</label><input class="form-control" name="social" autocomplete="off"  value="${userEntity.social}"></div>
                     </div>
                     <div class="col-sm-12 col-md-6">
-                        <div class="form-group mb-3"><label class="form-label">Position Name</label><input class="form-control" type="password" name="confirmpass" autocomplete="off" ></div>
+                        <div class="form-group mb-3"><label class="form-label">Position Name</label><input class="form-control" name="position" autocomplete="off" value="${userEntity.position}"></div>
                     </div>
                 </div>
                 <hr>
@@ -98,7 +99,9 @@
             <c:forEach items="${draftEntitiesList}" var="draft">
             <a class="list-group-item list-group-item-action flex-column align-items-start" href="/compose/${draft.id}">
                 <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">${draft.title}</h5><span class="badge rounded-pill bg-primary align-self-center">Status</span>
+                    <h5 class="mb-1">${draft.title}</h5><span class="badge rounded-pill align-self-center
+        ${draft.editable ? 'bg-primary' : (draft.published ? 'bg-success' : 'bg-warning')}">
+                        ${draft.editable ? 'Drafted' : (draft.published ? 'Published' : 'Queued')}
                 </div>
                 <p class="mb-1">${draft.previewContent}</p>
                 <small class="text-muted">${draft.userEntity.firstName} ${draft.userEntity.lastName}</small>
@@ -112,6 +115,29 @@
 </div>
 <div class="list-group"></div>
 <script src="/assets/dashboard/assets/bootstrap/js/bootstrap.min.js"></script>
+
+<script>
+
+
+    function previewImage() {
+            const input = document.getElementById('avatar-file');
+            const backgroundDiv = document.getElementById('background-ava');
+
+            const file = input.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    const base64Image = e.target.result;
+                    backgroundDiv.style.backgroundImage = `url('`+ base64Image + `')`;
+                    document.getElementById('base64-image').value = base64Image;
+                };
+
+                reader.readAsDataURL(file);
+            }
+        }
+</script>
 </body>
 
 </html>

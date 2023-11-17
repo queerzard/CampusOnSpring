@@ -18,8 +18,8 @@ public interface ArticleRepository extends JpaRepository<ArticleEntity, Long> {
     @Query("SELECT a FROM ArticleEntity a WHERE a.published = true AND a.views >= :minViews")
     List<ArticleEntity> findPopularArticlesWithMinViews(int minViews);
 
-    @Query("SELECT a FROM ArticleEntity a WHERE a.published = true")
-    List<ArticleEntity> findAllPublishedArticles();
+    @Query("SELECT a FROM ArticleEntity a WHERE a.published = true AND a.publishedMillis IS NOT NULL ORDER BY a.publishedMillis DESC")
+    List<ArticleEntity> findAllPublishedArticles(Pageable pageable);
 
     @Query("SELECT a FROM ArticleEntity a WHERE a.published = false")
     List<ArticleEntity> findAllUnpublishedArticles();
@@ -40,6 +40,8 @@ public interface ArticleRepository extends JpaRepository<ArticleEntity, Long> {
             "LOWER(a.title) LIKE LOWER(concat('%', :query, '%')) OR " +
             "LOWER(a.contents) LIKE LOWER(concat('%', :query, '%')) )")
     List<ArticleEntity> findArticlesByQuery(@Param("query") String query, Pageable pageable);
+
+
 
     @Query("SELECT a FROM ArticleEntity a WHERE a.published = true AND ( " +
             "LOWER(a.tags) LIKE LOWER(concat('%', :query, '%')) OR " +

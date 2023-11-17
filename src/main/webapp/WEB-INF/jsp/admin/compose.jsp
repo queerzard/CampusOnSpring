@@ -213,7 +213,7 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
             setPublished(true);
 
         }, 900);
-        displayAlert('1cc88a', 'Success!', "Article Submitted!");
+        alert('Article Submitted!');
 
         setTimeout(() => {
             window.location.href = "/article?a=" + postId;
@@ -244,16 +244,16 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
         })
             .done(function(response) {
                 // handle the server response
-                if (response.success) {
+                if (response.status == 200) {
                     console.log(response.message);
-                    displayAlert('1cc88a', 'Success!', response.message);
+                    alert(response.message);
                     // redirect to the URL received from the server
                     setTimeout(() => {
                         window.location.href = "/home";
                     }, 1200);
                 } else {
-                    console.log(response.message);
-                    displayAlert('e74a3b', 'Error!', response.message);
+                    console.log(response.message + response.status);
+                    alert(response.message);
                     // display an error message to the user
                 }
             });
@@ -310,13 +310,13 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
         })
             .done(function(response) {
                 // handle the server response
-                if (response.success) {
+                if (response.status == 200) {
                     console.log(response.message);
-                    displayAlert('1cc88a', 'Success!', response.message);
+                    alert(response.message);
                     // redirect to the URL received from the server
                 } else {
                     console.log(response.message);
-                    displayAlert('e74a3b', 'Error!', response.message);
+                    alert(response.message);
                     // display an error message to the user
                 }
             });
@@ -338,155 +338,20 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
         })
             .done(function(response) {
                 // handle the server response
-                if (response.success) {
+                if (response.status == 200) {
                     console.log(response.message);
                     console.log(response.data.url);
-                    displayAlert('1cc88a', 'Success!', response.message);
+                    alert(response.message);
                     // redirect to the URL received from the server
                     setTimeout(() => {
                         window.location.href = '/article?a=' + postId;
                     }, 4000);
                 } else {
                     console.log(response.message);
-                    displayAlert('e74a3b', 'Error!', response.message);
+                    alert(response.message);
                     // display an error message to the user
                 }
             });
-    }
-
-    function displayAlert(colorHex, heading, message) {
-        // Create the alert container element
-        const alertContainer = document.createElement('div');
-        alertContainer.className = 'alert-container';
-
-        // Create the alert element with the provided color, heading, and message
-        const alert = document.createElement('div');
-        alert.className = 'alert';
-        alert.style.backgroundColor = `#` + colorHex;
-        alert.innerHTML = `
-<div class="alert-header">
-      <div class="white-line"></div>
-    </div>
-    <h2>[(${heading})]</h2>
-    <p>[(${message})]</p>
-    <span class="close-btn">&times;</span>
-  `;
-
-        // Add a click event listener to the close button
-        const closeBtn = alert.querySelector('.close-btn');
-        closeBtn.addEventListener('click', () => {
-            alertContainer.remove();
-        });
-
-        // Append the alert to the container, and the container to the body
-        alertContainer.appendChild(alert);
-        document.body.appendChild(alertContainer);
-
-
-        // Remove the alert after 4 seconds
-        setTimeout(() => {
-            alertContainer.remove();
-        }, 5000);
-
-        // Apply the CSS styles to the alert element
-        const styles = `
-    .alert-container {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    z-index: 3234;
-
-    }
-
-    .alert {
-      position: absolute;
-      width: 400px;
-      padding: 0px;
-      text-align: center;
-      background-color: #fff;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-      transform: translate(-50%, -50%);
-  word-wrap: break-word;
-  max-width: 90%;
- animation: slide-in 0.3s ease-in-out forwards, slide-out 0.3s ease-in-out forwards 4.7s; /* added slide-in and slide-out animations */
-    }
-
-
-@keyframes slide-in {
-  from {
-    transform: translateX(100%);
-  }
-  to {
-    transform: translateX(0);
-  }
-}
-
-@keyframes slide-out {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(100%);
-  }
-}
-    .alert h2 {
-padding-top: 5px;
-      font-size: 1.5rem;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-
-.alert-header {
-  position: relative;
-}
-
-.alert-header::before {
-  content: "";
-  position: absolute;
-  top: -2px;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background-color: white;
-  animation: alert-header-animation 5s linear;
-}
-
-@keyframes alert-header-animation {
-  0% { width: 0; }
-  100% { width: 100%; }
-}
-
-    .alert p {
-      font-size: 1.2rem;
-      margin-bottom: 20px;
-      padding: 5px;
-    }
-
-    .close-btn {
-      position: absolute;
-      top: 2px;
-      right: 2px;
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: #ccc;
-      cursor: pointer;
-      z-index: 3235;
-    }
-
-    .close-btn:hover {
-      color: #999;
-    }
-  `;
-        const styleEl = document.createElement('style');
-        styleEl.textContent = styles;
-        alert.appendChild(styleEl);
     }
 
 

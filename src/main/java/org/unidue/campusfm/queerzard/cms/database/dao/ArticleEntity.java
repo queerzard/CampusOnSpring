@@ -70,14 +70,12 @@ public class ArticleEntity extends AbstractEntity{
 
     public void setPublished(boolean published) {
         this.published = published;
+        this.editable = !published;
         if(published){
             publishedMillis = System.currentTimeMillis();
-            this.editable = false;
             this.publishDayOfMonth = UtilitiesCollection.getDay(publishedMillis);
             this.publishMonthName = UtilitiesCollection.getMonth(publishedMillis);
             this.publishYear = UtilitiesCollection.getYear(publishedMillis);
-        } else {
-            editable = true;
         }
     }
 

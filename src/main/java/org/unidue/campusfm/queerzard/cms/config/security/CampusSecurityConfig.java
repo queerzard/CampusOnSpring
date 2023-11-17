@@ -35,7 +35,7 @@ public class CampusSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 /*.csrf().disable()*/
-                .csrf().ignoringAntMatchers("/api/v1/**").and()
+                .csrf().ignoringAntMatchers("/api/v1/**", "/register").and()
                 .authorizeRequests()
                     .antMatchers("/").permitAll()
                     .antMatchers("/home").permitAll()
@@ -56,7 +56,7 @@ public class CampusSecurityConfig extends WebSecurityConfigurerAdapter {
 
                     .antMatchers("/myprofile").authenticated()
                     .antMatchers("/compose").authenticated()
-                    .antMatchers("/drafts").authenticated()
+                    .antMatchers("/register").authenticated()
 
                 .anyRequest().authenticated()
 
