@@ -1,34 +1,40 @@
 package org.unidue.campusfm.queerzard.cms.web.dto;
 
 import lombok.Data;
-import lombok.Getter;
 import org.unidue.campusfm.queerzard.cms.utils.validators.DisallowedCharacters;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @Data
-public class RegistrationModel implements Serializable {
+public class RegistrationModel{
 
-    @NotBlank(message = "Username is a mandatory field!")
+    @Size(min = 0, max = 16, message = "Role must have a length of 0 to 16 characters!")
+    @NotBlank(message = "role is a mandatory field!")
     @DisallowedCharacters(message = "This field cannot contain special characters!")
-    @Size(min = 5, max = 16, message = "Your username must have a length of 5 to 16 characters!")
-    private String username;
+    private String role;
 
-    @NotBlank(message = "Email is a mandatory field!")
+    @Size(min = 0, max = 16, message = "Position must have a length of 0 to 16 characters!")
+    @NotBlank(message = "role is a mandatory field!")
+    @DisallowedCharacters(message = "This field cannot contain special characters!")
+    private String position;
+
+
     @Email(message = "Please enter a valid email!")
+    @NotBlank(message = "Email is a mandatory field!")
     private String email;
 
-    @NotBlank(message = "Password is a mandatory field!")
     @Size(min = 8, max = 32, message = "Your password must have a length of 8 to 32 characters!")
+    @NotBlank(message = "Password is a mandatory field!")
     private String password;
 
     @Override
     public String toString() {
         return "RegistrationModel{" +
-                "username='" + username + '\'' +
+                "role='" + role + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 '}';

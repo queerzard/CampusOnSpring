@@ -49,9 +49,9 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
                 <li class="nav-item">
                     <a class="nav-link" href="/about"><msg:message code="navigator.label.about"/></a>
                 </li>
-                <li class="nav-item">
+<%--                <li class="nav-item">
                     <a class="nav-link" href="/events"><msg:message code="navigator.label.events"/></a>
-                </li>
+                </li>--%>
                 <li class="nav-item">
 
                     <a class="nav-link" href="/login"><msg:message code="navigator.label.login"/></a>

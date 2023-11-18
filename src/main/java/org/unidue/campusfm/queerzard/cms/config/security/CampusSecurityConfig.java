@@ -42,6 +42,7 @@ public class CampusSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/search").permitAll()
                     .antMatchers("/article").permitAll()
                     .antMatchers("/about").permitAll()
+                    .antMatchers("/author/**").permitAll()
                     .antMatchers("/contact").permitAll()
                     .antMatchers("/listen").permitAll()
                     .antMatchers("/imprint").permitAll()

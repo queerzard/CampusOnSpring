@@ -51,9 +51,9 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
                 <li class="nav-item">
                     <a class="nav-link" href="/about"><msg:message code="navigator.label.about" /></a>
                 </li>
-                <li class="nav-item">
+<%--                <li class="nav-item">
                     <a class="nav-link" href="/events"><msg:message code="navigator.label.events" /></a>
-                </li>
+                </li>--%>
                 <li class="nav-item">
                     <a class="nav-link" href="/login"><msg:message code="navigator.label.login" /></a>
                 </li>
@@ -93,28 +93,6 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
                         ${article.userEntity.firstName} ${article.userEntity.lastName} <msg:message code="page.article.publishedOn" />
                         ${article.publishMonthName} ${article.publishDayOfMonth}, ${article.publishYear}</a></p></div>
             <hr>
-
-            <%--<div class="col">
-                <a href="/article?a=${article.id}">
-                    <div class="card">
-                        <img class="card-img-top w-100 d-block fit-cover" style="height: 200px;"
-                             src="data:image/png;base64, ${article.base64preview}"/>
-                        <div class="card-body p-4">
-                            <p class="text-primary card-text mb-0">${article.category}</p>
-                            <h4 class="card-title">${article.title}</h4>
-                            <p class="card-text">${article.previewContent}</p>
-                            <div class="d-flex">
-                                <img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="50" height="50"
-                                     src="data:image/png;base64, ${article.userEntity.base64Avatar}"/>
-                                <div>
-                                    <p class="fw-bold mb-0">${article.userEntity.firstName} ${article.userEntity.lastName}</p>
-                                    <p class="text-muted mb-0">${article.publishMonthName} ${article.publishDayOfMonth}, ${article.publishYear}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>--%>
         </c:forEach>
 
     </div>

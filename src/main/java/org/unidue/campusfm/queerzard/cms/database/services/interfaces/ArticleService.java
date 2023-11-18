@@ -22,12 +22,17 @@ public interface ArticleService {
     boolean articleExistsById(String id);
     ArticleEntity getArticleByPostId(String postId);
     List<ArticleEntity> getArticlesByAuthor(UserEntity user);
+
+    List<ArticleEntity> getArticlesByAuthor(UserEntity user, Pageable pageable);
+
     List<ArticleEntity> getArticlesWithString(String regex);
 
     List<ArticleEntity> findAllPublishedArticles(int page, int pageSize);
 
     List<ArticleEntity> findArticlesByQuery(String query, int pageNumber, int pageSize);
     List<ArticleEntity> findAllArticlesByQuery(String query);
+    List<ArticleEntity> findAllPublishedArticlesByAuthor(UserEntity user);
+
 
     void delete(ArticleEntity article);
 

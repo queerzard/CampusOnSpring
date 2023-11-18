@@ -1,17 +1,20 @@
 package org.unidue.campusfm.queerzard.cms.web.controllers.admin.security;
 
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.unidue.campusfm.queerzard.cms.database.dao.UserEntity;
 import org.unidue.campusfm.queerzard.cms.database.services.interfaces.UserService;
 import org.unidue.campusfm.queerzard.cms.database.services.user.CampusUserDetails;
 import org.unidue.campusfm.queerzard.cms.web.dto.RegistrationModel;
 
-@Controller
+import javax.validation.Valid;
+
+@Controller @Validated
 public class RegistrationController {
 
     @Autowired
@@ -36,9 +39,7 @@ public class RegistrationController {
                                   @ModelAttribute("registrationModel") @Valid RegistrationModel registrationModel,
                                   BindingResult result, Model model){
 
-    /*    ValidationUtils.invokeValidator(validator, registrationModel, result);*/
-
-                CampusUserDetails userDetails = (authentication != null ? (CampusUserDetails) authentication.getPrincipal() : null);
+        CampusUserDetails userDetails = (authentication != null ? (CampusUserDetails) authentication.getPrincipal() : null);
         boolean admin = false;
         if(userDetails == null || !(admin = userDetails.getAuthorities().stream()
                 .anyMatch(a -> a.getAuthority().contains("ADMIN"))))
@@ -46,11 +47,19 @@ public class RegistrationController {
 
         if(result.hasErrors()) {
             System.out.println("HAHAHAH KAKA2");
-            return "admin/register";
+            return "redirect:/register?error=Validation Error! Check Parameters";
         }
 
+        if(userService.userExistsByEmail(registrationModel.getEmail()))
+            return "redirect:/register?error=This user already exists!";
+
+        UserEntity entity;
+        userService.addUserIfNotExists((entity = new UserEntity("", "",
+                registrationModel.getEmail(),
+                registrationModel.getPassword(), "USER", "", true)));
+
         System.out.println("kaka 3 :c");
-        return "admin/register";
+        return "redirect:/profile/" + entity.getUsername();
     }
 
 }

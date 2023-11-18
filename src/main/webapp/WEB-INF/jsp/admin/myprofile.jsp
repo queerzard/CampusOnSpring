@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="msg" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html data-bs-theme="light" lang="en">
 
@@ -11,6 +12,8 @@
     <title>Dashboard</title>
     <link rel="stylesheet" href="/assets/dashboard/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/dashboard/assets/css/styles.min.css">
+    <link rel="stylesheet" href="/assets/css/Toggle-Switch-toggle-switch.css">
+    <link rel="stylesheet" href="/assets/css/Toggle-Switch.css">
 </head>
 
 <body>
@@ -41,41 +44,70 @@
             <div class="alert alert-info alert-dismissible absolue center" role="alert"><button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="alert"></button><span>Profile save with success</span></div>
         </div>
     </div>
-    <form>
-        <div class="row profile-row">
+    <%--@elvariable id="profileModel" type="org.unidue.campusfm.queerzard.cms.web.dto.ProfileModel"--%>
+    <form:form action="/profile/${userEntity.username}" method="post" modelAttribute="profileModel" >
+    <div class="row profile-row">
             <div class="col-md-4 relative">
                 <div class="avatar">
                     <div class="avatar-bg center" id="background-ava" style="background-image: url('data:image/png;base64, ${userEntity.base64Avatar}')"></div></div>
-                    <input id="avatar-file" class="form-control form-control" type="file" name="avatar-file" onchange="previewImage()">
-                    <input id="base64-image" type="hidden" style="display: none" name="base64-image">
+                    <input id="avatar-file" class="form-control form-control" type="file" onchange="previewImage()">
+                    <form:input id="base64-image" type="hidden" style="display: none" name="base64-image" path="base64Avatar"/>
             </div>
             <div class="col-md-8">
                 <h2>${userEntity.username}'s Profile </h2>
                 <hr>
                 <div class="row">
                     <div class="col-sm-12 col-md-6">
-                        <div class="form-group mb-3"><label class="form-label">Firstname </label><input class="form-control" type="text" name="firstname" value="${userEntity.firstName}"></div>
+                        <div class="form-group mb-3">
+                            <label class="form-label">Firstname </label>
+                            <form:input class="form-control" type="text" name="firstname" id="firstname" value="${userEntity.firstName}" path="firstName"/>
+                        </div>
                     </div>
+
                     <div class="col-sm-12 col-md-6">
-                        <div class="form-group mb-3"><label class="form-label">Lastname </label><input class="form-control" type="text" name="lastname" value="${userEntity.lastName}"></div>
+                        <div class="form-group mb-3">
+                            <label class="form-label">Lastname </label>
+                            <form:input class="form-control" type="text" name="lastname" id="lastname" value="${userEntity.lastName}" path="lastName"/>
+                        </div>
                     </div>
+
                 </div>
-                <div class="form-group mb-3"><label class="form-label">Email </label><input class="form-control" type="email" autocomplete="off" name="email" value="${userEntity.email}"></div>
+
+                <div class="form-group mb-3">
+                    <label class="form-label">Email </label>
+                    <form:input class="form-control" type="email" autocomplete="off" name="email" id="email" value="${userEntity.email}" path="email"/>
+                </div>
+
                 <div class="row">
                     <div class="col-sm-12 col-md-6">
-                        <div class="form-group mb-3"><label class="form-label">Social Link</label><input class="form-control" name="social" autocomplete="off"  value="${userEntity.social}"></div>
+                        <div class="form-group mb-3">
+                            <label class="form-label">Social Link</label>
+                            <form:input class="form-control" name="social" id="social" autocomplete="off"  value="${userEntity.social}" path="socialLink"/>
+                        </div>
                     </div>
+
                     <div class="col-sm-12 col-md-6">
-                        <div class="form-group mb-3"><label class="form-label">Position Name</label><input class="form-control" name="position" autocomplete="off" value="${userEntity.position}"></div>
+                        <div class="form-group mb-3">
+                            <label class="form-label">Position Name</label>
+                            <form:input class="form-control" name="position" id="position" autocomplete="off" value="${userEntity.position}" path="position"/>
+                        </div>
                     </div>
+
                 </div>
                 <hr>
                 <div class="row">
-                    <div class="col-md-12 content-right"><button class="btn btn-primary form-btn" type="submit">SAVE </button><button class="btn btn-danger form-btn" type="button">DEACTIVATE</button></div>
+                    <div class="col-md-12 content-right">
+                        <button class="btn btn-primary form-btn" type="submit">SAVE</button>
+                        <label class="switch">
+                            <input type="checkbox" id="enabled" name="enabled" ${userEntity.enabled ? 'checked' : ''}/>
+                            <span class="slider round"></span>
+                        </label>
+                </div></div>
                 </div>
             </div>
         </div>
-    </form>
+    </form:form>
+
 </div>
 <div class="container">
     <div class="row">
@@ -94,10 +126,11 @@
         </div>
         <div class="col-md-6">
             <div>
-                <h3>(coming soon...)</h3>
+                <h3>Public</h3>
                 <hr class="mt-0">
             </div>
         </div>
+
         <div class="col-md-6">
             <c:forEach items="${draftEntitiesList}" var="draft">
             <a class="list-group-item list-group-item-action flex-column align-items-start" href="/compose/${draft.id}">
@@ -113,7 +146,21 @@
             </c:forEach>
 
         </div>
-        <div class="col-md-6"></div>
+        <div class="col-md-6">
+            <c:forEach items="${articleEntitiesList}" var="article">
+                <a class="list-group-item list-group-item-action flex-column align-items-start" href="/article?a=${article.id}">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">${article.title}</h5><span class="badge rounded-pill align-self-center
+        ${article.editable ? 'bg-primary' : (article.published ? 'bg-success' : 'bg-warning')}">
+                            ${article.editable ? 'Drafted' : (article.published ? 'Published' : 'Queued')}
+                    </div>
+                    <p class="mb-1">${article.previewContent}</p>
+                    <small class="text-muted">${article.userEntity.firstName} ${article.userEntity.lastName}</small>
+                </a>
+                <hr>
+            </c:forEach>
+
+        </div>
     </div>
 </div>
 <div class="list-group"></div>

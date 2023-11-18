@@ -39,7 +39,7 @@ public class UserEntity extends AbstractEntity{
 
 
     @Column(columnDefinition = "LONGTEXT")
-    @JsonIgnore @Getter
+    @JsonIgnore @Getter @Setter
     private String base64Avatar;
 
     @Getter @Setter private boolean enabled;

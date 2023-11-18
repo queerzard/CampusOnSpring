@@ -94,6 +94,16 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public List<ArticleEntity> findAllPublishedArticlesByAuthor(UserEntity user) {
+        return articleRepository.findAllPublishedByAuthor(user);
+    }
+
+    @Override
+    public List<ArticleEntity> getArticlesByAuthor(UserEntity user, Pageable pageable) {
+        return articleRepository.findArticleEntitiesByUserEntityAndPublishedTrueOrderByPublishedMillisDesc(user, pageable);
+    }
+
+    @Override
     public void delete(ArticleEntity article) {
         articleRepository.delete(article);
     }

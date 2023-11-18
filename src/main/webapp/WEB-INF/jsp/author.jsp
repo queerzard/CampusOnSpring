@@ -9,17 +9,17 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title><msg:message code="page.listen.title"/></title>
+    <title><msg:message code="page.author.title"/></title>
     <meta name="twitter:title" content="CampusFM - Klingt... anders!">
-    <meta property="og:image" content="assets/img/cropped-Logo-Tab-180x180.png">
+    <meta property="og:image" content="/assets/img/cropped-Logo-Tab-180x180.png">
     <meta name="description" content="Klingt... anders!
 Das Uni-Radio der Uni-Duisburg-Essen.">
-    <meta name="twitter:image" content="assets/img/cropped-Logo-Tab-180x180.png">
+    <meta name="twitter:image" content="/assets/img/cropped-Logo-Tab-180x180.png">
     <meta name="twitter:description" content="Das Uni-Radio der Uni-Duisburg-Essen">
-    <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="assets/img/cropped-Logo-Tab-180x180.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/cropped-Logo-Tab-32x32.png">
-    <link rel="icon" type="image/png" sizes="180x180" href="assets/img/cropped-Logo-Tab-180x180.png">
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="/assets/img/cropped-Logo-Tab-180x180.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/cropped-Logo-Tab-32x32.png">
+    <link rel="icon" type="image/png" sizes="180x180" href="/assets/img/cropped-Logo-Tab-180x180.png">
+    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
     <link rel="stylesheet"
@@ -27,7 +27,7 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abel&amp;display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abhaya+Libre&amp;display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="assets/css/styles.min.css">
+    <link rel="stylesheet" href="/assets/css/styles.min.css">
 
 
 </head>
@@ -40,7 +40,7 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
 
             </i>
         </button>
-        <img src="assets/img/Logo_CampusFM.png" style="width: 192px;filter: contrast(110%);" width="192" height="69">
+        <img src="/assets/img/Logo_CampusFM.png" style="width: 192px;filter: contrast(110%);" width="192" height="69">
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
@@ -62,7 +62,7 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
 
 
 <header class="masthead"
-        style="background: url(&quot;assets/img/banner.png&quot;) center / cover no-repeat; ">
+        style="background: url(&quot;/assets/img/banner.png&quot;) center / cover no-repeat; ">
     <div class="overlay">
 
     </div>
@@ -70,8 +70,8 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
         <div class="row">
             <div class="col-md-10 col-lg-8 mx-auto position-relative">
                 <div class="site-heading">
-                    <h1><msg:message code="page.listen.biglabel"/></h1>
-                    <span class="subheading"><msg:message code="page.listen.sublabel"/></span>
+                    <h1>${userEntity.firstName} ${userEntity.lastName}</h1>
+                    <span class="subheading"><msg:message code="page.author.sublabel"/></span>
                 </div>
             </div>
         </div>
@@ -81,19 +81,29 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
 
 <div class="container">
     <div class="row mb-5">
-        <div class="col-md-8 col-xl-6 text-center mx-auto" style="width: 90%;font-family: Abel, sans-serif;">
-            <h2 class="divider-style"><span><msg:message code="page.listen.biglabel"/></span></h2>
-            <p class="text-start w-lg-50" style="font-family: 'Open Sans', sans-serif;">
 
-                <br/><span style="color: rgb(0, 0, 0); background-color: transparent;">Empfang per UKW</span><br/>
-                <br/><span style="color: rgb(0, 0, 0); background-color: transparent;">Seid ihr in Duisburg und Umgebung könnt ihr ganz einfach euer Auto- oder Küchenradio auf UKW 104,5 MHz und in Essen, Gelsenkirchen und Umgebung auf 105,6 einstellen. Dort könnt ihr uns ganz ohne Internetverbindung und ohne Rücksicht aufs Datenvolumen so lange hören, wie ihr wollt! Je nach Lage und Gerät ist der Empfang auch noch in Teilen von Bottrop und Oberhausen möglich. Probiert es im Zweifel einfach mal aus.</span><br/>
-                <br/><span style="color: rgb(0, 0, 0); background-color: transparent;">Weltweit im Internet</span><br/>
-                <br/><span style="color: rgb(0, 0, 0); background-color: transparent;">Selbstverständlich könnt ihr uns aber auch weltweit im Internet hören: Das geht zum Beispiel direkt hier auf unserer Website (oder auch über bald wieder über die myUDE-App.) Leider kann es über diese beiden Wege aber hin und wieder zu temporären, technischen Ausfällen kommen.</span><br/>
-                <br/><span style="color: rgb(0, 0, 0); background-color: transparent;">Unser Stream läuft aber weiter! Falls es auf der Website oder in der App nicht funktioniert, probiert es doch einfach mal direkt über diese Stream-Adresse:</span><br/>
-                <br/><a href="http://stream.campusfm.de/" target="_blank">http://stream.campusfm.de/</a><br/><br/><br/>
-            </p>
+        <div class="col-md-8 col-xl-6 text-center mx-auto" style="width: 90%;font-family: Abel, sans-serif;">
+            <h2 class="divider-style"><span><msg:message code="page.author.biglabel"/></span></h2>
+            <p class="text-start w-lg-50" style="font-family: 'Open Sans', sans-serif;"><br/><span
+                    style="color: rgb(0, 0, 0); background-color: transparent;">
+                Das sind wir!</span><br/>
+                <span style="color: rgb(0, 0, 0); background-color: transparent;">Ein bunter Haufen engagierter Studis, die Radio machen lieben!</span><br/><br/><span
+                        style="color: rgb(0, 0, 0); background-color: transparent;">Wir kommen aus den verschiedensten Fachschaften, wachsen als Team aber ständig weiter zusammen!</span><br/><br/><span
+                        style="color: rgb(0, 0, 0); background-color: transparent;">CampusFM ist komplett selbst organisiert, was uns neben kreativer Freiheit auch die Möglichkeit bietet, in vielen verschiedenen Bereichen zu arbeiten. </span><br/><br/><span
+                        style="color: rgb(0, 0, 0); background-color: transparent;">So kann jede*r die eigenen Stärken ausspielen und Neues lernen! </span><br/><span
+                        style="color: rgb(0, 0, 0); background-color: transparent;">Wenn du Lust hast, mal bei uns reinzuschnuppern, dann melde dich doch gerne mit einer einfachen Mail bei unserem Personalchef. </span><br/><br/><br/>
             </p>
         </div>
+
+        <c:forEach items="${articleEntitiesList}" var="article">
+
+            <div class="post-preview"><a href="/article?a=${article.id}"><h2 class="post-title" style="font-size: 32px;">${article.title}</h2>
+                <h3 class="post-subtitle" style="font-size: 20px;">${article.previewContent}</h3></a>
+                <p class="post-meta"><msg:message code="page.article.publishedBy" />&nbsp;<a href="/article?a=${article.id}">
+                        ${article.userEntity.firstName} ${article.userEntity.lastName} <msg:message code="page.article.publishedOn" />
+                        ${article.publishMonthName} ${article.publishDayOfMonth}, ${article.publishYear}</a></p></div>
+            <hr>
+        </c:forEach>
 
     </div>
 </div>

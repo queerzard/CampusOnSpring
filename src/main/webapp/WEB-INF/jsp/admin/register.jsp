@@ -12,6 +12,7 @@
     <title><msg:message code="page.register.title" /></title>
     <link rel="stylesheet" href="/assets/dashboard/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/dashboard/assets/css/styles.min.css">
+    <link rel="stylesheet" href="/assets/css/NZDropdown-Singlee.css">
 </head>
 
 <style>
@@ -84,15 +85,7 @@
                 <div class="col-md-8 offset-md-2">
                     <form class="custom-form">
                         <h1><msg:message code="page.register.heading" /></h1>
-                        <div class="row form-group">
-                            <div class="col-sm-4 label-column">
-                                <label class="col-form-label" for="username"><msg:message code="page.register.username" /></label>
-                            </div>
-                            <div class="col-sm-6 input-column">
-                                <form:input class="form-control" path="username" name="username" id="username" type="text"/>
-                                <form:errors path="username" cssClass="errors"/>
-                            </div>
-                        </div>
+
                         <div class="row form-group">
                             <div class="col-sm-4 label-column">
                                 <label class="col-form-label" for="email"><msg:message code="page.register.email" /></label>
@@ -102,6 +95,7 @@
                                 <form:errors path="email" cssClass="errors"/>
                             </div>
                         </div>
+
                         <div class="row form-group">
                             <div class="col-sm-4 label-column">
                                 <label class="col-form-label" for="password"><msg:message code="page.register.password" /></label>
@@ -111,6 +105,20 @@
                                 <form:errors path="password" cssClass="errors"/>
                             </div>
                         </div>
+
+                        <div class="row form-group">
+                            <div class="col-sm-4 label-column">
+                                <label class="col-form-label" for="role"><msg:message code="page.register.role" /></label>
+                            </div>
+                            <div class="col-sm-6 input-column">
+                                <form:select class="form-select form-control" style="height: 28px;padding-top: 3px;padding-bottom: 3px;font-size: 12px;width: 100%;" name="role" id= "role" path="role">
+                                    <option value="user">USER</option>
+                                    <option value="admin">ADMIN</option>
+                                </form:select>
+                                <form:errors path="role" cssClass="errors"/>
+                            </div>
+                        </div>
+
                         <button class="btn btn-light submit-button" type="submit"><msg:message code="page.register.submit" /></button>
                         </form:form>
 

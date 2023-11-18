@@ -49,9 +49,9 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
                 <li class="nav-item">
                     <a class="nav-link" href="/about"><msg:message code="navigator.label.about"/></a>
                 </li>
-                <li class="nav-item">
+<%--                <li class="nav-item">
                     <a class="nav-link" href="/events"><msg:message code="navigator.label.events"/></a>
-                </li>
+                </li>--%>
                 <li class="nav-item">
                     <a class="nav-link" href="/login"><msg:message code="navigator.label.login"/></a>
                 </li>
@@ -105,9 +105,8 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
 
                     <!-- Team item -->
                     <div class="col-xl-3 col-sm-6 mb-5">
-                        <div class="bg-white rounded shadow-sm py-5 px-4"><img
-                                src="data:image/png;base64, ${userEntity.base64Avatar}" alt="" width="128"
-                                class="img-fluid rounded-circle mb-3 shadow-sm">
+                        <div class="bg-white rounded shadow-sm py-5 px-4">
+                            <img src="data:image/png;base64, ${userEntity.base64Avatar}" alt="" style="overflow: hidden; object-fit: cover; width: 128px; height: 128px;" width="128" height="128" class="img-fluid rounded-circle mb-3 shadow-sm">
                             <h5 class="mb-0">${userEntity.firstName} ${userEntity.lastName}</h5><span
                                     class="small text-uppercase text-muted">${userEntity.position}</span></br>
                             <ul class="social mb-0 list-inline mt-3">
@@ -119,8 +118,8 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
                     </div><!-- End -->
 
 
-                </div>
                 </c:forEach>
+            </div>
 
             </div>
 

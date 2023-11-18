@@ -35,7 +35,7 @@ public class ComposeController {
         if(articleId == null || articleId.isBlank() || !articleService.articleExistsById(articleId)){
 
             ArticleEntity article = new ArticleEntity(((CampusUserDetails) (authentication.getPrincipal())).getUserEntity(),
-                    "Unnamed", "this is cunt",
+                    "Unnamed", "And the story began with...",
                     "allgemein", "",
                     null, null);
             articleService.addArticle(article);

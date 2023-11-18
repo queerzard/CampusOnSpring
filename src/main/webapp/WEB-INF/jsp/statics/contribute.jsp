@@ -9,7 +9,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title><msg:message code="page.imprint.title"/></title>
+    <title><msg:message code="page.contribute.title"/></title>
     <meta name="twitter:title" content="CampusFM - Klingt... anders!">
     <meta property="og:image" content="assets/img/cropped-Logo-Tab-180x180.png">
     <meta name="description" content="Klingt... anders!
@@ -49,9 +49,9 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
                 <li class="nav-item">
                     <a class="nav-link" href="/about"><msg:message code="navigator.label.about"/></a>
                 </li>
-                <li class="nav-item">
+<%--                <li class="nav-item">
                     <a class="nav-link" href="/events"><msg:message code="navigator.label.events"/></a>
-                </li>
+                </li>--%>
                 <li class="nav-item">
                     <a class="nav-link" href="/login"><msg:message code="navigator.label.login"/></a>
                 </li>
@@ -70,8 +70,8 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
         <div class="row">
             <div class="col-md-10 col-lg-8 mx-auto position-relative">
                 <div class="site-heading">
-                    <h1><msg:message code="page.imprint.biglabel"/></h1>
-                    <span class="subheading"><msg:message code="page.imprint.sublabel"/></span>
+                    <h1><msg:message code="page.contribute.biglabel"/></h1>
+                    <span class="subheading"><msg:message code="page.contribute.sublabel"/></span>
                 </div>
             </div>
         </div>
@@ -82,15 +82,18 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
 <div class="container">
     <div class="row mb-5">
         <div class="col-md-8 col-xl-6 text-center mx-auto" style="width: 90%;font-family: Abel, sans-serif;">
-            <h2 class="divider-style"><span><msg:message code="page.imprint.biglabel"/></span></h2>
-            <p class="text-start w-lg-50" style="font-family: 'Open Sans', sans-serif;"><br/><span
-                    style="color: rgb(0, 0, 0); background-color: transparent;">
-                Das sind wir!</span><br/>
-                <span style="color: rgb(0, 0, 0); background-color: transparent;">Ein bunter Haufen engagierter Studis, die Radio machen lieben!</span><br/><br/><span
-                        style="color: rgb(0, 0, 0); background-color: transparent;">Wir kommen aus den verschiedensten Fachschaften, wachsen als Team aber ständig weiter zusammen!</span><br/><br/><span
-                        style="color: rgb(0, 0, 0); background-color: transparent;">CampusFM ist komplett selbst organisiert, was uns neben kreativer Freiheit auch die Möglichkeit bietet, in vielen verschiedenen Bereichen zu arbeiten. </span><br/><br/><span
-                        style="color: rgb(0, 0, 0); background-color: transparent;">So kann jede*r die eigenen Stärken ausspielen und Neues lernen! </span><br/><span
-                        style="color: rgb(0, 0, 0); background-color: transparent;">Wenn du Lust hast, mal bei uns reinzuschnuppern, dann melde dich doch gerne mit einer einfachen Mail bei unserem Personalchef. </span><br/><br/><br/>
+            <h2 class="divider-style"><span><msg:message code="page.contribute.biglabel"/></span></h2>
+            <p class="text-start w-lg-50" style="font-family: 'Open Sans', sans-serif;"><br/><br/><span style="color: rgb(0, 0, 0); background-color: transparent;">Mitmachen!</span><br/>
+                <br/><span style="color: rgb(0, 0, 0); background-color: transparent;">Irgendwas mit Medien? Dann ist CampusFM das Radio für Dich! Wir suchen stets nach neuen Stimmen, die unser Radio vielfältiger, bunter und besser machen. Und diese Stimme kannst Du sein!</span><br/>
+                <br/><span style="color: rgb(0, 0, 0); background-color: transparent;">Ob du in der Musikredaktion mitentscheidest welche Songs bei uns im Radio laufen, in der Wortredaktion zu unseren Inhalten beisteuerst, in der Onlineredaktion unsere Internetpräsenz aufrecht hältst oder als Technik-Zauberer unsere Sendeanlage betreust: das ist nur Dir überlassen!</span><br/>
+                <br/><span style="color: rgb(0, 0, 0); background-color: transparent;">Wir erwarten keine journalistischen Vorkenntnisse, jedoch Kreativität, Offenheit, Zuverlässigkeit, Spaß am Texten und am Ausprobieren sowie Bereitschaft und Motivation, sich ehrenamtlich zu engagieren. Einzige bürokratische Hürde: ein Studierenden- oder Mitarbeiterausweis einer Universität oder Hochschule in NRW. Bei uns können leider nur Hochschulangehörige live on air gehen!</span><br/>
+                <br/><span style="color: rgb(0, 0, 0); background-color: transparent;">CampusFM – Dein Ausbildungsradio</span><br/>
+                <br/><span style="color: rgb(0, 0, 0); background-color: transparent;">CampusFM bietet nicht nur Radio, sondern seinen Mitgliedern auch eine kostenfreie Ausbildung! Wir führen intern Seminare durch, in denen wir die verschiedenen Beitragsformen erklären und praktische Tipps zu deren Erstellung geben. Ob du wissen willst, wie ein Kollegen-Gespräch funktioniert, wie dein Beitrag mit Original-Tönen besser wird, oder wie du deine Radiostimme am besten übst: CampusFM hilft dir weiter!</span><br/>
+                <br/><span style="color: rgb(0, 0, 0); background-color: transparent;">Etwas erfahreneren Mitgliedern bieten wir außerdem die Möglichkeit durch Fortbildungen Moderator, Nachrichtensprecher oder Chef vom Dienst zu werden.</span><br/>
+                <br/><span style="color: rgb(0, 0, 0); background-color: transparent;">Für alles andere können Mitglieder kostenlos Seminare von der Landesanstalt für Medien NRW besuchen, um weitere professionelle Ausbildungen zu bekommen. Diese werden immer wieder von bekannten Größen wie Olli Briesch durchgeführt.</span><br/>
+                <br/><span style="color: rgb(0, 0, 0); background-color: transparent;">Schreib uns eine Mail – mach mit!</span><br/>
+                <br/><a href="mailto:ausbildung@campusfm.info">ausbildung@campusfm.info</a><br/><br/><br/>
+            </p>
             </p>
         </div>
 

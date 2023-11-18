@@ -24,6 +24,8 @@ public interface ArticleRepository extends JpaRepository<ArticleEntity, Long> {
     @Query("SELECT a FROM ArticleEntity a WHERE a.published = false")
     List<ArticleEntity> findAllUnpublishedArticles();
 
+    List<ArticleEntity> findArticleEntitiesByUserEntityAndPublishedTrueOrderByPublishedMillisDesc(UserEntity user, Pageable pageable);
+
     @Query("SELECT a FROM ArticleEntity a WHERE a.published = false AND a.userEntity = :user")
     List<ArticleEntity> findAllUnpublishedByAuthor(UserEntity user);
 
@@ -49,6 +51,8 @@ public interface ArticleRepository extends JpaRepository<ArticleEntity, Long> {
             "LOWER(a.title) LIKE LOWER(concat('%', :query, '%')) OR " +
             "LOWER(a.contents) LIKE LOWER(concat('%', :query, '%')) )")
     List<ArticleEntity> findAllArticlesByQuery(@Param("query") String query);
+
+    List<ArticleEntity> findAllByPublishedTrueAndUserEntity(UserEntity user);
 
     boolean existsArticleEntityById(String postId);
 
