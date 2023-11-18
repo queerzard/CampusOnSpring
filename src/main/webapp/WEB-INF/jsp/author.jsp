@@ -40,7 +40,7 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
 
             </i>
         </button>
-        <img src="/assets/img/Logo_CampusFM.png" style="width: 192px;filter: contrast(110%);" width="192" height="69">
+        <img src="/assets/img/Logo_CampusFM.png" style="width: 142px;filter: contrast(110%);" width="142" height="49">
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
@@ -84,14 +84,8 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
 
         <div class="col-md-8 col-xl-6 text-center mx-auto" style="width: 90%;font-family: Abel, sans-serif;">
             <h2 class="divider-style"><span><msg:message code="page.author.biglabel"/></span></h2>
-            <p class="text-start w-lg-50" style="font-family: 'Open Sans', sans-serif;"><br/><span
-                    style="color: rgb(0, 0, 0); background-color: transparent;">
-                Das sind wir!</span><br/>
-                <span style="color: rgb(0, 0, 0); background-color: transparent;">Ein bunter Haufen engagierter Studis, die Radio machen lieben!</span><br/><br/><span
-                        style="color: rgb(0, 0, 0); background-color: transparent;">Wir kommen aus den verschiedensten Fachschaften, wachsen als Team aber ständig weiter zusammen!</span><br/><br/><span
-                        style="color: rgb(0, 0, 0); background-color: transparent;">CampusFM ist komplett selbst organisiert, was uns neben kreativer Freiheit auch die Möglichkeit bietet, in vielen verschiedenen Bereichen zu arbeiten. </span><br/><br/><span
-                        style="color: rgb(0, 0, 0); background-color: transparent;">So kann jede*r die eigenen Stärken ausspielen und Neues lernen! </span><br/><span
-                        style="color: rgb(0, 0, 0); background-color: transparent;">Wenn du Lust hast, mal bei uns reinzuschnuppern, dann melde dich doch gerne mit einer einfachen Mail bei unserem Personalchef. </span><br/><br/><br/>
+            <p class="text-start w-lg-50" style="font-family: 'Open Sans', sans-serif;">
+
             </p>
         </div>
 
