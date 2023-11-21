@@ -30,9 +30,9 @@ public class ComposeController {
         if(authentication == null)
             return "redirect:/";
 
-        CampusUserDetails userDetails = (authentication != null ? (CampusUserDetails) authentication.getPrincipal() : null);
+        CampusUserDetails userDetails = ((CampusUserDetails) authentication.getPrincipal());
 
-        if(articleId == null || articleId.isBlank() || !articleService.articleExistsById(articleId)){
+        if(articleId == null || articleId.isEmpty() || !articleService.articleExistsById(articleId)){
 
             ArticleEntity article = new ArticleEntity(((CampusUserDetails) (authentication.getPrincipal())).getUserEntity(),
                     "Unnamed", "And the story began with...",
@@ -46,11 +46,13 @@ public class ComposeController {
 
         boolean notAdmin = !userDetails.getAuthorities().stream()
                 .anyMatch(a -> a.getAuthority().contains("ADMIN"));
-        if(!articleEntity.getUserEntity().getId()
-                .equals(userDetails.getUserEntity().getId()) && notAdmin || notAdmin && !articleEntity.isEditable())
+        boolean isAuthor = articleEntity.getUserEntity().getId()
+                .equals(userDetails.getUserEntity().getId());
+        if(!isAuthor && notAdmin || notAdmin && !articleEntity.isEditable())
             return "redirect:/";
 
         model.addAttribute("articleEntity", articleEntity);
+        model.addAttribute("notAuthor", !isAuthor);
 
         return "admin/compose";
     }

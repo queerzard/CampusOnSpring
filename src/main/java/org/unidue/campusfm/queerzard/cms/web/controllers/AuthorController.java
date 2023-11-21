@@ -29,7 +29,7 @@ public class AuthorController {
     public String query(Model model, @PathVariable(value = "username", required = false) String username,
                         @RequestParam(defaultValue = "0") @Min(0) @Positive int page){
 
-        if(username == null || username.isBlank() || !userService.userExistsByName(username))
+        if(username == null || username.isEmpty() || !userService.userExistsByName(username))
             return "redirect:/";
 
         UserEntity user = userService.getUserByUsername(username);

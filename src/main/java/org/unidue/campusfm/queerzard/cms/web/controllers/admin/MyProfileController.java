@@ -63,6 +63,7 @@ public class MyProfileController {
             draftEntitiesList = articleService.findAllUnpublishedByAuthor(userEntity);
         }
 
+        model.addAttribute("isAdmin", admin);
         model.addAttribute("draftEntitiesList", draftEntitiesList);
         model.addAttribute("articleEntitiesList", articleEntitiesList);
         model.addAttribute("profileModel", new ProfileModel());
@@ -86,26 +87,27 @@ public class MyProfileController {
         UserEntity userEntity = userService.getUserByUsername(username);
 
         if(admin){
-            if(profileModel.getEnabled() != null && !profileModel.getEnabled().isBlank())
+            if(profileModel.getEnabled() != null && !profileModel.getEnabled().isEmpty())
                 userEntity.setEnabled(profileModel.getEnabled().equalsIgnoreCase("1") ||
                         profileModel.getEnabled().equalsIgnoreCase("true") ||
                         profileModel.getEnabled().equalsIgnoreCase("on"));
-            if(profileModel.getPosition() != null && !profileModel.getPosition().isBlank())
+            if(profileModel.getPosition() != null && !profileModel.getPosition().isEmpty())
                 userEntity.setPosition(profileModel.getPosition());
+
         }
 
-        if(profileModel.getEmail() != null && !profileModel.getEmail().isBlank() && !userService.userExistsByEmail(profileModel.getEmail()))
+        if(profileModel.getEmail() != null && !profileModel.getEmail().isEmpty() && !userService.userExistsByEmail(profileModel.getEmail()))
             userEntity.setEmail(profileModel.getEmail());
 
-        if(profileModel.getFirstName() != null && !profileModel.getFirstName().isBlank())
+        if(profileModel.getFirstName() != null && !profileModel.getFirstName().isEmpty())
             userEntity.setFirstName(profileModel.getFirstName());
-        if(profileModel.getLastName() != null && !profileModel.getLastName().isBlank())
+        if(profileModel.getLastName() != null && !profileModel.getLastName().isEmpty())
             userEntity.setLastName(profileModel.getLastName());
-        if(profileModel.getSocialLink() != null && !profileModel.getSocialLink().isBlank())
+        if(profileModel.getSocialLink() != null && !profileModel.getSocialLink().isEmpty())
             userEntity.setSocial(profileModel.getSocialLink());
-        if(profileModel.getDescription() != null && !profileModel.getDescription().isBlank())
+        if(profileModel.getDescription() != null && !profileModel.getDescription().isEmpty())
             userEntity.setDescription(profileModel.getDescription());
-        if(profileModel.getBase64Avatar() != null && !profileModel.getBase64Avatar().isBlank())
+        if(profileModel.getBase64Avatar() != null && !profileModel.getBase64Avatar().isEmpty())
             userEntity.setBase64Avatar(profileModel.getBase64Avatar().contains(",") ?
                     profileModel.getBase64Avatar().split(",")[1] : profileModel.getBase64Avatar());
 

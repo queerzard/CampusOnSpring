@@ -3,6 +3,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="msg" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html data-bs-theme="light" lang="en">
 
@@ -33,8 +34,14 @@
             <li class="nav-item">
                 <a class="nav-link" href="/compose/1">Compose</a>
             </li>
+            <sec:authorize access="hasRole('ADMIN')">
             <li class="nav-item">
                 <a class="nav-link" href="/register">Register</a>
+            </li>
+            </sec:authorize>
+
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
             </li>
         </ul>
     </div>
@@ -86,22 +93,29 @@
                         </div>
                     </div>
 
+                    <sec:authorize access="hasRole('ADMIN')">
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group mb-3">
                             <label class="form-label">Position Name</label>
-                            <form:input class="form-control" name="position" id="position" autocomplete="off" value="${userEntity.position}" path="position"/>
+                            <form:input class="form-control" type="position" autocomplete="off" name="position" id="position" value="${userEntity.position}" path="position"/>
+
                         </div>
                     </div>
+                    </sec:authorize>
 
                 </div>
+
                 <hr>
                 <div class="row">
                     <div class="col-md-12 content-right">
                         <button class="btn btn-primary form-btn" type="submit">SAVE</button>
+
+                        <sec:authorize access="hasRole('ADMIN')">
                         <label class="switch">
-                            <input type="checkbox" id="enabled" name="enabled" ${userEntity.enabled ? 'checked' : ''}/>
+                            <input type="checkbox" id="enabled" name="enabled" onclick="alert('If you turn off the switch and submit the form, your account will be disabled and you will not be able to login in future!');" ${userEntity.enabled ? 'checked' : ''}/>
                             <span class="slider round"></span>
                         </label>
+                        </sec:authorize>
                 </div></div>
                 </div>
             </div>
@@ -140,7 +154,7 @@
                         ${draft.editable ? 'Drafted' : (draft.published ? 'Published' : 'Queued')}
                 </div>
                 <p class="mb-1">${draft.previewContent}</p>
-                <small class="text-muted">${draft.userEntity.firstName} ${draft.userEntity.lastName}</small>
+                <a href="/profile/${draft.userEntity.username}"><small class="text-muted">${draft.userEntity.firstName} ${draft.userEntity.lastName}</small></a>
             </a>
                 <hr>
             </c:forEach>
@@ -155,7 +169,7 @@
                             ${article.editable ? 'Drafted' : (article.published ? 'Published' : 'Queued')}
                     </div>
                     <p class="mb-1">${article.previewContent}</p>
-                    <small class="text-muted">${article.userEntity.firstName} ${article.userEntity.lastName}</small>
+                    <a href="/profile/${article.userEntity.username}"><small class="text-muted">${article.userEntity.firstName} ${article.userEntity.lastName}</small></a>
                 </a>
                 <hr>
             </c:forEach>

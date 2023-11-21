@@ -54,6 +54,7 @@ public class CampusSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/api/v1/**").permitAll()
 
                     .antMatchers("/login").permitAll()
+                    .antMatchers("/logout").permitAll()
 
                     .antMatchers("/myprofile").authenticated()
                     .antMatchers("/compose").authenticated()
@@ -71,7 +72,7 @@ public class CampusSecurityConfig extends WebSecurityConfigurerAdapter {
                     .logout().logoutUrl("/logout")
                         .invalidateHttpSession(true) // Invalidate the user's session
                         .clearAuthentication(true)    // Clear authentication information
-                        .logoutSuccessUrl("/login?logout")
+                        .logoutSuccessUrl("/").deleteCookies("JSESSIONID")
                         .permitAll()
 
 /*                .and()

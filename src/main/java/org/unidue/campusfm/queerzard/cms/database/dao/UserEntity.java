@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Fetch;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.unidue.campusfm.queerzard.cms.utils.UtilitiesCollection;
 import org.unidue.campusfm.queerzard.cms.utils.validators.DisallowedCharacters;
 
@@ -54,7 +56,7 @@ public class UserEntity extends AbstractEntity{
     @OneToMany
     @JsonIgnore @Getter @Setter private List<ArticleEntity> articleEntities = new ArrayList<>();
 
-   /* @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    /* @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(
@@ -64,11 +66,11 @@ public class UserEntity extends AbstractEntity{
 
     @Getter private List<Role> roles;*/
     @JsonIgnore
-    @Getter private String roles;
+    private String roles;
+
 
     @JsonIgnore
     @Setter private String permissions;
-
 
     public UserEntity(String firstName, String lastName, String email, String password, String social,
                       String position, String description, String avatar, String roles, String permissions, boolean enabled) {
@@ -113,7 +115,7 @@ public class UserEntity extends AbstractEntity{
     }
 
     public void setPassword(String password){
-        this.password = password;
+        this.password = new BCryptPasswordEncoder().encode(password);
     }
 
     public List<String> getPermissions(){

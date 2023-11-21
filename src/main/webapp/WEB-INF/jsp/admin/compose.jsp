@@ -2,6 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="msg" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
@@ -96,6 +98,9 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
                         <button class="btn btn-primary btn-sm" id="discardBtn" style="position: relative;background: rgb(31,31,31);">Discard</button>
                         <button class="btn btn-primary btn-sm" id="draftBtn" style="position: relative;background: rgb(31,31,31);">Draft</button>
                         <button class="btn btn-primary btn-sm" id="submitBtn" style="position: relative;background: rgb(31,31,31);">Submit</button>
+                        <sec:authorize access="hasRole('ADMIN')">
+                            ${notAuthor ? '<button class="btn btn-primary btn-sm" id="rejectArt" style="position: relative;background: rgb(31,31,31);">Reject Article</button>' : ''}
+                        </sec:authorize>
                     </div>
                     <div class="col">
                         <div class="form-group mb-3" style="padding-left: 40px;"><label class="form-label">Category</label>
@@ -220,6 +225,10 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
         }, 1200);
     });
 
+    $(document).on('click', '#rejectArt', function() {
+        setPublished(false)
+        alert("Article rejected and sent back to author!")
+    });
 
 
     $(document).on('click', '#draftBtn', function() {
@@ -323,12 +332,6 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
     }
 
     function setPublished(boolean) {
-        var formData = {
-            title: $('input[name=title]').val(),
-            content: tinymce.activeEditor.getContent(),
-            category: $('input[name=category]').val()
-        };
-
         // send the form data to the server
         $.ajax({
             type: 'POST',
@@ -340,11 +343,10 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
                 // handle the server response
                 if (response.status == 200) {
                     console.log(response.message);
-                    console.log(response.data.url);
                     alert(response.message);
                     // redirect to the URL received from the server
                     setTimeout(() => {
-                        window.location.href = '/article?a=' + postId;
+                        window.location.href = '/' + postId;
                     }, 4000);
                 } else {
                     console.log(response.message);

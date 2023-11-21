@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="msg" uri="http://www.springframework.org/tags" %>
-
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
@@ -29,6 +29,7 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abel&amp;display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abhaya+Libre&amp;display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <link rel="stylesheet" href="assets/css/styles.min.css">
 </head>
 <body>
@@ -84,6 +85,12 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
     <div class="col-md-10 col-lg-8 mx-auto">
         ${article.contents}
     </div>
+
+    <sec:authorize access="hasRole('ADMIN')">
+        <button id="deleteArt">DELETE ARTICLE</button>
+        <button id="takeDown">TAKE DOWN ARTICLE</button>
+    </sec:authorize>
+
 </div>
 </br>
 
@@ -155,5 +162,67 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/assets/js/script.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<sec:authorize access="hasRole('ADMIN')">
+
+    <script>
+        const urlSearchParams = new URLSearchParams(window.location.search);
+
+        window.addEventListener('load', function() {
+            postId = urlSearchParams.get("a")
+        });
+
+
+        $(document).on('click', '#takeDown', function() {
+            // send the form data to the server
+            $.ajax({
+                type: 'POST',
+                url: '/api/v1/article?article=' + postId + '&pub=false',
+                dataType: 'json',
+                encode: true
+            })
+                .done(function(response) {
+                    // handle the server response
+                    if (response.status == 200) {
+                        console.log(response.message);
+                        alert(response.message);
+                        // redirect to the URL received from the server
+                        setTimeout(() => {
+                            window.location.href = '/';
+                        }, 4000);
+                    } else {
+                        console.log(response.message);
+                        alert(response.message);
+                        // display an error message to the user
+                    }
+                });
+        });
+
+        $(document).on('click', '#deleteArt', function(){
+            $.ajax({
+                type: 'DELETE',
+                url: '/api/v1/article?article=' + postId,
+                dataType: 'json',
+                encode: true
+            })
+                .done(function(response) {
+                    // handle the server response
+                    if (response.status <= 200) {
+                        console.log(response.message);
+                        alert(response.message);
+                        // redirect to the URL received from the server
+                        setTimeout(() => {
+                            window.location.href = "/home";
+                        }, 1200);
+                    } else {
+                        console.log(response.message + response.status);
+                        alert(response.message);
+                        // display an error message to the user
+                    }
+                });
+        });
+    </script>
+
+</sec:authorize>
 </body>
 </html>

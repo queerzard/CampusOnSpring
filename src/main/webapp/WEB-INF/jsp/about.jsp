@@ -107,7 +107,7 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
                     <div class="col-xl-3 col-sm-6 mb-5">
                         <div class="bg-white rounded shadow-sm py-5 px-4">
                             <img src="data:image/png;base64, ${userEntity.base64Avatar}" alt="" style="overflow: hidden; object-fit: cover; width: 128px; height: 128px;" width="128" height="128" class="img-fluid rounded-circle mb-3 shadow-sm">
-                            <h5 class="mb-0">${userEntity.firstName} ${userEntity.lastName}</h5><span
+                            <a href="/author/${userEntity.username}"><h5 class="mb-0">${userEntity.firstName} ${userEntity.lastName}</h5></a><span
                                     class="small text-uppercase text-muted">${userEntity.position}</span></br>
                             <ul class="social mb-0 list-inline mt-3">
                                 <li class="list-inline-item"><a href="${userEntity.social}" class="social-link"><i

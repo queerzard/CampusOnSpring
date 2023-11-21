@@ -12,6 +12,7 @@ public class ProfileModel implements Serializable {
 
     private String username;
 
+
     @Size(min = 2, max = 16)
     @NotBlank(message = "Firstname cannot be blank..")
     private String firstName;
