@@ -1,6 +1,14 @@
-FROM openjdk:11
-LABEL authors="ozanaslan"
-ARG JAR_FILE=target/*.jar
-COPY ./target/CampusCMS-1.0-SNAPSHOT.jar spring.jar
+FROM maven:3.6.3-jdk-11
 
-ENTRYPOINT ["java", "-jar", "/spring.jar"]
+# Copy the project files to the container
+COPY src /usr/src/campus/src
+COPY pom.xml /usr/src/campus/pom.xml
+
+# Set the working directory
+WORKDIR /usr/src/campus
+
+EXPOSE 8080
+
+
+# Build the application
+RUN mvn spring-boot:run
