@@ -13,6 +13,7 @@ in Java using SpringMVC, JSP and Hibernate.
 
 ### TODO
 
+---
 
 
 - [x] Implement custom authentication and authorization
