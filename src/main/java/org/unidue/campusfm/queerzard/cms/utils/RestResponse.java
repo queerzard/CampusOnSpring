@@ -1,3 +1,9 @@
+
+/*
+ * Copyright (c) 2023. Ozan A. Aslan (github/@queerzard)
+ * All rights reserved.
+ */
+
 package org.unidue.campusfm.queerzard.cms.utils;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -6,7 +12,6 @@ import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
-import java.util.List;
 
 public class RestResponse {
 
@@ -26,6 +31,12 @@ public class RestResponse {
         this.httpStatus = httpStatus;
     }
 
+    public RestResponse(HttpStatus httpStatus, String message) {
+        this();
+        this.httpStatus = httpStatus;
+        this.message = message;
+    }
+
     public RestResponse addData(String key, Object value){
         this.data.put(key, value);
         return this;
@@ -34,12 +45,6 @@ public class RestResponse {
     public RestResponse removeData(String key){
         this.data.remove(key);
         return this;
-    }
-
-    public RestResponse(HttpStatus httpStatus, String message) {
-        this();
-        this.httpStatus = httpStatus;
-        this.message = message;
     }
 }
 

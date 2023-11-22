@@ -1,3 +1,9 @@
+
+/*
+ * Copyright (c) 2023. Ozan A. Aslan (github/@queerzard)
+ * All rights reserved.
+ */
+
 package org.unidue.campusfm.queerzard.cms.database.repositories;
 
 import org.springframework.data.domain.Pageable;
@@ -8,7 +14,6 @@ import org.unidue.campusfm.queerzard.cms.database.dao.ArticleEntity;
 import org.unidue.campusfm.queerzard.cms.database.dao.UserEntity;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface ArticleRepository extends JpaRepository<ArticleEntity, Long> {
 

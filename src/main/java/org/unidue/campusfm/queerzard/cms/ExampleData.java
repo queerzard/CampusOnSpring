@@ -1,14 +1,19 @@
+
+/*
+ * Copyright (c) 2023. Ozan A. Aslan (github/@queerzard)
+ * All rights reserved.
+ */
+
 package org.unidue.campusfm.queerzard.cms;
 
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.unidue.campusfm.queerzard.cms.database.dao.ArticleEntity;
 import org.unidue.campusfm.queerzard.cms.database.dao.UserEntity;
 import org.unidue.campusfm.queerzard.cms.database.services.interfaces.ArticleService;
 import org.unidue.campusfm.queerzard.cms.database.services.interfaces.UserService;
 
 import javax.annotation.PostConstruct;
+import java.util.UUID;
 
 @Service
 public class ExampleData {
@@ -25,18 +30,19 @@ public class ExampleData {
     @PostConstruct
     public void init(){
         if(userService.count() == 0){
+            String generatedPassword = UUID.randomUUID().toString();
             UserEntity user = userService.addUserIfNotExists(new UserEntity(
-                    "Ozan", "Aslan", "ozan0.aslan5@gmail.com",
-                    "default", "https://github.com/queerzard","Web-Admin",
-                    "Leftie","ROLE_ADMIN", "*", true));
+                    "admin", "", "admin@existing.email",
+                    generatedPassword, "https://github.com/queerzard/campusonspring","Master User",
+                    "Master User","ROLE_ADMIN", "*", true));
 
-            for(int i = 0; i < 12; i++){
-                ArticleEntity article = articleService.addArticle(new ArticleEntity(
-                        user, "This Is A Test Article", "This is lorem ipsum test content for a test article",
-                        "allgemein", "news, trump", null, null));
-                article.setPublished(true);
-                articleService.update(article);
-            }
+            System.out.println(
+                    "+++++++++++++++++++++++++++++\n" +
+                    "IMPORTANT! THESE ARE THE GENERATED ADMIN CREDENTIALS! NOTE THIS PASSWORD AND CHANGE IT AS IT CANNOT BE CHANGED\n" +
+                    "username: admin\n" +
+                    "password:" + generatedPassword + "\n" +
+                    "+++++++++++++++++++++++++++++\n"
+                    );
 
         }
 

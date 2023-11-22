@@ -3,8 +3,14 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="msg" uri="http://www.springframework.org/tags" %>
 
+
+<%--
+  ~ Copyright (c) 2023. Ozan A. Aslan (github/@queerzard)
+  ~ All rights reserved.
+  --%>
+
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 
 <head>
     <meta charset="utf-8">

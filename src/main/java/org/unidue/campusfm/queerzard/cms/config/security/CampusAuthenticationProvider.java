@@ -1,3 +1,9 @@
+
+/*
+ * Copyright (c) 2023. Ozan A. Aslan (github/@queerzard)
+ * All rights reserved.
+ */
+
 package org.unidue.campusfm.queerzard.cms.config.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +24,10 @@ public class CampusAuthenticationProvider implements AuthenticationProvider {
 
 
 
-    @Autowired
-    private UserService userService;
     private final UserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
+    @Autowired
+    private UserService userService;
 
     public CampusAuthenticationProvider(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;

@@ -4,6 +4,12 @@
 <%@ taglib prefix="msg" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
+<%--
+  ~ Copyright (c) 2023. Ozan A. Aslan (github/@queerzard)
+  ~ All rights reserved.
+  --%>
+
 <!DOCTYPE html>
 <html data-bs-theme="light" lang="en">
 

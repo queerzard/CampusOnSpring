@@ -1,14 +1,21 @@
+
+/*
+ * Copyright (c) 2023. Ozan A. Aslan (github/@queerzard)
+ * All rights reserved.
+ */
+
 package org.unidue.campusfm.queerzard.cms.database.dao;
 
 import lombok.Getter;
 import lombok.Setter;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Safelist;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.unidue.campusfm.queerzard.cms.utils.UtilitiesCollection;
 
-import javax.persistence.*;
-import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "article")

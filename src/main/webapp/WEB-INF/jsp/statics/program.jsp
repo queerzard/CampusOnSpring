@@ -3,8 +3,14 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="msg" uri="http://www.springframework.org/tags" %>
 
+
+<%--
+  ~ Copyright (c) 2023. Ozan A. Aslan (github/@queerzard)
+  ~ All rights reserved.
+  --%>
+
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 
 <head>
     <meta charset="utf-8">
@@ -104,7 +110,7 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
                     <div style="padding: 19% 0;"></div>
                     <div style="display:block; height:50px; margin:0 auto 12px; width:50px;">
                         <svg width="50px" height="50px" viewBox="0 0 60 60" version="1.1"
-                             xmlns="https://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink">
+                             xmlns="https://www.w3.org/2000/svg">
                             <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                 <g transform="translate(-511.000000, -20.000000)" fill="#000000">
                                     <g>

@@ -1,3 +1,9 @@
+
+/*
+ * Copyright (c) 2023. Ozan A. Aslan (github/@queerzard)
+ * All rights reserved.
+ */
+
 (function(){
     function readURL(input) {
 

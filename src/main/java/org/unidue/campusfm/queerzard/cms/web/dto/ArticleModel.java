@@ -1,11 +1,14 @@
+
+/*
+ * Copyright (c) 2023. Ozan A. Aslan (github/@queerzard)
+ * All rights reserved.
+ */
+
 package org.unidue.campusfm.queerzard.cms.web.dto;
 
 import lombok.Getter;
 import lombok.Setter;
 import org.unidue.campusfm.queerzard.cms.database.dao.UserEntity;
-
-import javax.persistence.Column;
-import javax.persistence.ManyToOne;
 
 public class ArticleModel {
 

@@ -1,3 +1,9 @@
+
+/*
+ * Copyright (c) 2023. Ozan A. Aslan (github/@queerzard)
+ * All rights reserved.
+ */
+
 package org.unidue.campusfm.queerzard.cms.web.controllers;
 
 import org.springframework.stereotype.Controller;

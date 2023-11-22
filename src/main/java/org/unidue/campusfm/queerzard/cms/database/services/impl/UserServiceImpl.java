@@ -1,7 +1,12 @@
+
+/*
+ * Copyright (c) 2023. Ozan A. Aslan (github/@queerzard)
+ * All rights reserved.
+ */
+
 package org.unidue.campusfm.queerzard.cms.database.services.impl;
 
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -9,9 +14,7 @@ import org.unidue.campusfm.queerzard.cms.database.dao.UserEntity;
 import org.unidue.campusfm.queerzard.cms.database.repositories.UserRepository;
 import org.unidue.campusfm.queerzard.cms.database.services.interfaces.UserService;
 
-import javax.persistence.EntityManager;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {

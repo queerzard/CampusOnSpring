@@ -1,6 +1,11 @@
+
+/*
+ * Copyright (c) 2023. Ozan A. Aslan (github/@queerzard)
+ * All rights reserved.
+ */
+
 package org.unidue.campusfm.queerzard.cms.web.controllers;
 
-import org.apache.logging.log4j.core.config.plugins.validation.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
@@ -15,8 +20,6 @@ import org.unidue.campusfm.queerzard.cms.database.services.interfaces.UserServic
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Positive;
-import java.net.URLDecoder;
-import java.util.Collections;
 import java.util.List;
 
 @Controller

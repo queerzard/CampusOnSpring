@@ -1,3 +1,9 @@
+
+/*
+ * Copyright (c) 2023. Ozan A. Aslan (github/@queerzard)
+ * All rights reserved.
+ */
+
 package org.unidue.campusfm.queerzard.cms.web.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +16,6 @@ import org.unidue.campusfm.queerzard.cms.database.services.interfaces.ArticleSer
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Positive;
-import java.util.Collections;
 import java.util.List;
 
 @Controller

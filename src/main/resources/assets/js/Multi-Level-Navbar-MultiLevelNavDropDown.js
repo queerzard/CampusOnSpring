@@ -1,3 +1,9 @@
+
+/*
+ * Copyright (c) 2023. Ozan A. Aslan (github/@queerzard)
+ * All rights reserved.
+ */
+
 //https://stackoverflow.com/questions/44467377/bootstrap-4-multilevel-dropdown-inside-navigation
 $('.dropdown-submenu > a').on("click", function(e) {
     var submenu = $(this);

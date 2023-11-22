@@ -1,13 +1,17 @@
+
+/*
+ * Copyright (c) 2023. Ozan A. Aslan (github/@queerzard)
+ * All rights reserved.
+ */
+
 package org.unidue.campusfm.queerzard.cms.web.dto;
 
 import lombok.Data;
 import org.unidue.campusfm.queerzard.cms.utils.validators.DisallowedCharacters;
 
-import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
 
 @Data
 public class RegistrationModel{

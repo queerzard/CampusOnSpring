@@ -1,3 +1,9 @@
+
+/*
+ * Copyright (c) 2023. Ozan A. Aslan (github/@queerzard)
+ * All rights reserved.
+ */
+
 package org.unidue.campusfm.queerzard.cms.database.services.impl;
 
 import lombok.Getter;
@@ -12,7 +18,6 @@ import org.unidue.campusfm.queerzard.cms.database.services.interfaces.ArticleSer
 
 import javax.persistence.EntityManager;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class ArticleServiceImpl implements ArticleService {

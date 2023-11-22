@@ -1,3 +1,9 @@
+
+/*
+ * Copyright (c) 2023. Ozan A. Aslan (github/@queerzard)
+ * All rights reserved.
+ */
+
 package org.unidue.campusfm.queerzard.cms.web.controllers.rest.api.v1.article;
 
 import lombok.SneakyThrows;
@@ -6,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.unidue.campusfm.queerzard.cms.database.dao.ArticleEntity;
@@ -16,9 +21,7 @@ import org.unidue.campusfm.queerzard.cms.database.services.user.CampusUserDetail
 import org.unidue.campusfm.queerzard.cms.utils.RestResponse;
 import org.unidue.campusfm.queerzard.cms.web.dto.ArticleModel;
 
-import javax.websocket.Decoder;
 import java.nio.charset.StandardCharsets;
-import java.security.Principal;
 
 /*
 
