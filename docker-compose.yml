@@ -1,11 +1,10 @@
 version: '3.1'
 
 services:
-  database:
+
+  campusdb:
     image: mariadb:10.6.4-focal
     restart: unless-stopped
-    ports:
-      - 3306:3306
     env_file: .env
     environment:
       MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
@@ -17,17 +16,36 @@ services:
     networks:
       - spring-network
 
-  phpmyadmin:
+  campuspma:
     depends_on:
-     - database
+     - campusdb
     image: phpmyadmin/phpmyadmin
     restart: unless-stopped
     ports:
-      - 8081:80
+      - 8084:80
     env_file: .env
     environment:
-      PMA_HOST: database
+      PMA_HOST: campusdb
       MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
+    networks:
+      - spring-network
+
+  campuscms:
+    depends_on:
+      - campusdb
+      - campuspma
+    restart: unless-stopped
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - 80:8080
+    env_file: .env
+    environment:
+      MYSQL_DATABASE: '${MYSQL_DATABASE}'
+      MYSQL_USER: '${MYSQL_USER}'
+      MYSQL_PASSWORD: '${MYSQL_PASSWORD}'
+      SPRING_DATASOURCE: 'jdbc:mariadb://campusdb:3306/${MYSQL_DATABASE}?autoReconnect=true&useSSL=false'
     networks:
       - spring-network
 
