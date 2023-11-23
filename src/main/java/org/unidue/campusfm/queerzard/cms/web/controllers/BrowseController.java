@@ -21,14 +21,24 @@ import java.net.URLDecoder;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * This class is a controller for browsing and searching articles.
+ */
 @Controller
 public class BrowseController {
-
-    //TODO: SEARCH CONTENTS, AUTHORS, TAGS, CATEGORIES & HANDLE VALIDATION
 
     @Autowired
     private ArticleService articleService;
 
+    /**
+     * Handles the search query request.
+     *
+     * @param model The model to add attributes to.
+     * @param query The search query string. Cannot be blank.
+     * @param page The page number of the search results. Must be a positive integer.
+     *             Defaults to 0 if not provided.
+     * @return The name of the view to render, which is "search".
+     */
     @RequestMapping("/search")
     public String query(Model model, @RequestParam("query") @NotBlank String query,
                         @RequestParam(defaultValue = "0") @Min(0) @Positive int page){

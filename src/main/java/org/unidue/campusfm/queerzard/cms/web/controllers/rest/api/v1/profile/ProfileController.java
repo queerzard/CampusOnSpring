@@ -31,6 +31,9 @@ HttpMethod | route | short explanation | logic
 
 */
 
+/**
+ * This class is a controller for managing user profiles.
+ */
 @RestController
 @RequestMapping("/api/v1/profile")
 public class ProfileController {

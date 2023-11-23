@@ -17,6 +17,17 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+/**
+ * Represents an article entity.
+ * An article consists of various properties such as the author, title, content,
+ * category, tags, preview, banner, creation date, publication date, etc.
+ *
+ * The ArticleEntity class is an entity class that maps to the "article" table in the database.
+ * It extends the AbstractEntity class which provides common properties like id, createdBy, createdAt, etc.
+ *
+ * An instance of the ArticleEntity class represents a single article.
+ * It can be used to create, update, and retrieve articles from the database.
+ */
 @Entity
 @Table(name = "article")
 public class ArticleEntity extends AbstractEntity{
@@ -62,6 +73,11 @@ public class ArticleEntity extends AbstractEntity{
         this.setBase64Banner(base64banner == null ? null : base64banner);
     }
 
+    /**
+     * Sets the content of the object.
+     *
+     * @param contents the content to be set
+     */
     public void setContent(String contents){
         this.contents = contents;
         String sanitized = Jsoup.clean(contents, Safelist.basic());
@@ -69,12 +85,24 @@ public class ArticleEntity extends AbstractEntity{
 
     }
 
+    /**
+     * Sets the base64 representation of the banner image.
+     *
+     * @param banner The base64 representation of the banner image. If null, a default banner image
+     *               will be used.
+     */
     public void setBase64Banner(String banner){
         this.base64banner = (banner != null ? banner : UtilitiesCollection
                 .toBase64(UtilitiesCollection.getFileBytes(UtilitiesCollection
                         .getFileFromResource("assets/img/banner.png"))));
     }
 
+    /**
+     * Updates the published status of an item.
+     * Sets the published flag and updates related fields accordingly.
+     *
+     * @param published the new published status of the item
+     */
     public void setPublished(boolean published) {
         this.published = published;
         this.editable = !published;

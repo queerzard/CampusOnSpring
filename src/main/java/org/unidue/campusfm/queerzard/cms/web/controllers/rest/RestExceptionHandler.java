@@ -21,6 +21,15 @@ import org.unidue.campusfm.queerzard.cms.utils.RestResponse;
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
+    /**
+     * Handles the HttpMessageNotReadableException by returning a ResponseEntity with a customized error message
+     *
+     * @param ex      the HttpMessageNotReadableException that occurred
+     * @param headers the HttpHeaders of the request
+     * @param status  the HttpStatus of the response
+     * @param request the WebRequest of the request
+     * @return a ResponseEntity with a customized error message in response
+     */
     @Override
     protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         String error = "Malformed JSON request";

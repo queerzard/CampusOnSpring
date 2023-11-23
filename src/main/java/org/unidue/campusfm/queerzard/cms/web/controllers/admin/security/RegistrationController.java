@@ -23,6 +23,10 @@ import org.unidue.campusfm.queerzard.cms.web.dto.RegistrationModel;
 
 import javax.validation.Valid;
 
+/**
+ * The RegistrationController class is a controller responsible for handling registration related requests.
+ * It provides methods for registering and validating new users.
+ */
 @Controller @Validated
 public class RegistrationController {
 
@@ -30,6 +34,14 @@ public class RegistrationController {
     private UserService userService;
 
 
+    /**
+     * Registers a new user.
+     *
+     * @param authentication the authentication object containing details about the logged in user
+     * @param model the model object to be used for rendering the view
+     * @param message the error message, if any (optional)
+     * @return the view name to be rendered
+     */
     @GetMapping("/register")
     public String registerNewUser(Authentication authentication, Model model, @RequestParam(value = "error", required = false) String message){
         CampusUserDetails userDetails = (authentication != null ? (CampusUserDetails) authentication.getPrincipal() : null);
@@ -43,6 +55,15 @@ public class RegistrationController {
         return "admin/register";
     }
 
+    /**
+     * Registers a new user.
+     *
+     * @param authentication the authentication object containing details about the logged in user
+     * @param registrationModel the model object containing the registration details
+     * @param result the binding result for validating the registration model
+     * @param model the model object to be used for rendering the view
+     * @return the view name to be rendered
+     */
     @PostMapping("/register")
     public String registerNewUser(Authentication authentication,
                                   @ModelAttribute("registrationModel") @Valid RegistrationModel registrationModel,

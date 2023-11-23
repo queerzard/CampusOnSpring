@@ -25,22 +25,22 @@
     <dependencies>
 
 
-<!--        <dependency>
-            <groupId>org.thymeleaf</groupId>
-            <artifactId>thymeleaf</artifactId>
-            <version>3.0.11.RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>org.thymeleaf</groupId>
-            <artifactId>thymeleaf-spring5</artifactId>
-            <version>3.0.11.RELEASE</version>
-        </dependency>-->
+        <!--        <dependency>
+                    <groupId>org.thymeleaf</groupId>
+                    <artifactId>thymeleaf</artifactId>
+                    <version>3.0.11.RELEASE</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.thymeleaf</groupId>
+                    <artifactId>thymeleaf-spring5</artifactId>
+                    <version>3.0.11.RELEASE</version>
+                </dependency>-->
 
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            
+
         </dependency>
 
         <!-- Tomcat embedded container-->
@@ -54,7 +54,7 @@
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
-            
+
 
         </dependency>
 
@@ -70,7 +70,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <version>2.1.5.RELEASE</version>
-            
+
 
         </dependency>
 
@@ -79,7 +79,7 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.26</version>
-            
+
 
         </dependency>
 
@@ -87,7 +87,7 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
             <version>8.0.0.Final</version>
-            
+
 
         </dependency>
 
@@ -95,7 +95,7 @@
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
             <version>1.15.3</version>
-            
+
 
         </dependency>
 
@@ -103,7 +103,7 @@
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
             <version>2.20.0</version>
-            
+
 
         </dependency>
 
@@ -111,7 +111,7 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-taglibs</artifactId>
             <version>5.2.2.RELEASE</version>
-            
+
 
         </dependency>
 
@@ -120,39 +120,33 @@
             <groupId>org.mariadb.jdbc</groupId>
             <artifactId>mariadb-java-client</artifactId>
             <version>3.1.2</version>
-            
+
 
         </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
-            
+
 
         </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
-            
+
 
         </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
-            
-
         </dependency>
-
-
-
 
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>20230227</version>
-            
 
         </dependency>
 
@@ -160,7 +154,7 @@
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
             <version>2.0.1.Final</version>
-            
+
 
         </dependency>
         <dependency>
@@ -168,17 +162,20 @@
             <artifactId>junit-jupiter-engine</artifactId>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
             <version>5.3.8</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-test</artifactId>
@@ -241,38 +238,24 @@
                     <version>3.0.0</version>
                 </plugin>
 
-                        <plugin>
-                            <groupId>org.springframework.boot</groupId>
-                            <artifactId>spring-boot-maven-plugin</artifactId>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
 
 
-                            <configuration>
-                                <fork>true</fork>
-                                <mainClass>${start-class}</mainClass>
-                            </configuration>
-                            <executions>
-                                <execution>
-                                    <goals>
-                                        <goal>repackage</goal>
-                                    </goals>
-                                </execution>
-                            </executions>
-
-                        </plugin>
-
-             <!--   <plugin>
-                    <artifactId>maven-assembly-plugin</artifactId>
                     <configuration>
-                        <archive>
-                            <manifest>
-                                <mainClass>org.unidue.campusfm.queerzard.cms.CampusCMS</mainClass>
-                            </manifest>
-                        </archive>
-                        <descriptorRefs>
-                            <descriptorRef>jar-with-dependencies</descriptorRef>
-                        </descriptorRefs>
+                        <fork>true</fork>
+                        <mainClass>${start-class}</mainClass>
                     </configuration>
-                </plugin>-->
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+
+                </plugin>
 
             </plugins>
         </pluginManagement>

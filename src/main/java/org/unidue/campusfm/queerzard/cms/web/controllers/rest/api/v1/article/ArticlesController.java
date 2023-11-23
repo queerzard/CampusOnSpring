@@ -46,6 +46,14 @@ HttpMethod | route | short explanation | logic
 
 */
 
+/**
+ * The ArticlesController class provides RESTful API endpoints for managing articles.
+ * These endpoints allow users to access, create, update, and delete articles.
+ *
+ * The endpoints also handle authorization logic to ensure that only authorized users can perform certain actions.
+ *
+ * This class is annotated with the @RestController and @RequestMapping annotations to define the base URL for all article-related requests.
+ */
 @RestController
 @RequestMapping("/api/v1/article")
 public class ArticlesController {
@@ -56,7 +64,16 @@ public class ArticlesController {
     @Autowired
     private ArticleService articleService;
 
-    //obtain an article by its ID (if article.published = false & user isnt author nor admin -> refuse |
+    /**
+     * Obtain an article by its ID.
+     * If article.published is false and the user is not the author or an admin, access is refused.
+     * If the user is the author or an admin, access is granted.
+     * If article.published is true, access is granted.
+     *
+     * @param authentication the authentication object containing the user details
+     * @param articleId the ID of the article to obtain
+     * @return a ResponseEntity object with the article details if access is granted, or an error message if access is refused
+     */ //obtain an article by its ID (if article.published = false & user isnt author nor admin -> refuse |
     // elif author or admin -> grant | or if article.published = true -> grant)
     @GetMapping
     public ResponseEntity<Object> handleGetMapping(Authentication authentication, @RequestParam("article") String articleId){
@@ -97,7 +114,16 @@ public class ArticlesController {
         return new ResponseEntity<>(articleModel, HttpStatus.OK);
     }
 
-    //Generate a database entry for a new article (if authenticated -> create | else -> refuse)
+    /**
+     * Generate a database entry for a new article.
+     * If authenticated, create the article.
+     * If not authenticated, refuse the creation of the article.
+     *
+     * @param authentication the authentication object containing the user details
+     * @param articleId the ID of the article to modify (optional)
+     * @param publishBool the publication status of the article (optional)
+     * @return a ResponseEntity object with the modified article details if successful, or an error message if access is refused or if the article does not exist
+     */ //Generate a database entry for a new article (if authenticated -> create | else -> refuse)
     @PostMapping()
     public ResponseEntity<Object> handlePostMapping(Authentication authentication, @RequestParam(value = "article", required = false) String articleId,
                                                     @RequestParam(value = "pub", required = false) boolean publishBool){
@@ -146,7 +172,16 @@ public class ArticlesController {
         return new ResponseEntity<>(article, HttpStatus.CREATED);
     }
 
-    //replace article content (if user = author || user = admin then -> delete | else -> refuse)
+    /**
+     * Replace the content of an existing article.
+     * If the user is the author or an administrator, the article will be deleted and replaced.
+     * If the user is neither the author nor an administrator, the replacement will be refused.
+     *
+     * @param authentication the authentication object containing the user details
+     * @param articleId the ID of the article to replace
+     * @param articleModel the new article content
+     * @return a ResponseEntity object with the modified article details if successful, or an error message if access is refused or if the article does not exist
+     */ //replace article content (if user = author || user = admin then -> delete | else -> refuse)
     @PutMapping()
     public ResponseEntity<Object> handlePutMapping(Authentication authentication, @RequestParam("article") String articleId, ArticleModel articleModel){
         ArticleEntity articleEntity;
@@ -183,7 +218,21 @@ public class ArticlesController {
                 .addData("model", articleModel), HttpStatus.OK);
     }
 
-    //patch article content (if user = author || user = admin then -> delete | else -> refuse)
+    /**
+     * Patch the content of an existing article.
+     * If the user is the author or an administrator, the specified fields of the article will be updated.
+     * If the user is neither the author nor an administrator, the patching will be refused.
+     *
+     * @param authentication the authentication object containing the user details
+     * @param articleId the ID of the article to patch
+     * @param title the new title of the article (optional)
+     * @param content the new content of the article (optional)
+     * @param tags the new tags of the article (optional)
+     * @param category the new category of the article
+     * @param multipartFile the new preview image of the article (optional)
+     * @return a ResponseEntity object with the modified article details if successful, or an error message if access is refused or if the article does not exist
+     * @throws IOException if there is an error reading the multipart file
+     */ //patch article content (if user = author || user = admin then -> delete | else -> refuse)
     @SneakyThrows
     @PatchMapping()
     public ResponseEntity<Object> handlePatchMapping(Authentication authentication, @RequestParam("article") String articleId,
@@ -230,7 +279,16 @@ public class ArticlesController {
                 .addData("model", articleEntity), HttpStatus.OK);
     }
 
-    //delete an article entry from DB (if user = author || user = admin then -> delete | else -> refuse)
+    /**
+     * Delete an article entry from the database.
+     * If the user is the author or an administrator, the article will be deleted.
+     * If the user is neither the author nor an administrator, the deletion will be refused.
+     *
+     * @param authentication the authentication object containing the user details
+     * @param articleId the ID of the article to delete
+     * @return a ResponseEntity object with a success message if the article is deleted successfully,
+     *         or an error message if access is refused or if the article does not exist
+     */ //delete an article entry from DB (if user = author || user = admin then -> delete | else -> refuse)
     @DeleteMapping()
     public ResponseEntity<Object> handleDeleteMapping(Authentication authentication, @RequestParam("article") String articleId){
 

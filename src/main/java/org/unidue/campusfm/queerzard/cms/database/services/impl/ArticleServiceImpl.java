@@ -16,14 +16,14 @@ import org.unidue.campusfm.queerzard.cms.database.dao.UserEntity;
 import org.unidue.campusfm.queerzard.cms.database.repositories.ArticleRepository;
 import org.unidue.campusfm.queerzard.cms.database.services.interfaces.ArticleService;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 
+/**
+ * This class implements the ArticleService interface and provides the implementation
+ * for various methods related to article management.
+ */
 @Service
 public class ArticleServiceImpl implements ArticleService {
-
-    @Autowired
-    private EntityManager entityManager;
 
     @Autowired
     @Getter private ArticleRepository articleRepository;

@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.security.Principal;
 
+/**
+ * This class represents a LoginController in a web application. It handles the login functionality
+ * by redirecting the user to the appropriate page based on their login status.
+ */
 @Controller
 public class LoginController {
 

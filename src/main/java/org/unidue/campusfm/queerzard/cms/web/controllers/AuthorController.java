@@ -22,12 +22,24 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.Positive;
 import java.util.List;
 
+/**
+ * The AuthorController class is a controller class that handles requests related to authors.
+ * It provides methods for querying and retrieving information about authors.
+ */
 @Controller
 public class AuthorController {
 
     @Autowired private ArticleService articleService;
     @Autowired private UserService userService;
 
+    /**
+     * This method queries the articles authored by a specific user.
+     *
+     * @param model    the Model object that holds the attributes for the view
+     * @param username the username of the author to query the articles for
+     * @param page     the page number for pagination (default value is 0)
+     * @return a String representing the name of the view to render
+     */
     @RequestMapping("/author/{username}")
     public String query(Model model, @PathVariable(value = "username", required = false) String username,
                         @RequestParam(defaultValue = "0") @Min(0) @Positive int page){

@@ -21,6 +21,9 @@ import org.unidue.campusfm.queerzard.cms.web.dto.ProfileModel;
 import javax.validation.Valid;
 import java.util.List;
 
+/**
+ * This class is a controller that handles requests related to the user profile.
+ */
 @Controller
 public class MyProfileController {
 
@@ -30,6 +33,12 @@ public class MyProfileController {
 
     @Autowired
     private UserService userService;
+    /**
+     * Redirects to the user's profile page.
+     *
+     * @param authentication the authentication object containing user details
+     * @return the redirect URL to the user's profile page
+     */
     @RequestMapping("/myprofile")
     public String myProfile(Authentication authentication){
 
@@ -39,6 +48,14 @@ public class MyProfileController {
         return "redirect:/profile/" + userDetails.getUsername().toLowerCase();
     }
 
+    /**
+     * Retrieves and displays the user's profile page.
+     *
+     * @param authentication the authentication object containing user details
+     * @param model the model object to be used for storing data to be displayed on the profile page
+     * @param username the username of the user whose profile is being viewed
+     * @return the view name for the user's profile page
+     */
     @GetMapping("/profile/{username}")
     public String userProfile(Authentication authentication, Model model, @PathVariable("username") String username){
         CampusUserDetails userDetails = (authentication != null ? (CampusUserDetails) authentication.getPrincipal() : null);
@@ -74,6 +91,15 @@ public class MyProfileController {
         return "admin/myprofile";
     }
 
+    /**
+     * Updates the user's profile with the provided information.
+     *
+     * @param authentication the authentication object containing user details
+     * @param model the model object to be used for storing data
+     * @param username the username of the user whose profile is being updated
+     * @param profileModel the object containing the updated profile information
+     * @return the view name for the user's profile page
+     */
     @PostMapping("/profile/{username}")
     public String patchUserProfile(Authentication authentication, Model model, @PathVariable("username") String username,
                                    @ModelAttribute("profileModel") @Valid ProfileModel profileModel){

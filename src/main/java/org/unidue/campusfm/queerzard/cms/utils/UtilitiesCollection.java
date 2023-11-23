@@ -26,23 +26,53 @@ public class UtilitiesCollection {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(UtilitiesCollection.class);
 
+    /**
+     * Converts a given byte array to its Base64 representation.
+     *
+     * @param bytes the byte array to convert
+     * @return the Base64 representation of the given byte array
+     */
     public static String toBase64(byte[] bytes) {
         return Base64.encodeBase64String(bytes);
     }
 
+    /**
+     * Reads the contents of a file into a byte array.
+     *
+     * @param file The file to read.
+     * @return The byte array containing the contents of the file.
+     * @throws IOException If an I/O error occurs while reading the file.
+     */
     @SneakyThrows
     public static byte[] getFileBytes(File file) {
         return Files.readAllBytes(file.toPath());
     }
 
+    /**
+     * Returns the default avatar file.
+     *
+     * @return The default avatar file.
+     */
     public static File getDefaultAvatarFile() {
         return getFileFromResource("avatardefault.png");
     }
 
+    /**
+     * Returns the file from the specified resource path.
+     *
+     * @param path The path of the resource file.
+     * @return The file from the resource path.
+     */
     public static File getFileFromResource(String path){
         return new File(UtilitiesCollection.class.getClassLoader().getResource(path).getFile());
     }
 
+    /**
+     * Escapes the given SQL string by replacing single quotes with two single quotes.
+     *
+     * @param string The SQL string to escape.
+     * @return The escaped SQL string.
+     */
     public static String escapeSQL(String string) {
         return string.replace("'", "''");
     }

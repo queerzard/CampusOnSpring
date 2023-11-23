@@ -10,6 +10,11 @@ import lombok.Getter;
 import lombok.Setter;
 import org.unidue.campusfm.queerzard.cms.database.dao.UserEntity;
 
+/**
+ * The ArticleModel class represents an article in the system.
+ * It holds various properties such as user information, content, tags, category, title, creation and publish date,
+ * and flags indicating the availability for editing and publishing status.
+ */
 public class ArticleModel {
 
     @Getter @Setter private UserEntity userEntity;

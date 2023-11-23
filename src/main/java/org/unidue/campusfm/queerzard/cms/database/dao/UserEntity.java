@@ -20,6 +20,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Represents a UserEntity object.
+ * This class is an entity that maps to a 'user' table in the database.
+ * It extends the AbstractEntity class.
+ */
 @Entity
 @Table(name = "user")
 public class UserEntity extends AbstractEntity{
@@ -114,20 +119,43 @@ public class UserEntity extends AbstractEntity{
 
 
 
+    /**
+     * Updates the last login timestamp.
+     * Sets the last login timestamp to the current system time in milliseconds.
+     */
     public void updateLastLogin() {
         this.lastLoginTimestamp = System.currentTimeMillis();
     }
 
+    /**
+     * Sets the password for the user.
+     *
+     * @param password the new password to be set
+     */
     public void setPassword(String password){
         this.password = new BCryptPasswordEncoder().encode(password);
     }
 
+    /**
+     * Returns a list of permissions.
+     *
+     * This method splits the permissions string using the delimiter ";" and
+     * returns a list of individual permissions as strings. If the permissions
+     * string is empty, it returns an empty list.
+     *
+     * @return a list of permissions
+     */
     public List<String> getPermissions(){
         if(this.permissions.length() > 0)
             return Arrays.asList(this.permissions.split(";"));
         return new ArrayList<>();
     }
 
+    /**
+     * Returns a list of roles for this user.
+     *
+     * @return A list of roles as strings.
+     */
     public List<String> getRoles(){
         if(this.roles.length() > 0)
             return Arrays.asList(this.roles.split(";"));
