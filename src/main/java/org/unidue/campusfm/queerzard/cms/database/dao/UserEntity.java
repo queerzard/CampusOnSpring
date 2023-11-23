@@ -27,33 +27,52 @@ import java.util.List;
  */
 @Entity
 @Table(name = "user")
-public class UserEntity extends AbstractEntity{
+public class UserEntity extends AbstractEntity {
 
-    @Getter @Setter @JsonIgnore @Column(unique = true, nullable = false)
+    @Getter
+    @Setter
+    @JsonIgnore
+    @Column(unique = true, nullable = false)
     private String username;
 
-    @Getter @Setter @Column(unique = true, nullable = false) @JsonIgnore
+    @Getter
+    @Setter
+    @Column(unique = true, nullable = false)
+    @JsonIgnore
     private String email;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private String firstName;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private String lastName;
 
     @JsonIgnore
-    @Getter private String password;
+    @Getter
+    private String password;
 
-    @Getter @Setter private String social;
-    @Getter @Setter private String position;
-    @Getter @Setter private String description;
+    @Getter
+    @Setter
+    private String social;
+    @Getter
+    @Setter
+    private String position;
+    @Getter
+    @Setter
+    private String description;
 
 
     @Column(columnDefinition = "LONGTEXT")
-    @JsonIgnore @Getter @Setter
+    @JsonIgnore
+    @Getter
+    @Setter
     private String base64Avatar;
 
-    @Getter @Setter private boolean enabled;
+    @Getter
+    @Setter
+    private boolean enabled;
 
     @Getter
     private long creationTimeStamp;
@@ -61,9 +80,11 @@ public class UserEntity extends AbstractEntity{
     private long lastLoginTimestamp;
 
 
-
     @OneToMany
-    @JsonIgnore @Getter @Setter private List<ArticleEntity> articleEntities = new ArrayList<>();
+    @JsonIgnore
+    @Getter
+    @Setter
+    private List<ArticleEntity> articleEntities = new ArrayList<>();
 
     /* @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
@@ -79,7 +100,8 @@ public class UserEntity extends AbstractEntity{
 
 
     @JsonIgnore
-    @Setter private String permissions;
+    @Setter
+    private String permissions;
 
     public UserEntity(String firstName, String lastName, String email, String password, String social,
                       String position, String description, String avatar, String roles, String permissions, boolean enabled) {
@@ -101,8 +123,7 @@ public class UserEntity extends AbstractEntity{
 
     public UserEntity(String firstName, String lastName, String email, String password, String social,
                       String position, String description, String roles, String permissions, boolean enabled) {
-        this(firstName, lastName, email, password, social, position, description, UtilitiesCollection
-                .toBase64(UtilitiesCollection.getFileBytes(UtilitiesCollection.getDefaultAvatarFile())), roles, permissions, enabled);
+        this(firstName, lastName, email, password, social, position, description, UtilitiesCollection.base64avatar(), roles, permissions, enabled);
 
     }
 
@@ -111,12 +132,12 @@ public class UserEntity extends AbstractEntity{
                 "Redakteur*in", "", roles, permissions, enabled);
     }
 
-    public UserEntity(String email, String password){
+    public UserEntity(String email, String password) {
         this("", "", email, password, "USER", "*", true);
     }
 
-    public UserEntity() {}
-
+    public UserEntity() {
+    }
 
 
     /**
@@ -132,21 +153,21 @@ public class UserEntity extends AbstractEntity{
      *
      * @param password the new password to be set
      */
-    public void setPassword(String password){
+    public void setPassword(String password) {
         this.password = new BCryptPasswordEncoder().encode(password);
     }
 
     /**
      * Returns a list of permissions.
-     *
+     * <p>
      * This method splits the permissions string using the delimiter ";" and
      * returns a list of individual permissions as strings. If the permissions
      * string is empty, it returns an empty list.
      *
      * @return a list of permissions
      */
-    public List<String> getPermissions(){
-        if(this.permissions.length() > 0)
+    public List<String> getPermissions() {
+        if (this.permissions.length() > 0)
             return Arrays.asList(this.permissions.split(";"));
         return new ArrayList<>();
     }
@@ -156,8 +177,8 @@ public class UserEntity extends AbstractEntity{
      *
      * @return A list of roles as strings.
      */
-    public List<String> getRoles(){
-        if(this.roles.length() > 0)
+    public List<String> getRoles() {
+        if (this.roles.length() > 0)
             return Arrays.asList(this.roles.split(";"));
         return new ArrayList<>();
     }

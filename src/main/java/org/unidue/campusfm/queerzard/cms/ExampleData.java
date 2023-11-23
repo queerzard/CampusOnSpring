@@ -19,7 +19,7 @@ import java.util.UUID;
 public class ExampleData {
 
     // STOPSHIP: 04.10.2023  
-    
+
     @Autowired
     private ArticleService articleService;
 
@@ -28,21 +28,21 @@ public class ExampleData {
     private UserService userService;
 
     @PostConstruct
-    public void init(){
-        if(userService.count() == 0){
+    public void init() {
+        if (userService.count() == 0) {
             String generatedPassword = UUID.randomUUID().toString();
             UserEntity user = userService.addUserIfNotExists(new UserEntity(
-                    "admin", "", "admin@existing.email",
-                    generatedPassword, "https://github.com/queerzard/campusonspring","Master User",
-                    "Master User","ROLE_ADMIN", "*", true));
+                    "admin", "istrator", "admin@existing.email",
+                    generatedPassword, "https://github.com/queerzard/campusonspring", "Master User",
+                    "Master User", "ROLE_ADMIN", "*", true));
 
             System.out.println(
                     "+++++++++++++++++++++++++++++\n" +
-                    "IMPORTANT! THESE ARE THE GENERATED ADMIN CREDENTIALS! NOTE THIS PASSWORD AND CHANGE IT AS IT CANNOT BE CHANGED\n" +
-                    "username: admin\n" +
-                    "password:" + generatedPassword + "\n" +
-                    "+++++++++++++++++++++++++++++\n"
-                    );
+                            "IMPORTANT! THESE ARE THE GENERATED ADMIN CREDENTIALS! NOTE THIS PASSWORD AND CHANGE IT AS IT CANNOT BE CHANGED\n" +
+                            "username: admin\n" +
+                            "password:" + generatedPassword + "\n" +
+                            "+++++++++++++++++++++++++++++\n"
+            );
 
         }
 

@@ -11,4 +11,6 @@ EXPOSE 8080
 
 
 # Build the application
-RUN mvn spring-boot:run
+RUN mvn clean package spring-boot:repackage
+
+ENTRYPOINT ["java", "-jar", "./target/CampusCMS-1.0-SNAPSHOT.jar"]
