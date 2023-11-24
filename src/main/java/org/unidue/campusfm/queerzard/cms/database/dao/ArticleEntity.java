@@ -121,8 +121,8 @@ public class ArticleEntity extends AbstractEntity {
      */
     public void setBase64Banner(String banner) {
         this.base64banner = (banner != null ? banner : UtilitiesCollection
-                .toBase64(UtilitiesCollection.getFileBytes(UtilitiesCollection
-                        .getFileFromResource("assets/img/banner.png"))));
+                .base64preview()/*toBase64(UtilitiesCollection.getFileBytes(UtilitiesCollection
+                        .getFileFromResource("assets/img/banner.png")))*/);
     }
 
     /**
