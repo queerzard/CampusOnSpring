@@ -34,7 +34,7 @@ public class ExampleData {
             UserEntity user = userService.addUserIfNotExists(new UserEntity(
                     "admin", "istrator", "admin@existing.email",
                     generatedPassword, "https://github.com/queerzard/campusonspring", "Master User",
-                    "Master User", "ROLE_ADMIN", "*", true));
+                    "Master User", "ADMIN", "*", true));
 
             System.out.println(
                     "+++++++++++++++++++++++++++++\n" +
@@ -43,7 +43,6 @@ public class ExampleData {
                             "password:" + generatedPassword + "\n" +
                             "+++++++++++++++++++++++++++++\n"
             );
-
         }
 
 

@@ -12,8 +12,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.ResourceUtils;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.nio.file.Files;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -68,9 +72,33 @@ public class UtilitiesCollection {
         /*return Base64.encodeBase64String(getFileBytes(getFileFromResource("/articlePlaceholder.png")));*/
     }
 
+    public static String base64prevban() {
+        return getByteArrayFromImageURL("http://localhost:8080/assets/img/banner.png");
+    }
+
+
+    public static String getByteArrayFromImageURL(String url) {
+
+        try {
+            URL imageUrl = new URL(url);
+            URLConnection ucon = imageUrl.openConnection();
+            InputStream is = ucon.getInputStream();
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            byte[] buffer = new byte[1024];
+            int read = 0;
+            while ((read = is.read(buffer, 0, buffer.length)) != -1) {
+                baos.write(buffer, 0, read);
+            }
+            baos.flush();
+            return Base64.encodeBase64String(baos.toByteArray());
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
     @SneakyThrows
     public static File getDefaultAvatarFile2() {
-        return ResourceUtils.getFile("classpath:/avatardefault.png");
+        return ResourceUtils.getFile("classpath:avatardefault.png");
     }
 
     /**
@@ -80,6 +108,7 @@ public class UtilitiesCollection {
      * @return The file from the resource path.
      */
     public static File getFileFromResource(String path) {
+
         return new File(UtilitiesCollection.class.getClassLoader().getResource(path).getFile());
     }
 

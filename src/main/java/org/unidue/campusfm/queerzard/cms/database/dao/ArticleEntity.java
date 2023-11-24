@@ -119,10 +119,11 @@ public class ArticleEntity extends AbstractEntity {
      * @param banner The base64 representation of the banner image. If null, a default banner image
      *               will be used.
      */
+    @SneakyThrows
     public void setBase64Banner(String banner) {
-        this.base64banner = (banner != null ? banner : UtilitiesCollection
-                .base64preview()/*toBase64(UtilitiesCollection.getFileBytes(UtilitiesCollection
-                        .getFileFromResource("assets/img/banner.png")))*/);
+        this.base64banner = (banner != null ? banner : UtilitiesCollection.base64prevban());
+        /*toBase64(UtilitiesCollection.getFileBytes(ResourceUtils.getFile("classpath:assets/img/banner.png"))))*/
+        ;
     }
 
     /**
