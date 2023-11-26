@@ -1,4 +1,3 @@
-
 <br/>
 <p align="center">
   <a href="https://github.com/queerzard/campusonspring">
@@ -29,7 +28,6 @@
 * [About the Project](#about-the-project)
 * [Built With](#built-with)
 * [Getting Started](#getting-started)
-    * [Prerequisites](#prerequisites)
     * [Installation](#installation)
 * [License](#license)
 * [Authors](#authors)
@@ -54,11 +52,14 @@ therefore an installation of the aforementioned software is required.
 ### Getting Started
 
 Guides on the Installation third party prerequisites are found here:
+
 * Check your OS and select your [Docker](https://docs.docker.com/engine/install/) installation accordingly.
-* In addition [MariaDB and (optionally phpMyAdmin)](https://migueldoctor.medium.com/run-mariadb-phpmyadmin-locally-in-3-steps-using-docker-6b5912ff37c9) might be valuable \
+* In
+  addition [MariaDB and (optionally phpMyAdmin)](https://migueldoctor.medium.com/run-mariadb-phpmyadmin-locally-in-3-steps-using-docker-6b5912ff37c9)
+  might be valuable \
   resources as well as mandatory software to configure a database connection.
 
-### Installation (continuation coming soon...)
+### Installation
 
 1. Clone the repository
 
@@ -66,15 +67,39 @@ Guides on the Installation third party prerequisites are found here:
 git clone https://github.com/queerzard/CampusOnSpring.git
 ```
 
+2. Edit .env file to the credentials desired.
 
+```sh
+cd CampusOnSpring
+nano .env
 
+MYSQL_DATABASE=spring_database
+MYSQL_USER=spring_username
+MYSQL_PASSWORD=spring_password
+MYSQL_ROOT_PASSWORD=root_password
+```
+
+3. Execute the docker-compose.yml
+
+```sh
+docker compose up -d
+```
+
+4. On first the start, you'll need to view the login credentials of the admin-account printed to the terminal.
+
+```sh
+docker logs <containerName>
+```
 
 ---
+
 ### License
 
-Distributed under the GPL3 License. See [LICENSE](https://github.com/queerzard/campusonspring/blob/main/LICENSE.md) for more information.
+Distributed under the GPL3 License. See [LICENSE](https://github.com/queerzard/campusonspring/blob/main/LICENSE.md) for
+more information.
 
 ---
+
 ### Authors
 
 * **Ozan A. Aslan** - [github@queerzard](https://github.com/queerzard/)
