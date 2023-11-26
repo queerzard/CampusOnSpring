@@ -27,7 +27,8 @@ import javax.validation.Valid;
  * The RegistrationController class is a controller responsible for handling registration related requests.
  * It provides methods for registering and validating new users.
  */
-@Controller @Validated
+@Controller
+@Validated
 public class RegistrationController {
 
     @Autowired
@@ -38,15 +39,15 @@ public class RegistrationController {
      * Registers a new user.
      *
      * @param authentication the authentication object containing details about the logged in user
-     * @param model the model object to be used for rendering the view
-     * @param message the error message, if any (optional)
+     * @param model          the model object to be used for rendering the view
+     * @param message        the error message, if any (optional)
      * @return the view name to be rendered
      */
     @GetMapping("/register")
-    public String registerNewUser(Authentication authentication, Model model, @RequestParam(value = "error", required = false) String message){
+    public String registerNewUser(Authentication authentication, Model model, @RequestParam(value = "error", required = false) String message) {
         CampusUserDetails userDetails = (authentication != null ? (CampusUserDetails) authentication.getPrincipal() : null);
         boolean admin = false;
-        if(userDetails == null || !(admin = userDetails.getAuthorities().stream()
+        if (userDetails == null || !(admin = userDetails.getAuthorities().stream()
                 .anyMatch(a -> a.getAuthority().contains("ADMIN"))))
             return "redirect:/myprofile";
 
@@ -58,35 +59,35 @@ public class RegistrationController {
     /**
      * Registers a new user.
      *
-     * @param authentication the authentication object containing details about the logged in user
+     * @param authentication    the authentication object containing details about the logged in user
      * @param registrationModel the model object containing the registration details
-     * @param result the binding result for validating the registration model
-     * @param model the model object to be used for rendering the view
+     * @param result            the binding result for validating the registration model
+     * @param model             the model object to be used for rendering the view
      * @return the view name to be rendered
      */
     @PostMapping("/register")
     public String registerNewUser(Authentication authentication,
                                   @ModelAttribute("registrationModel") @Valid RegistrationModel registrationModel,
-                                  BindingResult result, Model model){
+                                  BindingResult result, Model model) {
 
         CampusUserDetails userDetails = (authentication != null ? (CampusUserDetails) authentication.getPrincipal() : null);
         boolean admin = false;
-        if(userDetails == null || !(admin = userDetails.getAuthorities().stream()
+        if (userDetails == null || !(admin = userDetails.getAuthorities().stream()
                 .anyMatch(a -> a.getAuthority().contains("ADMIN"))))
             return "redirect:/myprofile";
 
-        if(result.hasErrors()) {
+        if (result.hasErrors()) {
             System.out.println("HAHAHAH KAKA2");
             return "redirect:/register?error=Validation Error! Check Parameters";
         }
 
-        if(userService.userExistsByEmail(registrationModel.getEmail()))
+        if (userService.userExistsByEmail(registrationModel.getEmail()))
             return "redirect:/register?error=This user already exists!";
 
         UserEntity entity;
         userService.addUserIfNotExists((entity = new UserEntity("", "",
                 registrationModel.getEmail(),
-                registrationModel.getPassword(), "USER", "", true)));
+                registrationModel.getPassword(), registrationModel.getRole(), "", true)));
 
         System.out.println("kaka 3 :c");
         return "redirect:/profile/" + entity.getUsername();
