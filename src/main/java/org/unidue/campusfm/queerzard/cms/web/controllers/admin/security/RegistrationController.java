@@ -87,7 +87,7 @@ public class RegistrationController {
         UserEntity entity;
         userService.addUserIfNotExists((entity = new UserEntity("", "",
                 registrationModel.getEmail(),
-                registrationModel.getPassword(), registrationModel.getRole(), "", true)));
+                registrationModel.getPassword(), registrationModel.getRole().toUpperCase(), "", true)));
 
         System.out.println("kaka 3 :c");
         return "redirect:/profile/" + entity.getUsername();
