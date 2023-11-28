@@ -1,0 +1,80 @@
+<div class="event__search__floater">
+    <div class="search__anchor">
+        <form autocomplete="off" id="event-search-form" action="search" method="get">
+            <input type="text" name="query" id="querriee" class="search__bar" placeholder="Suche">
+            <input class="search__submit" onclick="encodeFormData()" type="submit">
+            <div class="search__toggler"></div>
+        </form>
+
+    </div>
+</div>
+
+<script>
+    function encodeFormData() {
+        const query = document.getElementById("querriee");
+
+        query.value = encodeURIComponent(query.value);
+    }
+</script>
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="list-inline text-center">
+                    <li class="list-inline-item">
+                        <span class="fa-stack fa-lg">
+                            <a href="https://twitter.com/Campus_FM">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </a>
+                        </span>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="https://www.instagram.com/campusfmradio/?hl=de">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="list-inline-item"><a href="mailto:kontakt@campusfm.info">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-envelope fa-stack-1x fa-inverse">
+
+                            </i></span></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-xl-11 col-xxl-12">
+                <ul class="list-inline" style="font-size: 17px;font-family: Abel, sans-serif;">
+                    <li class="list-inline-item me-4">
+                        <a class="link-secondary" href="/imprint"><msg:message code="footer.label.imprint"/></a>
+                    </li>
+                    <li class="list-inline-item me-4">
+                        <a class="link-secondary" href="/contact"><msg:message code="footer.label.contact"/></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a class="link-secondary" href="/listen"><msg:message code="footer.label.listen"/></a>
+                    </li>
+                    <li class="list-inline-item" style="padding-left: 12px;padding-right: 12px;">
+                        <a class="link-secondary" href="/contribute"><msg:message code="footer.label.contribute"/></a>
+                    </li>
+                    <li class="list-inline-item" style="padding-right: 12px;padding-left: 12px;">
+                        <a class="link-secondary" href="/program"><msg:message code="footer.label.program"/></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-lg-8 mx-auto">
+                <p class="text-muted copyright">Copyright&nbsp;©&nbsp;CampusFM 2023</p>
+            </div>
+        </div>
+    </div>
+</footer>

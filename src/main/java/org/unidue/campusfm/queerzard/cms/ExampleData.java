@@ -38,7 +38,7 @@ public class ExampleData {
 
             System.out.println(
                     "+++++++++++++++++++++++++++++\n" +
-                            "IMPORTANT! THESE ARE THE GENERATED ADMIN CREDENTIALS! NOTE THIS PASSWORD AND CHANGE IT AS IT CANNOT BE CHANGED\n" +
+                            "IMPORTANT! THESE ARE THE GENERATED ADMIN CREDENTIALS! NOTE THIS PASSWORD AS IT CANNOT BE CHANGED\n" +
                             "username: admin\n" +
                             "password:" + generatedPassword + "\n" +
                             "+++++++++++++++++++++++++++++\n"
