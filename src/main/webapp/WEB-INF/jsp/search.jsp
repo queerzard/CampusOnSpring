@@ -35,28 +35,29 @@
             </div>
         </div>
     </header>
-    < class="container">
-    <div class="row">
-        <div class="col-md-10 col-lg-8">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-lg-8">
 
-            <!-- PAGE MAIN CONTENT -->
+                <!-- PAGE MAIN CONTENT -->
 
-            <c:forEach items="${articleEntitiesList}" var="article">
+                <c:forEach items="${articleEntitiesList}" var="article">
 
-                <div class="post-preview"><a href="/article?a=${article.id}"><h2 class="post-title"
-                                                                                 style="font-size: 32px;">${article.title}</h2>
-                    <h3 class="post-subtitle" style="font-size: 20px;">${article.previewContent}</h3></a>
-                    <p class="post-meta"><msg:message code="page.article.publishedBy"/>&nbsp;<a
-                            href="/article?a=${article.id}">
-                            ${article.userEntity.firstName} ${article.userEntity.lastName} <msg:message
-                            code="page.article.publishedOn"/>
-                            ${article.publishMonthName} ${article.publishDayOfMonth}, ${article.publishYear}</a></p>
-                </div>
-                <hr>
-            </c:forEach>
+                    <div class="post-preview"><a href="/article?a=${article.id}"><h2 class="post-title"
+                                                                                     style="font-size: 32px;">${article.title}</h2>
+                        <h3 class="post-subtitle" style="font-size: 20px;">${article.previewContent}</h3></a>
+                        <p class="post-meta"><msg:message code="page.article.publishedBy"/>&nbsp;<a
+                                href="/article?a=${article.id}">
+                                ${article.userEntity.firstName} ${article.userEntity.lastName} <msg:message
+                                code="page.article.publishedOn"/>
+                                ${article.publishMonthName} ${article.publishDayOfMonth}, ${article.publishYear}</a></p>
+                    </div>
+                    <hr>
+                </c:forEach>
+
+            </div>
 
         </div>
-
     </div>
 
 
