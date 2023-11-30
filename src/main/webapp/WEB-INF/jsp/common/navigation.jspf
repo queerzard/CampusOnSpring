@@ -6,7 +6,8 @@
 
             </i>
         </button>
-        <img src="/assets/img/Logo_CampusFM.png" style="width: 142px;filter: contrast(110%);" width="142" height="49">
+        <a href="/home"><img src="/assets/img/Logo_CampusFM.png" style="width: 142px;filter: contrast(110%);"
+                             width="142" height="49"></a>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">

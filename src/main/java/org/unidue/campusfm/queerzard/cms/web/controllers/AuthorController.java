@@ -29,8 +29,10 @@ import java.util.List;
 @Controller
 public class AuthorController {
 
-    @Autowired private ArticleService articleService;
-    @Autowired private UserService userService;
+    @Autowired
+    private ArticleService articleService;
+    @Autowired
+    private UserService userService;
 
     /**
      * This method queries the articles authored by a specific user.
@@ -42,17 +44,18 @@ public class AuthorController {
      */
     @RequestMapping("/author/{username}")
     public String query(Model model, @PathVariable(value = "username", required = false) String username,
-                        @RequestParam(defaultValue = "0") @Min(0) @Positive int page){
+                        @RequestParam(defaultValue = "0") @Min(0) @Positive int page) {
 
-        if(username == null || username.isEmpty() || !userService.userExistsByName(username))
+        if (username == null || username.isEmpty() || !userService.userExistsByName(username))
             return "redirect:/";
 
         UserEntity user = userService.getUserByUsername(username);
-        List<ArticleEntity> articles = articleService.getArticlesByAuthor(user, PageRequest.of((page > 0 ? (page -1) : (page < 0 ? 0 : page)), 15));
+        List<ArticleEntity> articles = articleService.getArticlesByAuthor(user, PageRequest.of((page > 0 ? (page - 1) : (page < 0 ? 0 : page)), 15));
         model.addAttribute("articleEntitiesList", articles);
         model.addAttribute("userEntity", user);
 
         return "author";
     }
+
 
 }

@@ -77,7 +77,6 @@ public class RegistrationController {
             return "redirect:/myprofile";
 
         if (result.hasErrors()) {
-            System.out.println("HAHAHAH KAKA2");
             return "redirect:/register?error=Validation Error! Check Parameters";
         }
 
@@ -89,7 +88,6 @@ public class RegistrationController {
                 registrationModel.getEmail(),
                 registrationModel.getPassword(), registrationModel.getRole().toUpperCase(), "", true)));
 
-        System.out.println("kaka 3 :c");
         return "redirect:/profile/" + entity.getUsername();
     }
 

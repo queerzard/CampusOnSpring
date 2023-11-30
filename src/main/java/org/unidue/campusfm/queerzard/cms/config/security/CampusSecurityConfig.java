@@ -18,6 +18,7 @@ import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.unidue.campusfm.queerzard.cms.database.services.user.CampusUserDetailsService;
 
 @Order(value = -1)
@@ -28,6 +29,7 @@ public class CampusSecurityConfig extends WebSecurityConfigurerAdapter {
     private final CampusAuthenticationProvider authenticationProvider;
     @Autowired
     private CampusUserDetailsService userDetailsService;
+
     @Autowired
     public CampusSecurityConfig(CampusAuthenticationProvider authenticationProvider) {
         this.authenticationProvider = authenticationProvider;
@@ -42,43 +44,42 @@ public class CampusSecurityConfig extends WebSecurityConfigurerAdapter {
                 /*.csrf().disable()*/
                 .csrf().ignoringAntMatchers("/api/v1/**", "/register").and()
                 .authorizeRequests()
-                    .antMatchers("/").permitAll()
-                    .antMatchers("/home").permitAll()
-                    .antMatchers("/search").permitAll()
-                    .antMatchers("/article").permitAll()
-                    .antMatchers("/about").permitAll()
-                    .antMatchers("/author/**").permitAll()
-                    .antMatchers("/contact").permitAll()
-                    .antMatchers("/listen").permitAll()
-                    .antMatchers("/imprint").permitAll()
-                    .antMatchers("/program").permitAll()
-                    .antMatchers("/contribute").permitAll()
-                    .antMatchers("/assets/**").permitAll()
-                    .antMatchers("/assets/dashboard/**").permitAll()
+                .antMatchers("/").permitAll()
+                .antMatchers("/home").permitAll()
+                .antMatchers("/search").permitAll()
+                .antMatchers("/article").permitAll()
+                .antMatchers("/about").permitAll()
+                .antMatchers("/author/**").permitAll()
+                .antMatchers("/contact").permitAll()
+                .antMatchers("/listen").permitAll()
+                .antMatchers("/imprint").permitAll()
+                .antMatchers("/program").permitAll()
+                .antMatchers("/contribute").permitAll()
+                .antMatchers("/assets/**").permitAll()
+                .antMatchers("/assets/dashboard/**").permitAll()
 
-                    .antMatchers("/api/v1/**").permitAll()
+                .antMatchers("/api/v1/**").permitAll()
 
-                    .antMatchers("/login").permitAll()
-                    .antMatchers("/logout").permitAll()
+                .antMatchers("/login").permitAll()
 
-                    .antMatchers("/myprofile").authenticated()
-                    .antMatchers("/compose").authenticated()
-                    .antMatchers("/register").authenticated()
+                .antMatchers("/myprofile").authenticated()
+                .antMatchers("/compose").authenticated()
+                .antMatchers("/register").authenticated()
 
                 .anyRequest().authenticated()
 
                 .and()
-                    .formLogin()
-                        .loginPage("/login")
-                        .failureUrl("/login?error").permitAll()
-                        .defaultSuccessUrl("/myprofile", true)
-
+                .formLogin()
+                .loginPage("/login")
+                .failureUrl("/login?error").permitAll()
+                .defaultSuccessUrl("/myprofile", true)
                 .and()
-                    .logout().logoutUrl("/logout")
-                        .invalidateHttpSession(true) // Invalidate the user's session
-                        .clearAuthentication(true)    // Clear authentication information
-                        .logoutSuccessUrl("/").deleteCookies("JSESSIONID")
-                        .permitAll()
+                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login")
+/*                .and()
+                .logout().logoutUrl("/logout").permitAll()
+                .invalidateHttpSession(true) // Invalidate the user's session
+                .clearAuthentication(true)    // Clear authentication information
+                .logoutSuccessUrl("/login").deleteCookies("JSESSIONID")*/
 
 /*                .and()
                     .rememberMe()
@@ -99,7 +100,11 @@ public class CampusSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){return new BCryptPasswordEncoder();};
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    ;
 
     @Bean
     public SessionRegistry sessionRegistry() {

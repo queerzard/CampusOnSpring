@@ -1,0 +1,47 @@
+<%@ taglib prefix="th" uri="http://www.springframework.org/tags/form" %>
+<%--
+  ~ Copyright (c) 2023. Ozan A. Aslan (github/@queerzard)
+  ~ All rights reserved.
+  --%>
+
+<div class="container profile profile-view" id="profile">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Dashboard</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/home">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/myprofile">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/compose/1">Compose</a>
+                </li>
+                <sec:authorize access="hasRole('ADMIN')">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register">Register</a>
+                    </li>
+                </sec:authorize>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript: document.logoutForm.submit()" role="menuitem">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <form name="logoutForm" action="/logout" method="post" th:th:hidden="true">
+        <input hidden type="submit" value="Sign Out"/>
+    </form>
+    <div class="row">
+        <div class="col-md-12 alert-col relative">
+            <div class="alert alert-info alert-dismissible absolue center" role="alert">
+                <button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="alert"></button>
+                <span>Profile save with success</span></div>
+        </div>
+    </div>
