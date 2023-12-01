@@ -38,7 +38,6 @@ public class CampusSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        //TODO: MAKE. AUTHENTICATION. WORK?!
 
         http
                 /*.csrf().disable()*/
@@ -75,12 +74,6 @@ public class CampusSecurityConfig extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/myprofile", true)
                 .and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login")
-/*                .and()
-                .logout().logoutUrl("/logout").permitAll()
-                .invalidateHttpSession(true) // Invalidate the user's session
-                .clearAuthentication(true)    // Clear authentication information
-                .logoutSuccessUrl("/login").deleteCookies("JSESSIONID")*/
-
 /*                .and()
                     .rememberMe()
                         .key("v3ry23cr3tk3y")
