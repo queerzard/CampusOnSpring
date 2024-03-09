@@ -44,6 +44,7 @@ services:
       MYSQL_USER: '${MYSQL_USER}'
       MYSQL_PASSWORD: '${MYSQL_PASSWORD}'
       SPRING_DATASOURCE: 'jdbc:mariadb://campusdb:3306/${MYSQL_DATABASE}?autoReconnect=true&useSSL=false'
+      TINYMCE_KEY: '${TINYMCE_API_KEY}'
     networks:
       - spring-network
 

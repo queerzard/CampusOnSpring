@@ -219,7 +219,6 @@
 
     <%@ include file="common/footer.jspf" %>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js"></script>
     <script src="/assets/js/script.min.js"></script>
     </body>
 </html>
