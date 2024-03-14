@@ -20,8 +20,6 @@ Das Uni-Radio der Uni-Duisburg-Essen.">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abhaya+Libre&amp;display=swap">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="/assets/css/styles.min.css">
-<spring:eval expression="@environment.getProperty('${TINYMCE_KEY}')" var="mceapi" />
-<script src="https://cdn.tiny.cloud/1/${mceapi}/tinymce/5/tinymce.min.js"></script>
-<script src="  https://cdn.tiny.cloud/1/${mceapi}/tinymce/5/tinymce.min.js" async></script>
+<script src="/assets/js/tinymce/tinymce.min.js"></script>
 </head>
 <body>
