@@ -99,7 +99,7 @@
 
     <script>
         window.addEventListener('load', function () {
-            tinymce.init({
+/*            tinymce.init({
                 selector: 'textarea#tiny',
                 plugins: 'media',
                 width: '100%',
@@ -107,6 +107,9 @@
                 menubar: 'insert',
                 toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent',
                 menubar: 'favs edit view insert format tools table help',
+            });*/
+            tinymce.init({
+                selector: 'textarea#default-editor'
             });
 
             const path = window.location.pathname;
