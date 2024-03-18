@@ -99,9 +99,15 @@
 
     <script>
         window.addEventListener('load', function () {
-
             tinymce.init({
-                selector: 'textarea#default-editor'
+                selector: 'textarea#tiny',
+                plugins: 'media',
+                theme: 'silver',
+                width: '100%',
+                height: '600',
+                menubar: 'insert',
+                toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent',
+                menubar: 'favs edit view insert format tools table help',
             });
 
             const path = window.location.pathname;
