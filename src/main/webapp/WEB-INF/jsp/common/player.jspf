@@ -1,0 +1,194 @@
+
+<style>
+    .audioplayer {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 9999;
+        background-color: #ffffff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+    .audioplayer audio {
+        width: 100%;
+    }
+
+    .audioplayer .controls {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 10px;
+    }
+
+    .audioplayer .controls button {
+        background-color: #f9f9f9;
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        margin: 0 5px;
+        cursor: pointer;
+    }
+
+    .audioplayer .controls button:hover {
+        background-color: #e9e9e9;
+    }
+
+    .audioplayer .controls button:focus {
+        outline: none;
+    }
+
+    .audioplayer .controls .mute {
+        background-image: url(mute-button.svg);
+        background-repeat: no-repeat;
+        background-size: 70%;
+        background-position: center;
+    }
+
+    .audioplayer .controls .unmute {
+        background-image: url(unmute-button.svg);
+        background-repeat: no-repeat;
+        background-size: 70%;
+        background-position: center;
+    }
+
+    .audioplayer .controls .volume {
+        width: 0;
+        margin: 0 5px;
+        transition: width 0.1s ease-out;
+    }
+
+    .audioplayer .controls .mute:hover ~ .volume,
+    .audioplayer .controls .volume:hover {
+        width: 100px;
+        transition: width 0.1s ease-in;
+    }
+
+    .audioplayer .controls button i {
+        font-size: 1.2em;
+    }
+
+    .audioplayer .controls .play i:before {
+        content: "\f04b";
+    }
+
+    .audioplayer .controls .pause i:before {
+        content: "\f04c";
+    }
+
+    .audioplayer .controls .mute i:before {
+        content: "\f028";
+    }
+
+    .audioplayer .controls .unmute i:before {
+        content: "\f026";
+    }
+</style>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<div id="audioplayer" class="audioplayer">
+    <audio id="audio" src="http://5.9.16.111:8510/campusfm"></audio>
+    <div class="controls">
+        <button id="playBtn" class="play">
+            <i class="fa fa-play"></i></button>
+        <button id="muteBtn" class="mute">
+            <i class="fa fa-volume-up"></i>
+        </button>
+        <input id="volume" type="range" class="volume" min="0" max="1" step="0.1" value="0.3">
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const audioPlayer = document.getElementById('audioplayer');
+        const audio = document.getElementById('audio');
+        const playBtn = document.getElementById('playBtn');
+        const muteBtn = document.getElementById('muteBtn');
+        const volumeCtrl = document.getElementById('volume');
+
+        playBtn.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play();
+                playBtn.classList.remove('play');
+                playBtn.classList.add('pause');
+            } else {
+                audio.pause();
+                playBtn.classList.remove('pause');
+                playBtn.classList.add('play');
+            }
+        });
+
+        muteBtn.addEventListener('click', () => {
+            if (audio.muted) {
+                audio.muted = false;
+                muteBtn.classList.remove('unmute');
+                muteBtn.classList.add('mute');
+            } else {
+                audio.muted = true;
+                muteBtn.classList.remove('mute');
+                muteBtn.classList.add('unmute');
+            }
+        });
+
+        muteBtn.addEventListener('mouseenter', () => {
+            volumeCtrl.style.display = 'block';
+        });
+
+        muteBtn.addEventListener('mouseleave', () => {
+            setTimeout(() => {
+                if (!volumeCtrl.contains(document.activeElement)) {
+                    volumeCtrl.style.display = 'none';
+                }
+            }, 300);
+        });
+
+        volumeCtrl.addEventListener('mouseenter', () => {
+            volumeCtrl.style.display = 'block';
+        });
+
+        volumeCtrl.addEventListener('mouseleave', () => {
+            setTimeout(() => {
+                if (!muteBtn.contains(document.activeElement)) {
+                    volumeCtrl.style.display = 'none';
+                }
+            }, 300);
+        });
+
+        volumeCtrl.addEventListener('focus', () => {
+            volumeCtrl.style.display = 'block';
+        });
+
+        volumeCtrl.addEventListener('blur', () => {
+            volumeCtrl.style.display = 'none';
+        });
+
+        volumeCtrl.addEventListener('input', () => {
+            audio.volume = volumeCtrl.value;
+            if (audio.muted) {
+                audio.muted = false;
+                muteBtn.classList.remove('unmute');
+                muteBtn.classList.add('mute');
+            }
+        });
+
+        audio.addEventListener('volumechange', () => {
+            if (audio.muted) {
+                muteBtn.classList.remove('mute');
+                muteBtn.classList.add('unmute');
+                volumeCtrl.value = 0;
+            } else {
+                muteBtn.classList.remove('unmute');
+                muteBtn.classList.add('mute');
+                volumeCtrl.value = audio.volume;
+            }
+        });
+
+        // Set initial state
+        muteBtn.classList.add('mute');
+        volumeCtrl.value = audio.volume;
+        volumeCtrl.style.display = 'none';
+    });
+</script>

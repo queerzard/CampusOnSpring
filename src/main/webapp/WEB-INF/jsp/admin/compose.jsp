@@ -50,7 +50,18 @@
             <div>
                 <input type="file" id="avatarInput" accept="image/png" style="display: none"
                        onchange="previewAvatar(this)">
-                <textarea type="text" name="content" id="tiny"> ${articleEntity.contents}</textarea></div>
+           <%--     <textarea type="text" name="content" id="tiny"> ${articleEntity.contents}</textarea>--%>
+
+
+                    <div class="row row-editor">
+                        <div class="editor-container">
+                            <div class="editor">
+                                ${articleEntity.contents}
+                            </div>
+                        </div>
+                    </div>
+
+
             <div class="row" style="margin-top: 18px;margin-bottom: 18px;">
                 <div class="col-xxl-10" style="margin-bottom: 0px;width: 359.672px;">
                     <button class="btn btn-primary btn-sm" id="discardBtn"
@@ -95,11 +106,11 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script src="/assets/js/script.min.js"></script>
-
+    <script src="/assets/js/ckeditor/build/ckeditor.js"></script>
 
     <script>
         window.addEventListener('load', function () {
-            tinymce.init({
+/*            tinymce.init({
                 selector: 'textarea#tiny',
                 plugins: 'media',
                 theme: 'silver',
@@ -108,7 +119,16 @@
                 menubar: 'insert',
                 toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent',
                 menubar: 'favs edit view insert format tools table help',
-            });
+            });*/
+
+            ClassicEditor
+                .create( document.querySelector( '.editor' ), {} )
+                .then( editor => {
+                    window.editor = editor;
+                } )
+                .catch( error => {
+                    console.error( error );
+                } );
 
             const path = window.location.pathname;
 
@@ -207,7 +227,7 @@
             // get the form data
             var formData = new FormData();
             formData.append('title', $('input[name=title]').val());
-            formData.append('content', btoa(tinymce.activeEditor.getContent()));
+            formData.append('content', btoa(editor.getData()/*tinymce.activeEditor.getContent()*/));
             formData.append('category', $('input[name=category]').val());
             formData.append('article', postId);
 

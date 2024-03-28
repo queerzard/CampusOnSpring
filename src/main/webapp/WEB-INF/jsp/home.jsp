@@ -169,7 +169,9 @@
                             <h4 class="blog-card-caption">
                                 <a href="/article?a=${article.id}">${article.title}</a>
                             </h4>
-                            <p class="blog-card-description">${article.previewContent}</p>
+
+                                <iframe class="blog-card-description" id="preview-frame" srcdoc="${article.previewContent}"></iframe>
+
                             <div class="ftr">
                                 <div class="author">
                                     <a href="/author/${article.userEntity.username}"> <img
@@ -191,9 +193,10 @@
 
 
         <div style="padding-top: 10px;" class="container">
-            <button class="btn btn-primary float-end" id="next-page-button" type="button"
-                    style="background: rgb(0,161,74);"><msg:message code="page.home.label.nextpage"/></button>
-            <div class="clearfix"></div>
+            <div class="clearfix">
+                <button class="btn btn-primary float-end" id="next-page-button" type="button"
+                        style="background: rgb(0,161,74);"><msg:message code="page.home.label.nextpage"/></button>
+            </div>
         </div>
 
 

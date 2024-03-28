@@ -7,7 +7,7 @@
             </i>
         </button>
         <a href="/home"><img src="/assets/img/Logo_CampusFM.png" style="width: 142px;filter: contrast(110%);"
-                             width="142" height="49"></a>
+                             width="142" height="36"></a>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
@@ -16,9 +16,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/about"><msg:message code="navigator.label.about"/></a>
                 </li>
-                <%--                <li class="nav-item">
-                                    <a class="nav-link" href="/events"><msg:message code="navigator.label.events"/></a>
-                                </li>--%>
+                <%--
+                            <li class="nav-item">
+                                 <a class="nav-link" href="/events"><msg:message code="navigator.label.events"/></a>
+                            </li>
+                                --%>
                 <li class="nav-item">
                     <a class="nav-link" href="/login"><msg:message code="navigator.label.login"/></a>
                 </li>
