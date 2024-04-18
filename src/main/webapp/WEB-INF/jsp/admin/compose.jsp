@@ -110,25 +110,20 @@
 
     <script>
         window.addEventListener('load', function () {
-/*            tinymce.init({
-                selector: 'textarea#tiny',
-                plugins: 'media',
-                theme: 'silver',
-                width: '100%',
-                height: '600',
-                menubar: 'insert',
-                toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent',
-                menubar: 'favs edit view insert format tools table help',
-            });*/
 
             ClassicEditor
-                .create( document.querySelector( '.editor' ), {} )
+                .create( document.querySelector( '.editor' ), {
+
+                    language: 'de',
+                    entities: false
+
+                } )
                 .then( editor => {
                     window.editor = editor;
                 } )
                 .catch( error => {
                     console.error( error );
-                } );
+                });
 
             const path = window.location.pathname;
 

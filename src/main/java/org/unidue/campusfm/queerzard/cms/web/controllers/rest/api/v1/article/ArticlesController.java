@@ -7,6 +7,8 @@
 package org.unidue.campusfm.queerzard.cms.web.controllers.rest.api.v1.article;
 
 import lombok.SneakyThrows;
+import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +23,8 @@ import org.unidue.campusfm.queerzard.cms.database.services.user.CampusUserDetail
 import org.unidue.campusfm.queerzard.cms.utils.RestResponse;
 import org.unidue.campusfm.queerzard.cms.web.dto.ArticleModel;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 /*
@@ -55,7 +59,7 @@ HttpMethod | route | short explanation | logic
  * This class is annotated with the @RestController and @RequestMapping annotations to define the base URL for all article-related requests.
  */
 @RestController
-@RequestMapping("/api/v1/article")
+@RequestMapping("/api/v1/article") @Slf4j
 public class ArticlesController {
 
     @Autowired
@@ -76,24 +80,33 @@ public class ArticlesController {
      */ //obtain an article by its ID (if article.published = false & user isnt author nor admin -> refuse |
     // elif author or admin -> grant | or if article.published = true -> grant)
     @GetMapping
-    public ResponseEntity<Object> handleGetMapping(Authentication authentication, @RequestParam("article") String articleId){
+    public ResponseEntity<Object> handleGetMapping(Authentication authentication, @RequestParam("article") String articleId,
+                                                   HttpServletRequest request){
 
         ArticleEntity articleEntity;
         CampusUserDetails userDetails = (authentication != null ? (CampusUserDetails) authentication.getPrincipal() : null);
 
         //check if article by that ID exists
-        if(!articleService.articleExistsById(articleId))
+        if(!articleService.articleExistsById(articleId)){
+            log.warn( "{} attempted to access an unavailable resource. ({})", request.getRemoteAddr(), articleId);
+
             return new ResponseEntity<>(new RestResponse(HttpStatus.NOT_FOUND,
-                    "[handleGetMapping] this resource couldn't be found. unavailable resource;"), HttpStatus.NOT_FOUND);;
+                    "[handleGetMapping] this resource couldn't be found. unavailable resource;"),
+                    HttpStatus.NOT_FOUND);
+        }
         //obtain article from DB
         articleEntity = articleService.getArticleByPostId(articleId);
 
         //check the articles availability and the authentication / return error if
         if(!articleEntity.isPublished() && (userDetails == null || !articleEntity.getUserEntity().getId()
                 .equals(userDetails.getUserEntity().getId()) || !userDetails.getAuthorities().stream()
-                .anyMatch(a -> a.getAuthority().contains("ADMIN"))))
+                .anyMatch(a -> a.getAuthority().contains("ADMIN")))){
+            log.warn("{} attempted to access an unpublished, thus restricted resource " +
+                    "and is neither an administrator, not the author ({})", request.getRemoteAddr(), articleId);
             return new ResponseEntity<>(new RestResponse(HttpStatus.UNAUTHORIZED,
-                    "[handleGetMapping] access to an unpublished resource is restricted. not an administrator nor the author;"), HttpStatus.UNAUTHORIZED);
+                    "[handleGetMapping] access to an unpublished resource is restricted. not an administrator " +
+                            "nor the author;"), HttpStatus.UNAUTHORIZED);
+        }
 
         ArticleModel articleModel = new ArticleModel();
         articleModel.setBase64preview(articleEntity.getBase64preview());
@@ -110,7 +123,7 @@ public class ArticlesController {
         articleModel.setPublishDayOfMonth(articleEntity.getPublishDayOfMonth());
         articleModel.setPublishMonthName(articleEntity.getPublishMonthName());
         articleModel.setUserEntity(articleEntity.getUserEntity());
-
+        log.info( "{} fetched a resource with the article id ({})", request.getRemoteAddr(),  articleId);
         return new ResponseEntity<>(articleModel, HttpStatus.OK);
     }
 
@@ -125,50 +138,73 @@ public class ArticlesController {
      * @return a ResponseEntity object with the modified article details if successful, or an error message if access is refused or if the article does not exist
      */ //Generate a database entry for a new article (if authenticated -> create | else -> refuse)
     @PostMapping()
-    public ResponseEntity<Object> handlePostMapping(Authentication authentication, @RequestParam(value = "article", required = false) String articleId,
-                                                    @RequestParam(value = "pub", required = false) boolean publishBool){
+    public ResponseEntity<Object> handlePostMapping(Authentication authentication,
+                                                    @RequestParam(value = "article", required = false) String articleId,
+                                                    @RequestParam(value = "pub", required = false) boolean publishBool,
+                                                    HttpServletRequest request){
 
         if((articleId != null && !articleId.isEmpty())){
             ArticleEntity articleEntity;
             CampusUserDetails userDetails = (authentication != null ? (CampusUserDetails) authentication.getPrincipal() : null);
             //check if article by that ID exists
-            if(!articleService.articleExistsById(articleId))
+            if(!articleService.articleExistsById(articleId)){
+                log.warn( "{} attempted to POST a resource with the article id ({}), but that resource does not exist.",
+                        userDetails != null ? userDetails.getUsername() : request.getRemoteAddr(),  articleId);
+
                 return new ResponseEntity<>(new RestResponse(HttpStatus.NOT_FOUND,
-                        "[handlePostMapping] this resource couldn't be found. unavailable resource;"), HttpStatus.NOT_FOUND);;
+                        "[handlePostMapping] this resource couldn't be found. unavailable resource;"), HttpStatus.NOT_FOUND);
+            }
             //obtain article from DB
             articleEntity = articleService.getArticleByPostId(articleId);
 
             //check the articles availability and the authentication / return error if
             if (userDetails == null || // Not authenticated
                     (articleEntity.isPublished() && // Article is published
-                            (!userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().contains("ADMIN")))))
+                            (!userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().contains("ADMIN"))))){
+                log.warn( "{} attempted to POST a resource with the article id ({}), but is missing the authorization to perform this action.",
+                        userDetails != null ? userDetails.getUsername() : request.getRemoteAddr(),  articleId);
+
                 return new ResponseEntity<>(new RestResponse(HttpStatus.UNAUTHORIZED,
                         "[handlePostMapping] access to an unpublished resource is restricted. not an administrator nor the author;"), HttpStatus.UNAUTHORIZED);
+            }
 
             boolean admin = userDetails.getAuthorities().stream()
                     .anyMatch(a -> a.getAuthority().contains("ADMIN"));
 
-            if(articleEntity.isEditable() && !admin)
+            if(articleEntity.isEditable() && !admin){
                 articleEntity.setEditable(false);
-             else if(admin)
+                log.info( "{} has submitted a resource with the article id ({}) for review.",
+                        userDetails.getUsername(),  articleId);
+            } else if(admin){
                 articleEntity.setPublished(publishBool);
+                log.warn( "{} has reviewed and published a resource with the article id ({}).",
+                        userDetails.getUsername(),  articleId);
+            }
 
 
             articleService.update(articleEntity);
-
+            log.info( "{} has updated the publication status of a resource with the article id ({})",
+                    userDetails.getUsername(),  articleId);
             return new ResponseEntity<>(new RestResponse(HttpStatus.OK, "publication status modified!"), HttpStatus.OK);
         }
 
-        if(authentication == null)
+        if(authentication == null){
+            log.warn( "{} attempted to POST a resource with the article id ({}), " +
+                    "but is missing the authorization to perform this action. Authentication is null!",
+                    request.getRemoteAddr(),  articleId);
+
             return new ResponseEntity<>(new RestResponse(HttpStatus.UNAUTHORIZED,
                     "[handlePostMapping] principal is null; creating and changing the publication state of " +
                             "articles is reserved to authenticated users!"), HttpStatus.UNAUTHORIZED);
+        }
 
         ArticleEntity article = new ArticleEntity(((CampusUserDetails) (authentication.getPrincipal())).getUserEntity(),
                 "Unnamed", "",
                 "allgemein", "",
                 null, null);
         articleService.addArticle(article);
+        log.info( "{} has created a resource with the article id ({}).",
+                article.getUserEntity().getUsername(),  articleId);
         return new ResponseEntity<>(article, HttpStatus.CREATED);
     }
 
@@ -183,14 +219,18 @@ public class ArticlesController {
      * @return a ResponseEntity object with the modified article details if successful, or an error message if access is refused or if the article does not exist
      */ //replace article content (if user = author || user = admin then -> delete | else -> refuse)
     @PutMapping()
-    public ResponseEntity<Object> handlePutMapping(Authentication authentication, @RequestParam("article") String articleId, ArticleModel articleModel){
+    public ResponseEntity<Object> handlePutMapping(Authentication authentication, @RequestParam("article") String articleId,
+                                                   ArticleModel articleModel, HttpServletRequest request){
         ArticleEntity articleEntity;
         CampusUserDetails userDetails = (authentication != null ? (CampusUserDetails) authentication.getPrincipal() : null);
 
         //check if article by that ID exists
-        if(!articleService.articleExistsById(articleId))
+        if(!articleService.articleExistsById(articleId)){
+            log.warn( "{} attempted to PUT a resource with the article id ({}), but that resource does not exist.",
+                    userDetails != null ? userDetails.getUsername() : request.getRemoteAddr(),  articleId);
             return new ResponseEntity<>(new RestResponse(HttpStatus.NOT_FOUND,
-                    "[handlePutMapping] this resource couldn't be found. unavailable resource;"), HttpStatus.NOT_FOUND);;
+                    "[handlePutMapping] this resource couldn't be found. unavailable resource;"), HttpStatus.NOT_FOUND);
+        }
         //obtain article from DB
         articleEntity = articleService.getArticleByPostId(articleId);
 
@@ -198,9 +238,15 @@ public class ArticlesController {
         if (userDetails == null || // Not authenticated
                 (articleEntity.isPublished() && // Article is published
                         (!articleEntity.getUserEntity().getId().equals(userDetails.getUserEntity().getId())) && // User is not the owner
-                        !userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().contains("ADMIN"))))
+                        !userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().contains("ADMIN")))){
+            log.warn( "{} attempted to PUT a published resource with the article id ({}), but is missing the authorization to perform this action.",
+                    userDetails != null ? userDetails.getUsername() : request.getRemoteAddr(),  articleId);
+
             return new ResponseEntity<>(new RestResponse(HttpStatus.UNAUTHORIZED,
                     "[handlePutMapping] a published resource cannot be replaced and needs to be taken down first. not an administrator nor the author;"), HttpStatus.UNAUTHORIZED);
+        }
+
+
 
         //put code...
         articleEntity.setTitle(articleModel.getTitle());
@@ -213,7 +259,8 @@ public class ArticlesController {
         articleEntity.setViews(articleModel.getViews());
 
         articleService.update(articleEntity);
-
+        log.info( "{} has updated(PUT) a resource with the article id ({})",
+                userDetails.getUsername(),  articleId);
         return new ResponseEntity<>(new RestResponse(HttpStatus.OK, "this article has been modified!")
                 .addData("model", articleModel), HttpStatus.OK);
     }
@@ -239,16 +286,19 @@ public class ArticlesController {
                                                      @RequestPart(value = "title", required = false) String title,
                                                      @RequestPart(value = "content", required = false) String content,
                                                      @RequestPart(value = "tags", required = false) String tags, @RequestPart("category") String category,
-                                                     @RequestPart(value = "previewImage", required = false) MultipartFile multipartFile){
+                                                     @RequestPart(value = "previewImage", required = false) MultipartFile multipartFile, HttpServletRequest request){
 
         ArticleEntity articleEntity;
         CampusUserDetails userDetails = (authentication != null ? (CampusUserDetails) authentication.getPrincipal() : null);
 
 
         //check if article by that ID exists
-        if(!articleService.articleExistsById(articleId))
+        if(!articleService.articleExistsById(articleId)){
+            log.warn( "{} attempted to PATCH a resource with the article id ({}), but that resource does not exist.",
+                    userDetails != null ? userDetails.getUsername() : request.getRemoteAddr(),  articleId);
             return new ResponseEntity<>(new RestResponse(HttpStatus.NOT_FOUND,
-                    "[handlePatchMapping] this resource couldn't be found. unavailable resource;"), HttpStatus.NOT_FOUND);;
+                    "[handlePatchMapping] this resource couldn't be found. unavailable resource;"), HttpStatus.NOT_FOUND);
+        }
         //obtain article from DB
         articleEntity = articleService.getArticleByPostId(articleId);
 
@@ -256,9 +306,12 @@ public class ArticlesController {
         if (userDetails == null || // Not authenticated
                 (articleEntity.isPublished() && // Article is published
                         (!articleEntity.getUserEntity().getId().equals(userDetails.getUserEntity().getId())) && // User is not the owner
-                        !userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().contains("ADMIN"))))
+                        !userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().contains("ADMIN")))){
+            log.warn( "{} attempted to PATCH a resource with the article id ({}), but is missing the authorization to perform this action.",
+                    userDetails != null ? userDetails.getUsername() : request.getRemoteAddr(),  articleId);
             return new ResponseEntity<>(new RestResponse(HttpStatus.UNAUTHORIZED,
                     "[handlePatchMapping] access to this resource is restricted. not an administrator nor the author;"), HttpStatus.UNAUTHORIZED);
+        }
 
         //handlerCode...
         if(title != null && !title.isEmpty())
@@ -274,7 +327,8 @@ public class ArticlesController {
             articleEntity.setBase64preview(Base64.encodeBase64String(multipartFile.getBytes()));
 
         articleService.update(articleEntity);
-
+        log.info( "{} has updated(PATCH) a resource with the article id ({})",
+                userDetails.getUsername(),  articleId);
         return new ResponseEntity<>(new RestResponse(HttpStatus.OK, "this article has been modified!")
                 .addData("model", articleEntity), HttpStatus.OK);
     }
@@ -290,20 +344,23 @@ public class ArticlesController {
      *         or an error message if access is refused or if the article does not exist
      */ //delete an article entry from DB (if user = author || user = admin then -> delete | else -> refuse)
     @DeleteMapping()
-    public ResponseEntity<Object> handleDeleteMapping(Authentication authentication, @RequestParam("article") String articleId){
+    public ResponseEntity<Object> handleDeleteMapping(Authentication authentication, @RequestParam("article") String articleId, HttpServletRequest request){
 
         ArticleEntity articleEntity;
         CampusUserDetails userDetails = (authentication != null ? (CampusUserDetails) authentication.getPrincipal() : null);
 
         //check if article by that ID exists
-        if(!articleService.articleExistsById(articleId))
+        if(!articleService.articleExistsById(articleId)){
+            log.warn( "{} attempted to DELETE a resource with the article id ({}), but that resource does not exist.",
+                    userDetails != null ? userDetails.getUsername() : request.getRemoteAddr(),  articleId);
             return new ResponseEntity<>(new RestResponse(HttpStatus.NOT_FOUND,
                     "[handleDeleteMapping] this resource couldn't be found. unavailable resource;"), HttpStatus.NOT_FOUND);
+        }
         //obtain article from DB
         articleEntity = articleService.getArticleByPostId(articleId);
-
+/*
         boolean admin = userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().contains("ADMIN"));
-        boolean author = articleEntity.getUserEntity().getId().equals(userDetails.getUserEntity().getId());
+        boolean author = articleEntity.getUserEntity().getId().equals(userDetails.getUserEntity().getId());*/
 
       /*  wenn der nutzer nicht authentifiziert ist, soll er keinen Zugriff erhalten.
         Wenn er aber authentifiziert ist, sein artikel bearbeitbar und nicht publiziert ist und er der autor oder ein admin ist, dann soll er zugriff erhalten.
@@ -313,11 +370,16 @@ public class ArticlesController {
         if (userDetails == null || // Not authenticated
                 (articleEntity.isPublished() && // Article is published
                         (!articleEntity.getUserEntity().getId().equals(userDetails.getUserEntity().getId())) && // User is not the owner
-                        !userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().contains("ADMIN"))))
+                        !userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().contains("ADMIN")))){
+            log.warn( "{} attempted to DELETE a resource with the article id ({}), but is missing the authorization to perform this action.",
+                    userDetails != null ? userDetails.getUsername() : request.getRemoteAddr(),  articleId);
             return new ResponseEntity<>(new RestResponse(HttpStatus.UNAUTHORIZED,
                     "[handleDeleteMapping] resources can only be deleted by their author or an administrator!"), HttpStatus.UNAUTHORIZED);
+        }
 
         articleService.delete(articleEntity);
+        log.info( "{} has deleted a resource with the article id ({})",
+                userDetails.getUsername(),  articleId);
         return new ResponseEntity<>(new RestResponse(HttpStatus.OK, "article deleted successfully"), HttpStatus.OK);
     }
 

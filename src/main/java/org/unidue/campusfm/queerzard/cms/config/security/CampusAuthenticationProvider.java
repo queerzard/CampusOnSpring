@@ -6,6 +6,9 @@
 
 package org.unidue.campusfm.queerzard.cms.config.security;
 
+import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,7 +22,7 @@ import org.springframework.stereotype.Component;
 import org.unidue.campusfm.queerzard.cms.database.services.interfaces.UserService;
 import org.unidue.campusfm.queerzard.cms.database.services.user.CampusUserDetails;
 
-@Component
+@Component @Slf4j
 public class CampusAuthenticationProvider implements AuthenticationProvider {
 
 
@@ -39,21 +42,31 @@ public class CampusAuthenticationProvider implements AuthenticationProvider {
         String password = (authentication.getCredentials().toString());
         System.out.println(password);
 
+        log.info("Incoming login attempt: {}", username);
+
         CampusUserDetails userDetails = (CampusUserDetails) userDetailsService.loadUserByUsername(username);
-        if (userDetails == null)
+        if (userDetails == null){
+            log.warn("Someone attempted to log on with the username {} but that account does not exist.", username);
             throw new UsernameNotFoundException("User not found");
+        }
 
-        if (!passwordEncoder.matches(password, userDetails.getPassword()))
+        if (!passwordEncoder.matches(password, userDetails.getPassword())){
+            log.warn("Someone attempted to log on with the username {} but the password mismatched.", username);
             throw new AuthenticationException("Invalid credentials") {};
+        }
 
-        if(!userDetails.isEnabled())
+        if(!userDetails.isEnabled()){
+            log.warn("Someone attempted to log on to a disabled account with the username {}", username);
             throw new AuthenticationException("Account Disabled!") {};
+        }
 
         userDetails.getUserEntity().updateLastLogin();
         userService.update(userDetails.getUserEntity());
         // Create a fully authenticated Authentication object
         Authentication authenticated = new UsernamePasswordAuthenticationToken(
                 userDetails, null, userDetails.getAuthorities());
+        log.info("{} logged on.", username);
+
         return authenticated;
     }
     @Override

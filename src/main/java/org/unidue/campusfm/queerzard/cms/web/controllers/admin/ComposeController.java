@@ -6,6 +6,8 @@
 
 package org.unidue.campusfm.queerzard.cms.web.controllers.admin;
 
+import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -17,12 +19,14 @@ import org.unidue.campusfm.queerzard.cms.database.services.interfaces.ArticleSer
 import org.unidue.campusfm.queerzard.cms.database.services.interfaces.UserService;
 import org.unidue.campusfm.queerzard.cms.database.services.user.CampusUserDetails;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * The ComposeController class is a controller that handles requests related to creating or editing an article.
  * It is responsible for retrieving the composer view, validating user authentication, checking permissions,
  * and adding or updating articles.
  */
-@Controller
+@Controller @Slf4j
 public class ComposeController {
 
     @Autowired
@@ -41,10 +45,13 @@ public class ComposeController {
      * @return the view name for the composer page
      */
     @GetMapping("/compose/{id}")
-    public String getComposer(Model model, Authentication authentication, @PathVariable(value = "id", required = false) String articleId){
+    public String getComposer(Model model, Authentication authentication, @PathVariable(value = "id", required = false)
+                                String articleId, HttpServletRequest request){
 
-        if(authentication == null)
+        if(authentication == null){
+            log.warn("{} attempted to access the composer but isn't logged in.", request.getRemoteAddr());
             return "redirect:/";
+        }
 
         CampusUserDetails userDetails = ((CampusUserDetails) authentication.getPrincipal());
 
@@ -55,6 +62,9 @@ public class ComposeController {
                     "allgemein", "",
                     null, null);
             articleService.addArticle(article);
+
+            log.info("{} has created an article ({})", userDetails.getUsername(), articleId);
+
             return "redirect:/compose/" + article.getId();
         }
 
@@ -64,11 +74,14 @@ public class ComposeController {
                 .anyMatch(a -> a.getAuthority().contains("ADMIN"));
         boolean isAuthor = articleEntity.getUserEntity().getId()
                 .equals(userDetails.getUserEntity().getId());
-        if(!isAuthor && notAdmin || notAdmin && !articleEntity.isEditable())
+        if(!isAuthor && notAdmin || notAdmin && !articleEntity.isEditable()){
+            log.warn("{} attempted to access a restricted resource! ({}) ", userDetails.getUsername(), articleId);
             return "redirect:/";
+        }
 
         model.addAttribute("articleEntity", articleEntity);
         model.addAttribute("notAuthor", !isAuthor);
+        log.info("{} fetched a resource with the article id ({})", userDetails.getUsername(), articleId );
 
         return "admin/compose";
     }
