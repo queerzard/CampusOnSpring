@@ -54,7 +54,7 @@ public interface ArticleRepository extends JpaRepository<ArticleEntity, Long> {
             "LOWER(a.tags) LIKE LOWER(concat('%', :query, '%')) OR " +
             "LOWER(a.category) LIKE LOWER(concat('%', :query, '%')) OR " +
             "LOWER(a.title) LIKE LOWER(concat('%', :query, '%')) OR " +
-            "LOWER(a.contents) LIKE LOWER(concat('%', :query, '%')) )")
+            "LOWER(FROM_BASE64(a.contents)) LIKE LOWER(concat('%', :query, '%')) )")
     List<ArticleEntity> findAllArticlesByQuery(@Param("query") String query);
 
     List<ArticleEntity> findAllByPublishedTrueAndUserEntity(UserEntity user);

@@ -111,7 +111,7 @@ public class ArticlesController {
         ArticleModel articleModel = new ArticleModel();
         articleModel.setBase64preview(articleEntity.getBase64preview());
         articleModel.setPreviewContent(articleEntity.getPreviewContent());
-        articleModel.setContents(articleEntity.getContents());
+        articleModel.setContents(new String(Base64.decodeBase64(articleEntity.getContents()), StandardCharsets.UTF_8));
         articleModel.setTags(articleEntity.getTags());
         articleModel.setTitle(articleEntity.getTitle());
         articleModel.setEditable(articleEntity.isEditable());
@@ -317,7 +317,7 @@ public class ArticlesController {
         if(title != null && !title.isEmpty())
             articleEntity.setTitle(title);
         if(content != null && !content.isEmpty() && Base64.isBase64(content))
-            articleEntity.setContent(new String(java.util.Base64.getDecoder().decode(content), StandardCharsets.UTF_8));
+            articleEntity.setContent(content);
         if(tags != null && !tags.isEmpty())
             articleEntity.setTags(tags);
         if(category != null && !category.isEmpty())

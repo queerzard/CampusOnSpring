@@ -3,7 +3,9 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="msg" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-
+<%@ page import="java.util.Base64" %>
+<%@ page import="java.nio.charset.StandardCharsets" %>
+<%@ page import="org.unidue.campusfm.queerzard.cms.database.dao.ArticleEntity" %>
 <%--
   ~ Copyright (c) 2023. Ozan A. Aslan (github/@queerzard)
   ~ All rights reserved.
@@ -44,7 +46,6 @@
         <div class="col-md-10 col-lg-8 mx-auto">
             ${article.contents}
         </div>
-
         <sec:authorize access="hasRole('ADMIN')">
             <button id="deleteArt">DELETE ARTICLE</button>
             <button id="takeDown">TAKE DOWN ARTICLE</button>

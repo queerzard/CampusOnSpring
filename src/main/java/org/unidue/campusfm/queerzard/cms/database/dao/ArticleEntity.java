@@ -9,6 +9,7 @@ package org.unidue.campusfm.queerzard.cms.database.dao;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Safelist;
 import org.unidue.campusfm.queerzard.cms.utils.UtilitiesCollection;
@@ -17,6 +18,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Represents an article entity.
@@ -33,53 +35,26 @@ import javax.persistence.Table;
 @Table(name = "article")
 public class ArticleEntity extends AbstractEntity {
 
-    @ManyToOne
-    @Getter
-    private UserEntity userEntity;
+    @ManyToOne @Getter private UserEntity userEntity;
 
-    @Getter
-    @Setter
-    private String previewContent;
+    @Getter @Setter private String previewContent;
 
-    @Getter
-    @Setter
-    @Column(columnDefinition = "LONGTEXT")
-    private String base64preview;
-    @Getter
-    @Column(columnDefinition = "LONGTEXT")
-    private String base64banner;
-    @Getter
-    @Column(columnDefinition = "LONGTEXT")
-    private String contents;
-    @Getter
-    @Setter
-    private String tags;
-    @Getter
-    @Setter
-    private String category;
-    @Getter
-    @Setter
-    private String title;
-    @Getter
-    private long creationMillis;
-    @Getter
-    private long publishedMillis;
+    @Getter @Setter @Column(columnDefinition = "LONGTEXT") private String base64preview;
+    @Getter @Column(columnDefinition = "LONGTEXT") private String base64banner;
+    @Getter @Column(columnDefinition = "LONGTEXT") private String contents;
+    @Getter @Setter private String tags;
+    @Getter @Setter private String category;
+    @Getter @Setter private String title;
+    @Getter private long creationMillis;
+    @Getter private long publishedMillis;
 
-    @Getter
-    private String publishDayOfMonth;
-    @Getter
-    private String publishMonthName;
-    @Getter
-    private String publishYear;
+    @Getter private String publishDayOfMonth;
+    @Getter private String publishMonthName;
+    @Getter private String publishYear;
 
-    @Getter
-    @Setter
-    private boolean editable;
-    @Getter
-    private boolean published;
-    @Getter
-    @Setter
-    private int views;
+    @Getter @Setter private boolean editable;
+    @Getter private boolean published;
+    @Getter @Setter private int views;
 
     public ArticleEntity() {
     }
@@ -107,9 +82,16 @@ public class ArticleEntity extends AbstractEntity {
      * @param contents the content to be set
      */
     public void setContent(String contents) {
-        this.contents = contents;
-        String sanitized = Jsoup.clean(contents, Safelist.basic());
-        this.previewContent = Jsoup.clean((sanitized.length() > 200 ? sanitized.substring(0, 200) : sanitized).replaceAll("\n", ""), Safelist.none());
+        String decoded = "";
+        if(!Base64.isBase64(contents)){
+            decoded = contents;
+            this.contents = Base64.encodeBase64String(contents.getBytes(StandardCharsets.UTF_8));
+        } else {
+            decoded = new String(Base64.decodeBase64(contents), StandardCharsets.UTF_8);
+        }
+        String sanitized = Jsoup.clean(decoded, Safelist.basic());
+        this.previewContent = Base64.encodeBase64String(Jsoup.clean((sanitized.length() > 200 ?
+                sanitized.substring(0, 200) : sanitized).replaceAll("\n", ""), Safelist.none()).getBytes());
 
     }
 

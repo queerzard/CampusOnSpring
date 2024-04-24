@@ -1,0 +1,85 @@
+<!--
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="msg" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+-->
+
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/assets/dashboard/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/dashboard/assets/css/styles.min.css">
+    <link rel="stylesheet" href="/assets/css/Toggle-Switch-toggle-switch.css">
+    <link rel="stylesheet" href="/assets/css/Toggle-Switch.css">
+    <link rel="stylesheet" href="//unpkg.com/grapesjs/dist/css/grapes.min.css">
+    <script src="//unpkg.com/grapesjs"></script>
+    <script>
+        const editor = grapesjs.init({
+            // ...
+            blockManager: {
+                appendTo: '#blocks',
+                blocks: [
+                    {
+                        id: 'section', // id is mandatory
+                        label: '<b>Section</b>', // You can use HTML/SVG inside labels
+                        attributes: { class:'gjs-block-section' },
+                        content: `<section>
+          <h1>This is a simple title</h1>
+          <div>This is just a Lorem text: Lorem ipsum dolor sit amet</div>
+        </section>`,
+                    }, {
+                        id: 'text',
+                        label: 'Text',
+                        content: '<div data-gjs-type="text">Insert your text here</div>',
+                    }, {
+                        id: 'image',
+                        label: 'Image',
+                        // Select the component once it's dropped
+                        select: true,
+                        // You can pass components as a JSON instead of a simple HTML string,
+                        // in this case we also use a defined component type `image`
+                        content: { type: 'image' },
+                        // This triggers `active` event on dropped components and the `image`
+                        // reacts by opening the AssetManager
+                        activate: true,
+                    }
+                ]
+            },
+        });
+    </script>
+    <style>
+        #gjs {
+            border: 3px solid #444;
+        }
+
+        /* Reset some default styling */
+        .gjs-cv-canvas {
+            top: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .gjs-block {
+            width: auto;
+            height: auto;
+            min-height: auto;
+        }
+    </style>
+</head>
+
+<body>
+<!--<%@ include file="../common/navigator.jspf" %>-->
+
+<div id="gjs">
+    <h1>Hello World Component!</h1>
+</div>
+<div id="blocks"></div>
+
+</body>
+</html>
